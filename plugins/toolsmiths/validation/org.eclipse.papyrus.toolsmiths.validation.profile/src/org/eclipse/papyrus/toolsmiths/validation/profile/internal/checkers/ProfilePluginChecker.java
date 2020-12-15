@@ -20,7 +20,9 @@ import static org.eclipse.papyrus.toolsmiths.validation.profile.constants.Profil
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Objects;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
@@ -30,6 +32,7 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.papyrus.emf.helpers.BundleResourceURIHelper;
 import org.eclipse.papyrus.toolsmiths.validation.common.checkers.BuildPropertiesChecker;
 import org.eclipse.papyrus.toolsmiths.validation.common.checkers.CustomModelChecker;
 import org.eclipse.papyrus.toolsmiths.validation.common.checkers.ExtensionsChecker;
@@ -119,7 +122,17 @@ public class ProfilePluginChecker {
 	}
 
 	private static ModelDependenciesChecker createModelDependenciesChecker(IProject project, IFile modelFile, Resource resource) {
-		return new ModelDependenciesChecker(project, modelFile, resource, PROFILE_PLUGIN_VALIDATION_MARKER_TYPE);
+		return new ModelDependenciesChecker(project, modelFile, resource, PROFILE_PLUGIN_VALIDATION_MARKER_TYPE)
+				.withAdditionalRequirements(r -> ProfilePluginChecker.getBundlesFromExternalResources(r, project));
+	}
+
+	private static Collection<String> getBundlesFromExternalResources(Resource resource, IProject project) {
+		EcoreUtil.resolveAll(resource);
+		return resource.getResourceSet().getResources().stream()
+				.map(BundleResourceURIHelper.INSTANCE::getBundleNameFromResource)
+				.filter(Objects::nonNull)
+				.filter(name -> !name.equals(project.getName())) // no self importing.
+				.collect(Collectors.toList());
 	}
 
 	/**
@@ -178,7 +191,7 @@ public class ProfilePluginChecker {
 				.requireExtensionPoint(ProfilePluginValidationConstants.UML_GENERATED_PACKAGE_EXTENSION_POINT, validator::matchExtension, validator::checkExtension, validator::problemId);
 
 		if (model.getNestingPackage() == null) {
-			return reporter.requireExtensionPoint(ProfilePluginValidationConstants.UMLPROFILE_EXTENSION_POINT, validator::matchExtension, validator::checkExtension, validator::problemId);
+			return reporter.softRequireExtensionPoint(ProfilePluginValidationConstants.UMLPROFILE_EXTENSION_POINT, validator::matchExtension, validator::checkExtension, validator::problemId);
 		}
 		return reporter;
 	}

@@ -35,6 +35,7 @@ import org.eclipse.emf.common.util.DiagnosticChain;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.osgi.util.NLS;
+import org.eclipse.papyrus.emf.validation.DependencyValidationUtils;
 import org.eclipse.papyrus.infra.emf.utils.ResourceUtils;
 import org.eclipse.papyrus.toolsmiths.validation.common.Activator;
 
@@ -146,6 +147,18 @@ public interface IPluginChecker2 {
 	 */
 	static MarkerAttribute lineNumber(int line) {
 		return new MarkerAttribute(IMarker.LINE_NUMBER, line);
+	}
+
+	static MarkerAttribute missingDependency(String missingDependency) {
+		return new MarkerAttribute(DependencyValidationUtils.MISSING_DEPENDENCIES, missingDependency);
+	}
+
+	/**
+	 * Create a token to put in the {@linkplain Diagnostic#getData() data list} of a {@link Diagnostic} to indicate the problem id to
+	 * set in the resource marker for further resolutions.
+	 */
+	static MarkerAttribute problem(int problemID) {
+		return new MarkerAttribute("problemId", problemID);
 	}
 
 	/**
@@ -587,5 +600,7 @@ public interface IPluginChecker2 {
 		}
 
 	}
+
+
 
 }

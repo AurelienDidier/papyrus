@@ -55,6 +55,7 @@ import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.osgi.service.resolver.BundleSpecification;
 import org.eclipse.osgi.util.NLS;
+import org.eclipse.papyrus.emf.validation.DependencyValidationUtils;
 import org.eclipse.papyrus.toolsmiths.validation.common.Activator;
 import org.eclipse.papyrus.toolsmiths.validation.common.utils.ProjectManagementService;
 import org.eclipse.pde.internal.core.ibundle.IManifestHeader;
@@ -210,7 +211,7 @@ public class ModelDependenciesChecker extends AbstractPluginChecker {
 		if (!requiredPlugins.isEmpty()) {
 			requiredPlugins.stream().forEach(requiredPlugin -> {
 				int severity = severityFunction.applyAsInt(requiredPlugin);
-				errors.add(new ManifestError(getMarkerType(), "The plug-in ''" + requiredPlugin + "'' must be declared as required plug-in (for ''{0}'').", severity, Constants.REQUIRE_BUNDLE, resourceName));
+				errors.add(new ManifestError(getMarkerType(), "The plug-in ''" + requiredPlugin + "'' must be declared as required plug-in (for ''{0}'').", severity, Constants.REQUIRE_BUNDLE, resourceName, requiredPlugin));
 			});
 			reportErrors(diagnostics, errors);
 		}
@@ -230,7 +231,7 @@ public class ModelDependenciesChecker extends AbstractPluginChecker {
 			final IFile manifestFile = ProjectManagementService.getManifestFile(getProject());
 			BundleModel textBundleModel = prepareTextBundleModel(manifestFile);
 			errors.stream().forEach(error -> {
-				reportBundleError(diagnostics, manifestFile, textBundleModel, error.type, error.message, error.severity, error.header, error.dependentName);
+				reportBundleError(diagnostics, manifestFile, textBundleModel, error.type, error.message, error.severity, error.header, error.dependentName, error.requiredBundle);
 			});
 		}
 	}
@@ -252,8 +253,10 @@ public class ModelDependenciesChecker extends AbstractPluginChecker {
 	 *            the header entry of the manifest file on which marker is created.
 	 * @param sourceName
 	 *            the name of the source of the problem, e.g. the file or whatever that implies the problem
+	 * @param requiredBundle
+	 *            the name of the required bundle
 	 */
-	private void reportBundleError(DiagnosticChain diagnostics, IFile manifestFile, BundleModel textBundleModel, String type, String message, int severity, String header, String sourceName) {
+	private void reportBundleError(DiagnosticChain diagnostics, IFile manifestFile, BundleModel textBundleModel, String type, String message, int severity, String header, String sourceName, String requiredBundle) {
 		Diagnostic diagnostic;
 
 		if (textBundleModel != null) {
@@ -263,6 +266,10 @@ public class ModelDependenciesChecker extends AbstractPluginChecker {
 			if (sourceName != null) {
 				// All source names for the same dependency are collected and dynamically injected into the diagnostic message
 				data.add(IPluginChecker2.dynamicMessageArgument(0, sourceName));
+			}
+
+			if (requiredBundle != null) {
+				data.add(new MarkerAttribute(DependencyValidationUtils.MISSING_DEPENDENCIES, requiredBundle));
 			}
 
 			diagnostic = createDiagnostic(manifestFile, severity, 0, message, data.toArray());
@@ -549,13 +556,15 @@ public class ModelDependenciesChecker extends AbstractPluginChecker {
 		private final int severity;
 		private final String header;
 		private final String dependentName;
+		private final String requiredBundle;
 
-		ManifestError(String type, String message, int severity, String header, String dependentName) {
+		ManifestError(String type, String message, int severity, String header, String dependentName, String requiredBundle) {
 			this.type = type;
 			this.message = message;
 			this.severity = severity;
 			this.header = header;
 			this.dependentName = dependentName;
+			this.requiredBundle = requiredBundle;
 		}
 	}
 }

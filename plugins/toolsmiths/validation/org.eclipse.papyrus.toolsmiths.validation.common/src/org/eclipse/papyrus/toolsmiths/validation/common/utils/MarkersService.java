@@ -25,6 +25,7 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EValidator;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.papyrus.emf.validation.DependencyValidationUtils;
 import org.eclipse.papyrus.toolsmiths.validation.common.Activator;
 import org.eclipse.papyrus.toolsmiths.validation.common.checkers.IPluginChecker2;
 import org.eclipse.papyrus.toolsmiths.validation.common.internal.utils.MarkersManagementUtils;
@@ -88,6 +89,7 @@ public class MarkersService {
 
 		String target = null;
 		StringBuilder related = null;
+		String missingDependency = null;
 
 		for (Object next : diagnostic.getData()) {
 			if (next instanceof EObject) {
@@ -108,6 +110,11 @@ public class MarkersService {
 					related.append(URI.encodeFragment(uri, false));
 				}
 				break;
+			} else if (next instanceof IPluginChecker2.MarkerAttribute) {
+				IPluginChecker2.MarkerAttribute attr = (IPluginChecker2.MarkerAttribute) next;
+				if (DependencyValidationUtils.MISSING_DEPENDENCIES.equals(attr.getName())) {
+					missingDependency = (String) attr.getValue();
+				}
 			}
 		}
 
@@ -120,6 +127,10 @@ public class MarkersService {
 			}
 			if (related != null) {
 				result.setAttribute(EValidator.RELATED_URIS_ATTRIBUTE, related.toString());
+			}
+
+			if (missingDependency != null) {
+				result.setAttribute(DependencyValidationUtils.MISSING_DEPENDENCIES, missingDependency);
 			}
 		} catch (CoreException e) {
 			Activator.log.error("Failed to set attributes of problem marker.", e);

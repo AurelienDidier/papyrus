@@ -193,7 +193,7 @@ final class ProfilePluginXMLValidator {
 		case ProfilePluginValidationConstants.UMLPROFILE_EXTENSION_POINT:
 			String name = element.getAttribute(NAME);
 			if (name == null || name.isEmpty()) {
-				problems.reportProblem(Diagnostic.ERROR, element, NAME, NLS.bind(Messages.StaticProfilePluginErrorReporter_uiLabelIsNull, profile.getLabel()),
+				problems.reportProblem(Diagnostic.WARNING, element, NAME, NLS.bind(Messages.StaticProfilePluginErrorReporter_uiLabelIsNull, profile.getLabel()),
 						ProfilePluginValidationConstants.PAPYRUS_PROFILE_EXTENSION_NO_NAME_MARKER_ID,
 						CATEGORY, Collections.singletonMap(STATIC_PROFILE_MARKER_ATTRIBUTE, profile.getLabel()));
 			}

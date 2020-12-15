@@ -72,6 +72,7 @@ public class PluginErrorReporter<T extends EObject> extends ManifestErrorReporte
 	private final Multimap<String, ExtensionChecker<? super T>> extensionCheckers = HashMultimap.create();
 	private final Map<String, ExtensionFixProvider<? super T>> extensionFixProviders = new HashMap<>();
 	private final Set<String> architectureImpliedExtensionPoints = new HashSet<>();
+	private final Set<String> softRequiredExtensionPoints = new HashSet<>();
 	private final Set<String> foundExtensionPoints = new HashSet<>();
 
 	private final Map<String, String> localURIMappings = new HashMap<>();
@@ -148,6 +149,18 @@ public class PluginErrorReporter<T extends EObject> extends ManifestErrorReporte
 	 */
 	public PluginErrorReporter<T> requireExtensionPoint(String point, ExtensionMatcher<? super T> matcher, ExtensionChecker<? super T> checker, ExtensionFixProvider<? super T> fixProvider) {
 		requiredExtensionPoints.put(point, matcher);
+		if (checker != null) {
+			extensionCheckers.put(point, checker);
+		}
+		if (fixProvider != null) {
+			extensionFixProviders.put(point, fixProvider);
+		}
+		return this;
+	}
+
+	public PluginErrorReporter<T> softRequireExtensionPoint(String point, ExtensionMatcher<? super T> matcher, ExtensionChecker<? super T> checker, ExtensionFixProvider<? super T> fixProvider) {
+		requiredExtensionPoints.put(point, matcher);
+		softRequiredExtensionPoints.add(point);
 		if (checker != null) {
 			extensionCheckers.put(point, checker);
 		}
@@ -279,6 +292,9 @@ public class PluginErrorReporter<T extends EObject> extends ManifestErrorReporte
 		int severity = CompilerFlags.ERROR;
 		if (architectureImpliedExtensionPoints.contains(point)) {
 			// Only report this as a warning because perhaps the architecture model just isn't available in the workspace or PDE Target
+			severity = CompilerFlags.WARNING;
+		}
+		if (softRequiredExtensionPoints.contains(point)) {
 			severity = CompilerFlags.WARNING;
 		}
 

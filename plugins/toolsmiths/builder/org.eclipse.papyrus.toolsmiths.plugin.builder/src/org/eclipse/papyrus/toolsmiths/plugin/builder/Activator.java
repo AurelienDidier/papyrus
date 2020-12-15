@@ -83,6 +83,9 @@ public class Activator extends AbstractUIPlugin {
 
 		// manifest builder
 		PapyrusPluginBuilder.addManifestBuilder(new ManifestBuilder());
+		PapyrusPluginBuilder.addManifestBuilder(new PluginCheckerBuilder(PROFILE_PLUGIN_VALIDATION_MARKER_TYPE, this::mapProfilesResources)
+				.withChecker(ProfilePluginChecker.modelDependenciesCheckerFactory())
+				.withChecker(ProfilePluginChecker.buildPropertiesCheckerFactory()));
 		PapyrusPluginBuilder.addManifestBuilder(new PluginCheckerBuilder(ELEMENTTYPES_PLUGIN_VALIDATION_MARKER_TYPE, this::mapElementTypesResources)
 				.withChecker(ElementTypesPluginChecker.modelDependenciesCheckerFactory())
 				.withChecker(ElementTypesPluginChecker.buildPropertiesCheckerFactory()));
@@ -117,6 +120,11 @@ public class Activator extends AbstractUIPlugin {
 	private ListMultimap<IFile, Profile> mapAllProfilesResources(IProject project) {
 		ModelResourceMapper<Profile> mapper = new ModelResourceMapper<>(project);
 		return mapper.map(StaticProfileHelper.umlWithGenmodel(), resourceSets(), allElementsOfType(Profile.class));
+	}
+
+	private ListMultimap<IFile, Profile> mapProfilesResources(IProject project) {
+		ModelResourceMapper<Profile> mapper = new ModelResourceMapper<>(project);
+		return mapper.map(StaticProfileHelper.umlWithGenmodel(), resourceSets(), rootsOfType(Profile.class));
 	}
 
 }
