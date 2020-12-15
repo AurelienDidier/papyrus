@@ -87,7 +87,7 @@
          </markerResolutionGenerator>
          <markerResolutionGenerator
                class="org.eclipse.papyrus.toolsmiths.plugin.builder.quickfix.StaticProfileMarkerResolutionGenerator"
-               markerType="org.eclipse.pde.core.problem">
+               markerType="org.eclipse.papyrus.toolsmiths.validation.profile.diagnostic">
          </markerResolutionGenerator>
       </extension>
       <extension

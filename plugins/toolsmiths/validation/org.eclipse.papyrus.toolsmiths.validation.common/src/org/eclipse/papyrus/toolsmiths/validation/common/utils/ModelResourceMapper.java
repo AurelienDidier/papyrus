@@ -250,6 +250,11 @@ public class ModelResourceMapper<T extends EObject> {
 		return resourceSet -> Iterators2.stream(Iterators2.filter(roots(resourceSet), type));
 	}
 
+	public static <T extends EObject> Function<ResourceSet, Stream<T>> allElementsOfType(Class<? extends T> type) {
+		return resourceSet -> Iterators2.stream(Iterators2.filter(allElements(resourceSet), type));
+	}
+
+
 	@SuppressWarnings("serial")
 	private static TreeIterator<?> roots(ResourceSet resourceSet) {
 		return new AbstractTreeIterator<>(resourceSet.getResources(), false) {
@@ -263,5 +268,20 @@ public class ModelResourceMapper<T extends EObject> {
 			}
 		};
 	}
+
+	@SuppressWarnings("serial")
+	private static TreeIterator<?> allElements(ResourceSet resourceSet) {
+		return new AbstractTreeIterator<>(resourceSet.getResources(), false) {
+			@Override
+			protected Iterator<?> getChildren(Object object) {
+				return object instanceof Resource
+						? ((Resource) object).getAllContents()
+						: object instanceof Collection<?>
+								? ((Collection<?>) object).iterator()
+								: Collections.emptyIterator();
+			}
+		};
+	}
+
 
 }

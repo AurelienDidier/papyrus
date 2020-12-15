@@ -63,10 +63,13 @@
    </extension>
    <extension
          id="diagnostic"
-         name="Papyrus Toolsmiths Profile Plug-in problems"
+         name="Papyrus Toolsmiths Profiles Plug-in Problem"
          point="org.eclipse.core.resources.markers">
       <super
             type="org.eclipse.core.resources.problemmarker">
+      </super>
+      <super
+            type="org.eclipse.jdt.core.problem">
       </super>
       <persistent
             value="true">

@@ -79,7 +79,7 @@ final class ElementTypesPluginXMLValidator {
 		case ELEMENT_TYPE_SET:
 			String clientContextID = element.getAttribute(CLIENT_CONTEXT_ID);
 			if (clientContextID == null || clientContextID.isBlank()) {
-				problems.reportProblem(Diagnostic.ERROR, element, "Missing client context ID.", CATEGORY);
+				problems.reportProblem(Diagnostic.ERROR, element, "Missing client context ID.", CATEGORY, null);
 			}
 			break;
 		default:

@@ -18,6 +18,7 @@ package org.eclipse.papyrus.toolsmiths.plugin.builder.quickfix;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.papyrus.infra.emf.utils.ResourceUtils;
 import org.eclipse.papyrus.toolsmiths.plugin.builder.Activator;
@@ -75,7 +76,8 @@ public class NoEcoreGenPackageMarkerResolution extends AbstractPapyrusMarkerReso
 			extension.add(packageElement);
 			IFile genModel = MarkerResolutionUtils.getGenModelFile(marker);
 			if (genModel != null) {
-				packageElement.setAttribute("genModel", ResourceUtils.mapAndEncodePath(genModel)); //$NON-NLS-1$
+				IPath relativePath = genModel.getProjectRelativePath();
+				packageElement.setAttribute("genModel", ResourceUtils.getStringURI(relativePath)); //$NON-NLS-1$
 			}
 			String uri = MarkerResolutionUtils.getStereotypeUri(marker);
 			if (uri != null) {

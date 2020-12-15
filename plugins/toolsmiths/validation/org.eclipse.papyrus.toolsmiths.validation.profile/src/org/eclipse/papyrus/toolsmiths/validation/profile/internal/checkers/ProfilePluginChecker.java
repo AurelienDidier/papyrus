@@ -16,133 +16,184 @@
 
 package org.eclipse.papyrus.toolsmiths.validation.profile.internal.checkers;
 
-import java.lang.reflect.InvocationTargetException;
+import static org.eclipse.papyrus.toolsmiths.validation.profile.constants.ProfilePluginValidationConstants.PROFILE_PLUGIN_VALIDATION_MARKER_TYPE;
+
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
-import java.util.Iterator;
+import java.util.Set;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
-import org.eclipse.jdt.core.IJavaModelMarker;
-import org.eclipse.jface.dialogs.ProgressMonitorDialog;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.papyrus.toolsmiths.validation.common.checkers.BuildPropertiesChecker;
+import org.eclipse.papyrus.toolsmiths.validation.common.checkers.CustomModelChecker;
+import org.eclipse.papyrus.toolsmiths.validation.common.checkers.ExtensionsChecker;
+import org.eclipse.papyrus.toolsmiths.validation.common.checkers.IPluginChecker2;
 import org.eclipse.papyrus.toolsmiths.validation.common.checkers.ModelDependenciesChecker;
+import org.eclipse.papyrus.toolsmiths.validation.common.checkers.ModelValidationChecker;
+import org.eclipse.papyrus.toolsmiths.validation.common.internal.utils.PluginErrorReporter;
 import org.eclipse.papyrus.toolsmiths.validation.common.utils.MarkersService;
 import org.eclipse.papyrus.toolsmiths.validation.common.utils.PluginValidationService;
 import org.eclipse.papyrus.toolsmiths.validation.common.utils.ProjectManagementService;
-import org.eclipse.papyrus.toolsmiths.validation.profile.Activator;
 import org.eclipse.papyrus.toolsmiths.validation.profile.constants.ProfilePluginValidationConstants;
-import org.eclipse.papyrus.toolsmiths.validation.profile.internal.messages.Messages;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Shell;
+import org.eclipse.papyrus.uml.tools.utils.PackageUtil;
 import org.eclipse.uml2.uml.Profile;
+import org.eclipse.uml2.uml.UMLPackage;
 
 /**
- * This allows to check a profile plug-in (extensions, builds, dependencies).
+ * This allows to check an profile plug-in (extensions, builds, dependencies, ...).
  */
 public class ProfilePluginChecker {
+
+	private static final Set<String> ADDITIONAL_REQUIREMENTS = Set.of("org.eclipse.uml2.uml.resources"); //$NON-NLS-1$
 
 	/**
 	 * This allows to check the profile plug-in.
 	 *
 	 * @param project
 	 *            The current project to check.
+	 * @param A
+	 *            monitor to report progress
 	 */
-	public static void checkProfilePlugin(final IProject project) {
+	public static void checkProfilePlugin(final IProject project, IProgressMonitor monitor) {
+		final Collection<IFile> profileFiles = ProjectManagementService.getFilesFromProject(project, "profile.uml", true); //$NON-NLS-1$
+		monitor.beginTask("Validate Profile plug-in", 1 + (profileFiles.size() * 3)); // $NON-NLS-1$
 
-		// Get the shell to manage the validation in an UI
-		final Shell shell = Display.getCurrent().getActiveShell();
+		monitor.subTask("Prepare plug-in validation"); //$NON-NLS-1$
+		// First of all, delete the existing markers for project
+		MarkersService.deleteMarkers(project, PROFILE_PLUGIN_VALIDATION_MARKER_TYPE);
 
-		try {
-			// Open the progress monitor dialog
-			new ProgressMonitorDialog(shell).run(true, true, monitor -> {
-				final Collection<IFile> profileFiles = ProjectManagementService.getFilesFromProject(project, "profile.uml", true); //$NON-NLS-1$
-				monitor.beginTask(Messages.ProfilePluginChecker_validateProfilePluginTask, 1 + (profileFiles.size() * 4)); // $NON-NLS-1$
+		// Create the plug-in validation service
+		final PluginValidationService pluginValidationService = new PluginValidationService();
 
-				monitor.subTask("Prepare validation."); //$NON-NLS-1$
-				// First of all, delete the existing markers for project
-				MarkersService.deleteMarkers(project, ProfilePluginValidationConstants.PROFILE_PLUGIN_VALIDATION_TYPE);
-				monitor.worked(1);
+		// First, check the static dependencies needed
+		pluginValidationService.addPluginChecker(createModelDependenciesChecker(project));
 
-				// Create the plug-in validation service
-				final PluginValidationService pluginValidationService = new PluginValidationService();
+		// For all profile files in the plug-in
+		for (final IFile profileFile : profileFiles) {
+			if (monitor.isCanceled()) {
+				return;
+			}
 
-				// For all profiles files in the plug-in
-				for (final IFile profileFile : profileFiles) {
+			// Get the resource
+			final URI profileFileURI = URI.createPlatformResourceURI(profileFile.getFullPath().toOSString(), true);
+			final Resource resource = new ResourceSetImpl().getResource(profileFileURI, true);
 
-					// get the existing profiles
-					final URI profileFileURI = URI.createPlatformResourceURI(profileFile.getFullPath().toOSString(), true);
-					final Collection<Profile> profiles = loadProfiles(profileFileURI);
+			// Check the validation of the element types file
+			pluginValidationService.addPluginChecker(createModelValidationChecker(project, profileFile, resource));
 
-					if (!profiles.isEmpty()) {
-						// First, create the extensions checker
-						pluginValidationService.addPluginChecker(new ProfileExtensionsChecker(project, profileFile, profiles));
+			// Check the extension point
+			pluginValidationService.addPluginChecker(createExtensionsChecker(project, profileFile, resource));
 
-						// Create the profile definition checker (no definition must be done for static profiles)
-						pluginValidationService.addPluginChecker(new ProfileDefinitionChecker(profileFile, profiles));
-
-						// Create the dependencies checker (depending to the external profile references)
-						Resource resource = profiles.iterator().next().eResource();
-						pluginValidationService.addPluginChecker(createProfileDependenciesChecker(project, profileFile, resource));
-					}
-
-					// Create the build checker
-					pluginValidationService.addPluginChecker(new BuildPropertiesChecker(project, profileFile).withEMFGeneratorModels());
-				}
-
-				monitor.worked(1);
-
-				// Call the validate
-				pluginValidationService.validate(monitor);
-			});
-		} catch (InvocationTargetException e) {
-			Activator.log.error(e);
-		} catch (InterruptedException e) {
-			// Do nothing, just cancelled by user
+			// Check the external dependencies needed
+			pluginValidationService.addPluginChecker(createModelDependenciesChecker(project, profileFile, resource));
 		}
+
+		monitor.worked(1);
+
+		// Call the validate
+		pluginValidationService.validate(monitor);
 	}
 
 	/**
-	 * Loads the EObject from the given URI.
+	 * Obtain a dependencies checker factory for the specified bundle dependencies validation.
 	 *
-	 * @param uri
-	 *            The URI from which the EObject is loaded.
-	 * @return
-	 *         The profiles available in the model (can be empty if no profile or if an error occurred).
+	 * @return the dependencies checker factory
 	 */
-	private static Collection<Profile> loadProfiles(final URI uri) {
-		final Collection<Profile> profiles = new HashSet<>();
-
-		final ResourceSet resourceSet = new ResourceSetImpl();
-		try {
-			final Resource resource = resourceSet.getResource(uri, true);
-			if (null != resource) {
-				if (!resource.getContents().isEmpty()) {
-					final Iterator<EObject> contentIt = resource.getAllContents();
-					while (contentIt.hasNext()) {
-						final EObject content = contentIt.next();
-						if (content instanceof Profile) {
-							profiles.add((Profile) content);
-						}
-					}
-				}
-			}
-		} catch (final Exception ex) {
-			Activator.log.error("Cannot load file: " + uri.toString(), ex); //$NON-NLS-1$
-		}
-
-		return profiles;
+	public static IPluginChecker2.Factory modelDependenciesCheckerFactory() {
+		// When checking the project, we have some additional requirements that aren't model-specific
+		return IPluginChecker2.Factory.forProject(ProfilePluginChecker::createModelDependenciesChecker)
+				.or(IPluginChecker2.Factory.forEMFResource(ProfilePluginChecker::createModelDependenciesChecker));
 	}
 
-	public static ModelDependenciesChecker createProfileDependenciesChecker(IProject project, IFile profileFile, Resource profileResource) {
-		// TODO(569357): For now, continue using the Java Model Marker for compatibility until this is all refactored
-		return new ModelDependenciesChecker(project, profileFile, profileResource, IJavaModelMarker.JAVA_MODEL_PROBLEM_MARKER)
-				.withSeverityFunction(ModelDependenciesChecker.warningsFor("org.eclipse.uml2.uml.resources")); //$NON-NLS-1$
+	private static ModelDependenciesChecker createModelDependenciesChecker(IProject project) {
+		// When checking the project, we have some additional requirements that aren't model-specific
+		return new ModelDependenciesChecker(project, null, null, PROFILE_PLUGIN_VALIDATION_MARKER_TYPE)
+				.addRequirements(ADDITIONAL_REQUIREMENTS)
+				.withSeverityFunction(bundle -> ADDITIONAL_REQUIREMENTS.contains(bundle) ? Diagnostic.WARNING : Diagnostic.ERROR);
+	}
+
+	private static ModelDependenciesChecker createModelDependenciesChecker(IProject project, IFile modelFile, Resource resource) {
+		return new ModelDependenciesChecker(project, modelFile, resource, PROFILE_PLUGIN_VALIDATION_MARKER_TYPE);
+	}
+
+	/**
+	 * Obtain a model validation checker factory.
+	 *
+	 * @return the model validation checker factory
+	 */
+	public static IPluginChecker2.Factory modelValidationCheckerFactory() {
+		return IPluginChecker2.Factory.forEMFResource(ProfilePluginChecker::createModelValidationChecker);
+	}
+
+	private static ModelValidationChecker createModelValidationChecker(IProject project, IFile modelFile, Resource resource) {
+		return new ModelValidationChecker(modelFile, resource, PROFILE_PLUGIN_VALIDATION_MARKER_TYPE);
+	}
+
+	/**
+	 * Obtain a build properties checker factory.
+	 *
+	 * @return the build properties checker factory
+	 */
+	public static IPluginChecker2.Factory buildPropertiesCheckerFactory() {
+		return IPluginChecker2.Factory.forEMFResource(ProfilePluginChecker::createBuildPropertiesChecker);
+	}
+
+	private static BuildPropertiesChecker createBuildPropertiesChecker(IProject project, IFile modelFile, Resource resource) {
+		return new BuildPropertiesChecker(project, modelFile, PROFILE_PLUGIN_VALIDATION_MARKER_TYPE)
+				.withEMFGeneratorModels();
+	}
+
+	/**
+	 * Obtain a <tt>plugin.xml</tt> extensions checker factory.
+	 *
+	 * @return the extensions checker factory
+	 */
+	public static IPluginChecker2.Factory extensionsCheckerFactory() {
+		return IPluginChecker2.Factory.forEMFResource(ProfilePluginChecker::createExtensionsChecker);
+	}
+
+	private static ExtensionsChecker<Profile, PluginErrorReporter<Profile>> createExtensionsChecker(
+			IProject project, IFile modelFile, Resource resource) {
+
+		Collection<Profile> sets = EcoreUtil.getObjectsByType(resource.getContents(), UMLPackage.Literals.PROFILE);
+		Collection<Profile> allProfiles = new ArrayList<>();
+		for (Profile profile : sets) {
+			allProfiles.add(profile);
+			allProfiles.addAll(PackageUtil.getSubProfiles(profile));
+		}
+		return new ExtensionsChecker<>(project, modelFile, allProfiles, PROFILE_PLUGIN_VALIDATION_MARKER_TYPE, ProfilePluginChecker::createPluginErrorReporter);
+	}
+
+	private static PluginErrorReporter<Profile> createPluginErrorReporter(IFile pluginXML, IFile modelFile, Profile model) {
+		ProfilePluginXMLValidator validator = new ProfilePluginXMLValidator(modelFile);
+
+		PluginErrorReporter<Profile> reporter = new PluginErrorReporter<>(pluginXML, modelFile, model, PROFILE_PLUGIN_VALIDATION_MARKER_TYPE, profile -> profile.getName())
+				.requireExtensionPoint(ProfilePluginValidationConstants.ECORE_GENERATED_PACKAGE_EXTENSION_POINT, validator::matchExtension, validator::checkExtension, validator::problemId)
+				.requireExtensionPoint(ProfilePluginValidationConstants.UML_GENERATED_PACKAGE_EXTENSION_POINT, validator::matchExtension, validator::checkExtension, validator::problemId);
+
+		if (model.getNestingPackage() == null) {
+			return reporter.requireExtensionPoint(ProfilePluginValidationConstants.UMLPROFILE_EXTENSION_POINT, validator::matchExtension, validator::checkExtension, validator::problemId);
+		}
+		return reporter;
+	}
+
+	/**
+	 * Obtain a checker factory for custom model validation rules.
+	 *
+	 * @return the custom model checker factory
+	 */
+	public static IPluginChecker2.Factory customModelCheckerFactory() {
+		return IPluginChecker2.Factory.forEMFResource(ProfilePluginChecker::createCustomModelChecker);
+	}
+
+	private static CustomModelChecker createCustomModelChecker(IProject project, IFile modelFile, Resource resource) {
+		return new CustomModelChecker(modelFile, resource, PROFILE_PLUGIN_VALIDATION_MARKER_TYPE);
 	}
 
 }

@@ -16,7 +16,7 @@
 package org.eclipse.papyrus.toolsmiths.plugin.builder.quickfix;
 
 import org.eclipse.papyrus.toolsmiths.plugin.builder.Messages;
-import org.eclipse.papyrus.toolsmiths.validation.profile.internal.checkers.StaticProfilePluginErrorReporter;
+import org.eclipse.papyrus.toolsmiths.validation.profile.constants.ProfilePluginValidationConstants;
 
 /**
  * Resolution for markers created for missing genModel attributes in the extension point.
@@ -41,6 +41,6 @@ public class MissingUriAttributeMarkerResolution
 
 	@Override
 	protected String getAttributeValue() {
-		return getMarker().getAttribute(StaticProfilePluginErrorReporter.STATIC_PROFILE_STEREOTYPE_URI, ""); //$NON-NLS-1$
+		return getMarker().getAttribute(ProfilePluginValidationConstants.STATIC_PROFILE_STEREOTYPE_URI, ""); //$NON-NLS-1$
 	}
 }

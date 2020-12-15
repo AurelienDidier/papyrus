@@ -31,6 +31,7 @@ import org.eclipse.papyrus.infra.core.resource.ModelSet;
 import org.eclipse.papyrus.infra.core.resource.NotFoundException;
 import org.eclipse.papyrus.infra.core.resource.sasheditor.DiModel;
 import org.eclipse.papyrus.toolsmiths.validation.common.utils.ModelResourceMapper;
+import org.eclipse.papyrus.uml.tools.model.UmlModel;
 import org.eclipse.papyrus.uml.tools.model.UmlUtils;
 import org.eclipse.papyrus.uml.tools.utils.PackageUtil;
 import org.eclipse.uml2.uml.Profile;
@@ -62,7 +63,7 @@ public class StaticProfileHelper {
 		return Multimaps.asMap(mapper.map(diWithGenmodel(), modelSets(), modelSet -> getProfiles(modelSet, includeSubProfiles)));
 	}
 
-	static Predicate<IResource> diWithGenmodel() {
+	public static Predicate<IResource> diWithGenmodel() {
 		return byExtension(DiModel.DI_FILE_EXTENSION).and(file -> hasGenmodel(file));
 	}
 
@@ -80,15 +81,26 @@ public class StaticProfileHelper {
 
 				if (!includeSubProfiles) {
 					return Stream.of(profile);
+				} else {
+					return profileWithSubProfiles(profile);
 				}
-
-				return Stream.concat(Stream.of(profile), PackageUtil.getSubProfiles(profile).stream());
 			}
 		} catch (NotFoundException e) {
 			// Nothing to return
 		}
 
 		return Stream.empty();
+	}
+
+	static public Stream<Profile> profileWithSubProfiles(Profile profile) {
+		return Stream.concat(Stream.of(profile), PackageUtil.getSubProfiles(profile).stream());
+	}
+
+	/**
+	 * @return
+	 */
+	public static Predicate<IResource> umlWithGenmodel() {
+		return byExtension(UmlModel.UML_FILE_EXTENSION).and(file -> hasGenmodel(file));
 	}
 
 }

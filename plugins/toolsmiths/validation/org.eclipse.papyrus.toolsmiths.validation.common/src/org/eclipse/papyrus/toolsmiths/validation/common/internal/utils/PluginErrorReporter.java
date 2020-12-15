@@ -45,6 +45,7 @@ import org.eclipse.pde.internal.core.builders.IncrementalErrorReporter.VirtualMa
 import org.eclipse.pde.internal.core.builders.ManifestErrorReporter;
 import org.eclipse.pde.internal.core.builders.PDEMarkerFactory;
 import org.eclipse.pde.internal.core.builders.XMLErrorReporter;
+import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -69,6 +70,7 @@ public class PluginErrorReporter<T extends EObject> extends ManifestErrorReporte
 
 	private final Map<String, ExtensionMatcher<? super T>> requiredExtensionPoints = new HashMap<>();
 	private final Multimap<String, ExtensionChecker<? super T>> extensionCheckers = HashMultimap.create();
+	private final Map<String, ExtensionFixProvider<? super T>> extensionFixProviders = new HashMap<>();
 	private final Set<String> architectureImpliedExtensionPoints = new HashSet<>();
 	private final Set<String> foundExtensionPoints = new HashSet<>();
 
@@ -80,6 +82,8 @@ public class PluginErrorReporter<T extends EObject> extends ManifestErrorReporte
 	private final ProblemReport problems;
 
 	private String sourceID;
+
+	private Function<? super T, String> nameFunction;
 
 	/**
 	 * Constructor.
@@ -117,6 +121,7 @@ public class PluginErrorReporter<T extends EObject> extends ManifestErrorReporte
 		this.modelFile = modelFile;
 		this.model = model;
 		this.markerType = markerType;
+		this.nameFunction = nameFunction;
 		this.problems = new ProblemReportImpl();
 		sourceID = sourceID(modelFile, model, nameFunction);
 	}
@@ -141,10 +146,13 @@ public class PluginErrorReporter<T extends EObject> extends ManifestErrorReporte
 	 *
 	 * @return myself, for convenience of call chaining
 	 */
-	public PluginErrorReporter<T> requireExtensionPoint(String point, ExtensionMatcher<? super T> matcher, ExtensionChecker<? super T> checker) {
+	public PluginErrorReporter<T> requireExtensionPoint(String point, ExtensionMatcher<? super T> matcher, ExtensionChecker<? super T> checker, ExtensionFixProvider<? super T> fixProvider) {
 		requiredExtensionPoints.put(point, matcher);
 		if (checker != null) {
 			extensionCheckers.put(point, checker);
+		}
+		if (fixProvider != null) {
+			extensionFixProviders.put(point, fixProvider);
 		}
 		return this;
 	}
@@ -274,8 +282,9 @@ public class PluginErrorReporter<T extends EObject> extends ManifestErrorReporte
 			severity = CompilerFlags.WARNING;
 		}
 
-		reportProblem(NLS.bind("Missing extension on point ''{0}'' for ''{1}''.", point, getModelFile().getProjectRelativePath()),
-				1, severity, "missing_extensions"); //$NON-NLS-1$
+		VirtualMarker marker = reportProblem(NLS.bind("Missing extension on point ''{0}'' for ''{2}'' [{1}].", new Object[] { point, getModelFile().getProjectRelativePath(), nameFunction.apply(model) }),
+				1, severity, extensionFixProviders.get(point) != null ? extensionFixProviders.get(point).problemId(point, model) : 0, null, null, "missing_extensions"); //$NON-NLS-1$
+		marker.setAttribute("staticProfile", nameFunction.apply(model));
 	}
 
 	protected void validateElement(Element element) {
@@ -320,6 +329,60 @@ public class PluginErrorReporter<T extends EObject> extends ManifestErrorReporte
 		return marker;
 	}
 
+	/**
+	 * Overrides super version with a new version of the {@link #generateLocationPath(Node, String)} method that was mismatching the nodes
+	 * <p>
+	 * Text nodes were also added in the index, and not only elements as expected by the missing attribute marker resolution)
+	 * </p>
+	 *
+	 * @see org.eclipse.pde.internal.core.builders.XMLErrorReporter#report(java.lang.String, int, int, int, org.w3c.dom.Element, java.lang.String, java.lang.String)
+	 */
+	@Override
+	public VirtualMarker report(String message, int line, int severity, int fixId, Element element, String attrName,
+			String category) {
+		VirtualMarker marker = report(message, line, severity, fixId, category);
+		if (marker == null) {
+			return null;
+		}
+		marker.setAttribute(PDEMarkerFactory.MPK_LOCATION_PATH, generateLocationPath(element, attrName));
+		return marker;
+	}
+
+	private String generateLocationPath(Node node, String attrName) {
+		if (node == null) {
+			return ""; // //$NON-NLS-1$
+		}
+
+		int childIndex = 0;
+		for (Node previousSibling = node.getPreviousSibling(); previousSibling != null; previousSibling = previousSibling.getPreviousSibling()) {
+			if ((previousSibling instanceof Element)) {
+				// filter text
+				childIndex += 1;
+			}
+		}
+
+		StringBuilder sb = new StringBuilder();
+		Node parent = node.getParentNode();
+		if (parent != null && !(parent instanceof Document)) {
+			sb.append(generateLocationPath(parent, null));
+			sb.append(F_CHILD_SEP);
+		}
+		composeNodeString(node, childIndex, attrName, sb);
+		return sb.toString();
+	}
+
+	private String composeNodeString(Node node, int index, String attrName, StringBuilder sb) {
+		sb.append('(');
+		sb.append(index);
+		sb.append(')');
+		sb.append(node.getNodeName());
+		if (attrName != null) {
+			sb.append(F_ATT_PREFIX);
+			sb.append(attrName);
+		}
+		return sb.toString();
+	}
+
 	protected VirtualMarker reportProblem(String message, int line, int severity, String category) {
 		VirtualMarker marker = report(message, line, severity, category);
 		addMarkerID(marker);
@@ -332,6 +395,8 @@ public class PluginErrorReporter<T extends EObject> extends ManifestErrorReporte
 		}
 		addMarkerAttribute(marker, DiagnosticErrorReporter.SOURCE_ID, sourceID);
 	}
+
+
 
 	protected String decodePath(String path) {
 		if (path == null) {
@@ -483,8 +548,10 @@ public class PluginErrorReporter<T extends EObject> extends ManifestErrorReporte
 		 *            the ID of a fix for the problem
 		 * @param category
 		 *            the problem category
+		 * @param data
+		 *            additional data to pass with the problem
 		 */
-		void reportProblem(int severity, Element element, String attrName, String message, int fixId, String category);
+		void reportProblem(int severity, Element element, String attrName, String message, int fixId, String category, Map<String, String> data);
 
 		/**
 		 * Report a problem in some attribute of an {@code element} of the <tt>plugin.xml</tt>.
@@ -499,8 +566,10 @@ public class PluginErrorReporter<T extends EObject> extends ManifestErrorReporte
 		 *            a description of the problem
 		 * @param category
 		 *            the problem category
+		 * @param data
+		 *            additional data to pass with the problem
 		 */
-		void reportProblem(int severity, Element element, String attrName, String message, String category);
+		void reportProblem(int severity, Element element, String attrName, String message, String category, Map<String, String> data);
 
 		/**
 		 * Report a fixable problem in some {@code element} of the <tt>plugin.xml</tt>.
@@ -515,9 +584,11 @@ public class PluginErrorReporter<T extends EObject> extends ManifestErrorReporte
 		 *            the ID of a fix for the problem
 		 * @param category
 		 *            the problem category
+		 * @param data
+		 *            additional data to pass with the problem
 		 */
-		default void reportProblem(int severity, Element element, String message, int fixId, String category) {
-			reportProblem(severity, element, null, message, fixId, category);
+		default void reportProblem(int severity, Element element, String message, int fixId, String category, Map<String, String> data) {
+			reportProblem(severity, element, null, message, fixId, category, data);
 		}
 
 		/**
@@ -531,9 +602,11 @@ public class PluginErrorReporter<T extends EObject> extends ManifestErrorReporte
 		 *            a description of the problem
 		 * @param category
 		 *            the problem category
+		 * @param data
+		 *            additional data to pass with the problem
 		 */
-		default void reportProblem(int severity, Element element, String message, String category) {
-			reportProblem(severity, element, null, message, category);
+		default void reportProblem(int severity, Element element, String message, String category, Map<String, String> data) {
+			reportProblem(severity, element, null, message, category, data);
 		}
 
 		/**
@@ -547,8 +620,10 @@ public class PluginErrorReporter<T extends EObject> extends ManifestErrorReporte
 		 *            the ID of a fix for the problem
 		 * @param category
 		 *            the problem category
+		 * @param data
+		 *            additional data to pass with the problem
 		 */
-		void reportProblem(int severity, String message, int fixId, String category);
+		void reportProblem(int severity, String message, int fixId, String category, Map<String, String> data);
 
 		/**
 		 * Report a problem on the <tt>plugin.xml</tt> as a whole.
@@ -559,21 +634,25 @@ public class PluginErrorReporter<T extends EObject> extends ManifestErrorReporte
 		 *            a description of the problem
 		 * @param category
 		 *            the problem category
+		 * @param data
+		 *            additional data to pass with the problem
 		 */
-		void reportProblem(int severity, String message, String category);
+		void reportProblem(int severity, String message, String category, Map<String, String> data);
 
 	}
 
 	private class ProblemReportImpl implements ProblemReport {
 
 		@Override
-		public void reportProblem(int severity, Element element, String attrName, String message, int fixId, String category) {
-			PluginErrorReporter.this.reportProblem(message, getLine(element, attrName), toCompilerSeverity(severity), fixId, element, attrName, category);
+		public void reportProblem(int severity, Element element, String attrName, String message, int fixId, String category, Map<String, String> data) {
+			VirtualMarker problem = PluginErrorReporter.this.reportProblem(message, getLine(element, attrName), toCompilerSeverity(severity), fixId, element, attrName, category);
+			applyData(problem, data);
 		}
 
 		@Override
-		public void reportProblem(int severity, Element element, String attrName, String message, String category) {
-			PluginErrorReporter.this.reportProblem(message, getLine(element, attrName), toCompilerSeverity(severity), category);
+		public void reportProblem(int severity, Element element, String attrName, String message, String category, Map<String, String> data) {
+			VirtualMarker problem = PluginErrorReporter.this.reportProblem(message, getLine(element, attrName), toCompilerSeverity(severity), category);
+			applyData(problem, data);
 		}
 
 		private int getLine(Element element, String attrName) {
@@ -581,13 +660,23 @@ public class PluginErrorReporter<T extends EObject> extends ManifestErrorReporte
 		}
 
 		@Override
-		public void reportProblem(int severity, String message, int fixId, String category) {
-			PluginErrorReporter.this.report(message, 1, toCompilerSeverity(severity), fixId, category);
+		public void reportProblem(int severity, String message, int fixId, String category, Map<String, String> data) {
+			VirtualMarker problem = PluginErrorReporter.this.report(message, 1, toCompilerSeverity(severity), fixId, category);
+			applyData(problem, data);
 		}
 
 		@Override
-		public void reportProblem(int severity, String message, String category) {
-			PluginErrorReporter.this.report(message, 1, toCompilerSeverity(severity), category);
+		public void reportProblem(int severity, String message, String category, Map<String, String> data) {
+			VirtualMarker problem = PluginErrorReporter.this.report(message, 1, toCompilerSeverity(severity), category);
+			applyData(problem, data);
+		}
+
+		void applyData(VirtualMarker problem, Map<String, String> data) {
+			if (data != null) {
+				data.forEach((k, v) -> {
+					problem.setAttribute(k, v);
+				});
+			}
 		}
 
 		private int toCompilerSeverity(int diagnosticSeverity) {
@@ -604,6 +693,10 @@ public class PluginErrorReporter<T extends EObject> extends ManifestErrorReporte
 			}
 		}
 
+	}
+
+	public interface ExtensionFixProvider<T extends EObject> {
+		int problemId(String point, T model);
 	}
 
 }

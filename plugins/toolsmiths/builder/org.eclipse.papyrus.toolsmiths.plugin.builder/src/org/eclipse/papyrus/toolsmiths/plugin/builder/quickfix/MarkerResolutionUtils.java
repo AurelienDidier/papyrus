@@ -28,7 +28,7 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.papyrus.toolsmiths.plugin.builder.helper.StaticProfileHelper;
-import org.eclipse.papyrus.toolsmiths.validation.profile.internal.checkers.StaticProfilePluginErrorReporter;
+import org.eclipse.papyrus.toolsmiths.validation.profile.constants.ProfilePluginValidationConstants;
 import org.eclipse.papyrus.uml.tools.utils.StaticProfileUtil;
 import org.eclipse.ui.IMarkerResolution;
 import org.eclipse.uml2.uml.Profile;
@@ -84,7 +84,7 @@ public final class MarkerResolutionUtils {
 
 	/** Returns the profile name stored in the marker attribute {@link StaticProfilePluginErrorReporter#STATIC_PROFILE_MARKER_ATTRIBUTE} or <code>null</code> if the attribute does not exist. */
 	public static String getProfileName(IMarker marker) {
-		return marker.getAttribute(StaticProfilePluginErrorReporter.STATIC_PROFILE_MARKER_ATTRIBUTE, null);
+		return marker.getAttribute(ProfilePluginValidationConstants.STATIC_PROFILE_MARKER_ATTRIBUTE, null);
 	}
 
 	/**

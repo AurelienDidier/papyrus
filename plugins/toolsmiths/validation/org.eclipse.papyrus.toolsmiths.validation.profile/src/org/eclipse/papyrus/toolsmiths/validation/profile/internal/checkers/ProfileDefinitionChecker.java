@@ -92,7 +92,7 @@ public class ProfileDefinitionChecker implements IPluginChecker {
 			for (final Profile profile : profiles) {
 				MarkersService.createMarker(
 						profileFile,
-						ProfilePluginValidationConstants.PROFILE_PLUGIN_VALIDATION_TYPE,
+						ProfilePluginValidationConstants.PROFILE_PLUGIN_VALIDATION_MARKER_TYPE,
 						"The profile '" + profile.getName() + "' contain a definition but should not", //$NON-NLS-1$ //$NON-NLS-2$
 						IMarker.SEVERITY_ERROR);
 			}

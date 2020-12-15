@@ -16,7 +16,7 @@
 package org.eclipse.papyrus.toolsmiths.plugin.builder.quickfix;
 
 import org.eclipse.core.resources.IMarker;
-import org.eclipse.papyrus.toolsmiths.validation.profile.internal.checkers.StaticProfilePluginErrorReporter;
+import org.eclipse.papyrus.toolsmiths.validation.profile.constants.ProfilePluginValidationConstants;
 import org.eclipse.pde.internal.core.builders.PDEMarkerFactory;
 import org.eclipse.ui.IMarkerResolution;
 import org.eclipse.ui.IMarkerResolutionGenerator;
@@ -33,21 +33,21 @@ public class StaticProfileMarkerResolutionGenerator implements IMarkerResolution
 	public IMarkerResolution[] getResolutions(IMarker marker) {
 		int problemId = marker.getAttribute(PDEMarkerFactory.PROBLEM_ID, PDEMarkerFactory.NO_RESOLUTION);
 		switch (problemId) {
-		case StaticProfilePluginErrorReporter.NO_GENMODEL_MARKER_ID:
+		case ProfilePluginValidationConstants.NO_GENMODEL_MARKER_ID:
 			return new IMarkerResolution[] { new MissingGenModelAttributeMarkerResolution() };
-		case StaticProfilePluginErrorReporter.NO_URI_MARKER_ID:
+		case ProfilePluginValidationConstants.NO_URI_MARKER_ID:
 			return new IMarkerResolution[] { new MissingUriAttributeMarkerResolution() };
-		case StaticProfilePluginErrorReporter.NO_ECORE_GEN_PACKAGE_MARKER_ID:
+		case ProfilePluginValidationConstants.NO_ECORE_GEN_PACKAGE_MARKER_ID:
 			return new IMarkerResolution[] { new NoEcoreGenPackageMarkerResolution() };
-		case StaticProfilePluginErrorReporter.NO_UML2_GEN_PACKAGE_MARKER_ID:
+		case ProfilePluginValidationConstants.NO_UML2_GEN_PACKAGE_MARKER_ID:
 			return new IMarkerResolution[] { new NoUMLGenPackageMarkerResolution() };
-		case StaticProfilePluginErrorReporter.NO_UML2_GEN_PACKAGE_LOCATION_MARKER_ID:
+		case ProfilePluginValidationConstants.NO_UML2_GEN_PACKAGE_LOCATION_MARKER_ID:
 			return new IMarkerResolution[] { new NoLocationUMLGenPackageMarkerResolution() };
-		case StaticProfilePluginErrorReporter.PAPYRUS_PROFILE_EXTENSION_NO_NAME_MARKER_ID:
+		case ProfilePluginValidationConstants.PAPYRUS_PROFILE_EXTENSION_NO_NAME_MARKER_ID:
 			return new IMarkerResolution[] { new PapyrusProfileExtensionMissingNameMarkerResolution() };
-		case StaticProfilePluginErrorReporter.NO_PAPYRUS_PROFILE_MARKER_ID:
+		case ProfilePluginValidationConstants.NO_PAPYRUS_PROFILE_MARKER_ID:
 			return new IMarkerResolution[] { new NoPapyrusProfileExtensionMarkerResolution() };
-		case StaticProfilePluginErrorReporter.MISSING_FROM_BINARY_BUILD_MARKER_ID:
+		case ProfilePluginValidationConstants.MISSING_FROM_BINARY_BUILD_MARKER_ID:
 			return new IMarkerResolution[] { new ResourceMissingFromBinaryBuildMarkerResolution() };
 		default:
 			return NO_RESOLUTIONS;

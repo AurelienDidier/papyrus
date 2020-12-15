@@ -16,6 +16,8 @@
 package org.eclipse.papyrus.toolsmiths.validation.profile.checkers;
 
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.papyrus.toolsmiths.validation.profile.internal.checkers.ProfilePluginChecker;
 
 /**
@@ -29,8 +31,8 @@ public class ProfilePluginCheckerService {
 	 * @param project
 	 *            The current project to check.
 	 */
-	public static void checkProfilePlugin(final IProject project) {
-		ProfilePluginChecker.checkProfilePlugin(project);
+	public static void checkProfilePlugin(final IProject project, IProgressMonitor monitor) {
+		ProfilePluginChecker.checkProfilePlugin(project, monitor == null ? new NullProgressMonitor() : monitor);
 	}
 
 }
