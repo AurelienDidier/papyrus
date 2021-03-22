@@ -1,0 +1,43 @@
+/*******************************************************************************
+ * Copyright (c) 2009 THALES GLOBAL SERVICES.
+ * This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License 2.0
+ * which accompanies this distribution, and is available at
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ *
+ * Contributors:
+ *    Obeo - initial API and implementation
+ *******************************************************************************/
+package org.eclipse.sirius.diagram.ui.tools.api.graphical.edit.styles;
+
+import org.eclipse.sirius.diagram.description.DiagramElementMapping;
+import org.eclipse.sirius.diagram.ui.tools.internal.graphical.edit.styles.StyleConfigurationRegistry;
+import org.eclipse.sirius.viewpoint.Style;
+
+/**
+ * A registry for {@link StyleConfiguration}s.
+ * 
+ * @author ymortier
+ */
+public interface IStyleConfigurationRegistry {
+
+    /**
+     * The Default registry.
+     */
+    IStyleConfigurationRegistry INSTANCE = StyleConfigurationRegistry.getInstance();
+
+    /**
+     * Return the {@link StyleConfiguration} corresponding to the specified
+     * {@link DiagramElementMapping} and {@link Style}.
+     * 
+     * @param vpElementMapping
+     *            the mapping of the viewpoint element.
+     * @param style
+     *            the style.
+     * @return the style configuration
+     */
+    StyleConfiguration getStyleConfiguration(DiagramElementMapping vpElementMapping, Style style);
+
+}

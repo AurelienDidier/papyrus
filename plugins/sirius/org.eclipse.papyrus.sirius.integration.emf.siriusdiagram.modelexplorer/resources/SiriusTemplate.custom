@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<custom:Customization xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:custom="http://www.eclipse.org/papyrus/emf/facet/custom/0.2.incubation/custom" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:efacet="http://www.eclipse.org/papyrus/emf/facet/efacet/0.2.incubation/efacet" xmlns:javaQuery="http://www.eclipse.org/papyrus/emf/facet/query/java/0.2.incubation/javaquery" xmlns:query="http://www.eclipse.org/papyrus/emf/facet/efacet/0.2.incubation/efacet/query" name="SiriusDiagram" documentation="Display contained document template and their icons" mustBeLoadedByDefault="true" rank="-1000">
+  <eClassifiers xsi:type="custom:EClassCustomization" name="Document" documentation="Representation of document in model explorer">
+    <extendedMetaclass href="http://www.eclipse.org/papyrus/sirius/emf/1.0.0/siriusdiagram#//SiriusDiagram"/>
+    <facetOperations name="getDocumentLabel">
+      <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eParameters name="eStructuralFeature">
+        <eType xsi:type="ecore:EClass" href="http://www.eclipse.org/emf/2002/Ecore#//ETypedElement"/>
+      </eParameters>
+      <query xsi:type="javaQuery:JavaQuery" implementationClassName="org.eclipse.papyrus.sirius.integration.emf.siriusdiagram.modelexplorer.internal.query.GetSiriusDiagramLabelQuery"/>
+      <override xsi:type="efacet:FacetOperation" href="platform:/plugin/org.eclipse.papyrus.emf.facet.custom.ui/resources/customproperties.efacet#//CustomizedEObject/label"/>
+    </facetOperations>
+    <facetOperations name="getSiriusDiagramIcon" documentation="Return the path to the icon of the corresponding document template">
+      <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/papyrus/emf/facet/custom/0.2.incubation/custom_primitive_types#//Image"/>
+      <eParameters name="eObject">
+        <eType xsi:type="ecore:EClass" href="http://www.eclipse.org/emf/2002/Ecore#//EObject"/>
+      </eParameters>
+      <query xsi:type="javaQuery:JavaQuery" implementationClassName="org.eclipse.papyrus.sirius.integration.emf.siriusdiagram.modelexplorer.internal.query.GetSiriusDiagramIconQuery"/>
+      <override xsi:type="efacet:FacetOperation" href="platform:/plugin/org.eclipse.papyrus.emf.facet.custom.ui/resources/customproperties.efacet#//CustomizedEObject/image"/>
+    </facetOperations>
+    <facetOperations name="getVisibleReferences" upperBound="-1">
+      <eType xsi:type="ecore:EClass" href="http://www.eclipse.org/emf/2002/Ecore#//EReference"/>
+      <query xsi:type="javaQuery:JavaQuery" implementationClassName="org.eclipse.papyrus.sirius.integration.emf.siriusdiagram.modelexplorer.internal.query.GetVisibleReferencesQuery"/>
+      <override xsi:type="efacet:FacetOperation" href="platform:/plugin/org.eclipse.papyrus.emf.facet.custom.ui/resources/customproperties.efacet#//CustomizedEObject/visibleReferences"/>
+    </facetOperations>
+    <facetOperations name="getSiriusDiagramParent">
+      <eType xsi:type="ecore:EClass" href="http://www.eclipse.org/emf/2002/Ecore#//EObject"/>
+      <eParameters name="eStructuralFeature">
+        <eType xsi:type="ecore:EClass" href="http://www.eclipse.org/emf/2002/Ecore#//ETypedElement"/>
+      </eParameters>
+      <query xsi:type="javaQuery:JavaQuery" implementationClassName="org.eclipse.papyrus.sirius.integration.emf.siriusdiagram.modelexplorer.internal.query.GetSiriusDiagramParentQuery"/>
+      <override xsi:type="efacet:FacetOperation" href="platform:/plugin/org.eclipse.papyrus.emf.facet.custom.ui/resources/customproperties.efacet#//CustomizedEObject/parent"/>
+    </facetOperations>
+  </eClassifiers>
+  <eClassifiers xsi:type="efacet:Facet" name="SiriusDiagramContainer" documentation="this is a container of SiriusDiagram" conformanceTypedElement="//SiriusDiagramContainer/isSiriusDiagramContainer">
+    <extendedMetaclass href="http://www.eclipse.org/emf/2002/Ecore#//EObject"/>
+    <facetOperations name="isSiriusDiagramContainer" documentation="test if it references SiriusDiagram">
+      <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+      <query xsi:type="javaQuery:JavaQuery" implementationClassName="org.eclipse.papyrus.sirius.integration.emf.siriusdiagram.modelexplorer.internal.query.IsSiriusDiagramContainerQuery"/>
+    </facetOperations>
+  </eClassifiers>
+  <eClassifiers xsi:type="custom:FacetCustomization" name="SiriusDiagramContainer" documentation="representation of a container of SiriusDiagram" extendedFacets="//SiriusDiagramContainer" customizedFacet="//SiriusDiagramContainer">
+    <facetElements xsi:type="efacet:FacetReference" name="SiriusDiagrams" upperBound="-1" defaultValueLiteral="" derived="true">
+      <eType xsi:type="ecore:EClass" href="http://www.eclipse.org/papyrus/sirius/emf/1.0.0/siriusdiagram#//SiriusDiagram"/>
+      <query xsi:type="query:OperationCallQuery" operation="//SiriusDiagramContainer.1/getContainedSiriusDiagrams"/>
+    </facetElements>
+    <facetOperations name="getContainedSiriusDiagrams" upperBound="-1" documentation="Get the collection of all contained SiriusDiagrams">
+      <eType xsi:type="ecore:EClass" href="http://www.eclipse.org/papyrus/sirius/emf/1.0.0/siriusdiagram#//SiriusDiagram"/>
+      <query xsi:type="javaQuery:JavaQuery" implementationClassName="org.eclipse.papyrus.sirius.integration.emf.siriusdiagram.modelexplorer.internal.query.GetContainedSiriusDiagrams"/>
+    </facetOperations>
+  </eClassifiers>
+  <eSubpackages xsi:type="custom:Customization" name="SiriusDiagram" documentation="Display contained document template and their icons" mustBeLoadedByDefault="true" rank="-1000">
+    <eClassifiers xsi:type="custom:EClassCustomization" name="Document" documentation="Representation of document in model explorer">
+      <extendedMetaclass href="http://www.eclipse.org/papyrus/sirius/emf/1.0.0/siriusdiagram#//SiriusDiagram"/>
+      <facetOperations name="getDocumentLabel">
+        <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+        <eParameters name="eStructuralFeature">
+          <eType xsi:type="ecore:EClass" href="http://www.eclipse.org/emf/2002/Ecore#//ETypedElement"/>
+        </eParameters>
+        <query xsi:type="javaQuery:JavaQuery" implementationClassName="org.eclipse.papyrus.sirius.integration.emf.siriusdiagram.modelexplorer.internal.query.GetSiriusDiagramLabelQuery"/>
+        <override xsi:type="efacet:FacetOperation" href="platform:/plugin/org.eclipse.papyrus.emf.facet.custom.ui/resources/customproperties.efacet#//CustomizedEObject/label"/>
+      </facetOperations>
+      <facetOperations name="getSiriusDiagramIcon" documentation="Return the path to the icon of the corresponding document template">
+        <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/papyrus/emf/facet/custom/0.2.incubation/custom_primitive_types#//Image"/>
+        <eParameters name="eObject">
+          <eType xsi:type="ecore:EClass" href="http://www.eclipse.org/emf/2002/Ecore#//EObject"/>
+        </eParameters>
+        <query xsi:type="javaQuery:JavaQuery" implementationClassName="org.eclipse.papyrus.sirius.integration.emf.siriusdiagram.modelexplorer.internal.query.GetSiriusDiagramIconQuery"/>
+        <override xsi:type="efacet:FacetOperation" href="platform:/plugin/org.eclipse.papyrus.emf.facet.custom.ui/resources/customproperties.efacet#//CustomizedEObject/image"/>
+      </facetOperations>
+      <facetOperations name="getVisibleReferences" upperBound="-1">
+        <eType xsi:type="ecore:EClass" href="http://www.eclipse.org/emf/2002/Ecore#//EReference"/>
+        <query xsi:type="javaQuery:JavaQuery" implementationClassName="org.eclipse.papyrus.sirius.integration.emf.siriusdiagram.modelexplorer.internal.query.GetVisibleReferencesQuery"/>
+        <override xsi:type="efacet:FacetOperation" href="platform:/plugin/org.eclipse.papyrus.emf.facet.custom.ui/resources/customproperties.efacet#//CustomizedEObject/visibleReferences"/>
+      </facetOperations>
+      <facetOperations name="getSiriusDiagramParent">
+        <eType xsi:type="ecore:EClass" href="http://www.eclipse.org/emf/2002/Ecore#//EObject"/>
+        <eParameters name="eStructuralFeature">
+          <eType xsi:type="ecore:EClass" href="http://www.eclipse.org/emf/2002/Ecore#//ETypedElement"/>
+        </eParameters>
+        <query xsi:type="javaQuery:JavaQuery" implementationClassName="org.eclipse.papyrus.sirius.integration.emf.siriusdiagram.modelexplorer.internal.query.GetSiriusDiagramParentQuery"/>
+        <override xsi:type="efacet:FacetOperation" href="platform:/plugin/org.eclipse.papyrus.emf.facet.custom.ui/resources/customproperties.efacet#//CustomizedEObject/parent"/>
+      </facetOperations>
+    </eClassifiers>
+    <eClassifiers xsi:type="efacet:Facet" name="SiriusDiagramContainer" documentation="this is a container of SiriusDiagram" conformanceTypedElement="//SiriusDiagram/SiriusDiagramContainer/isSiriusDiagramContainer">
+      <extendedMetaclass href="http://www.eclipse.org/emf/2002/Ecore#//EObject"/>
+      <facetOperations name="isSiriusDiagramContainer" documentation="test if it references SiriusDiagram">
+        <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+        <query xsi:type="javaQuery:JavaQuery" implementationClassName="org.eclipse.papyrus.sirius.integration.emf.siriusdiagram.modelexplorer.internal.query.IsSiriusDiagramContainerQuery"/>
+      </facetOperations>
+    </eClassifiers>
+    <eClassifiers xsi:type="custom:FacetCustomization" name="SiriusDiagramContainer" documentation="representation of a container of SiriusDiagram" extendedFacets="//SiriusDiagram/SiriusDiagramContainer" customizedFacet="//SiriusDiagram/SiriusDiagramContainer">
+      <facetElements xsi:type="efacet:FacetReference" name="SiriusDiagrams" upperBound="-1" defaultValueLiteral="" derived="true">
+        <eType xsi:type="ecore:EClass" href="http://www.eclipse.org/papyrus/sirius/emf/1.0.0/siriusdiagram#//SiriusDiagram"/>
+        <query xsi:type="query:OperationCallQuery" operation="//SiriusDiagram/SiriusDiagramContainer.1/getContainedSiriusDiagrams"/>
+      </facetElements>
+      <facetOperations name="getContainedSiriusDiagrams" upperBound="-1" documentation="Get the collection of all contained SiriusDiagrams">
+        <eType xsi:type="ecore:EClass" href="http://www.eclipse.org/papyrus/sirius/emf/1.0.0/siriusdiagram#//SiriusDiagram"/>
+        <query xsi:type="javaQuery:JavaQuery" implementationClassName="org.eclipse.papyrus.sirius.integration.emf.siriusdiagram.modelexplorer.internal.query.GetContainedSiriusDiagrams"/>
+      </facetOperations>
+    </eClassifiers>
+  </eSubpackages>
+</custom:Customization>
