@@ -75,7 +75,7 @@ public class SiriusDiagramLabelProvider extends ViewPrototypeLabelProvider imple
 	 */
 	@Override
 	protected Image getNonCommonIcon(final Object commonObject) {
-		return org.eclipse.papyrus.infra.widgets.Activator.getDefault().getImage(Activator.PLUGIN_ID, "/icons/PapyrusDocument.gif"); //$NON-NLS-1$
+		return org.eclipse.papyrus.infra.widgets.Activator.getDefault().getImage(Activator.PLUGIN_ID, "/icons/PapyrusDiagram.gif"); //$NON-NLS-1$
 	}
 
 

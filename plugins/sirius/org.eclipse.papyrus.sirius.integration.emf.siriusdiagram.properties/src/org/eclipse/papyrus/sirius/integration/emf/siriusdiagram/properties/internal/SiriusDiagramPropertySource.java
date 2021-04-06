@@ -45,7 +45,8 @@ public class SiriusDiagramPropertySource extends PropertySource {
 	@Override
 	protected IPropertyDescriptor createPropertyDescriptor(final IItemPropertyDescriptor itemPropertyDescriptor) {
 		final EStructuralFeature f = (EStructuralFeature) itemPropertyDescriptor.getFeature(this.object);
-		// TODO if (f == DiagramPackage.eINSTANCE.getEReferenceTemplate_EReference()) {
+		// TODO réutiliser ce qui est fait pour les sirius diagram
+		// if (f == DiagramPackage.eINSTANCE.getEReferenceTemplate_EReference()) {
 		// return new CustomPropertyDescriptor(this.object, itemPropertyDescriptor, new EReferenceTemplateEReferenceEditorFactory());
 		// }
 		// if (f == DiagramPackage.eINSTANCE.getEClassTemplate_EClass()) {

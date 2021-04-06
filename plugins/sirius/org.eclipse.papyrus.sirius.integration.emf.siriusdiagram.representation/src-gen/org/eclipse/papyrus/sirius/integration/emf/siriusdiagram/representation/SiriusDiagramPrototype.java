@@ -17,6 +17,7 @@ import java.util.Map;
 
 import org.eclipse.emf.common.util.DiagnosticChain;
 import org.eclipse.papyrus.infra.architecture.representation.PapyrusRepresentationKind;
+import org.eclipse.sirius.diagram.DDiagram;
 
 /**
  * <!-- begin-user-doc -->
@@ -58,7 +59,7 @@ public interface SiriusDiagramPrototype extends PapyrusRepresentationKind {
 	 * @model required="true"
 	 * @generated
 	 */
-	SiriusDiagramPrototype getSiriusDiagramPrototype();
+	DDiagram getSiriusDiagramPrototype();
 
 	/**
 	 * Sets the value of the '{@link org.eclipse.papyrus.sirius.integration.emf.siriusdiagram.representation.SiriusDiagramPrototype#getSiriusDiagramPrototype <em>Document Template Prototype</em>}' reference.

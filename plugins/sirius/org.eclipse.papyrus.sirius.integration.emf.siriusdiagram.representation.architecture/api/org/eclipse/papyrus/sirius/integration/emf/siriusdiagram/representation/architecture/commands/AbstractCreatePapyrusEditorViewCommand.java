@@ -142,6 +142,7 @@ public abstract class AbstractCreatePapyrusEditorViewCommand<T extends EObject> 
 			return;
 		}
 		model.addDocument(newInstance, modelElement);
+
 	}
 
 	/**

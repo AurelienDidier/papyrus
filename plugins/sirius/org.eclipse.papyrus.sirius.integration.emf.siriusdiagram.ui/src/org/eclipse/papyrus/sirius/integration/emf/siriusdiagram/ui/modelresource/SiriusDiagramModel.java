@@ -14,13 +14,20 @@
 
 package org.eclipse.papyrus.sirius.integration.emf.siriusdiagram.ui.modelresource;
 
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.transaction.RecordingCommand;
 import org.eclipse.papyrus.infra.core.resource.AbstractDynamicModel;
 import org.eclipse.papyrus.sirius.integration.emf.siriusdiagram.representation.SiriusDiagramPrototype;
+import org.eclipse.sirius.business.api.componentization.ViewpointRegistry;
+import org.eclipse.sirius.business.api.session.Session;
+import org.eclipse.sirius.business.api.session.SessionManager;
 import org.eclipse.sirius.diagram.DDiagram;
+import org.eclipse.sirius.ui.business.api.viewpoint.ViewpointSelectionCallback;
+import org.eclipse.sirius.viewpoint.description.Viewpoint;
 
 
 
@@ -102,22 +109,55 @@ public class SiriusDiagramModel extends AbstractDynamicModel<DDiagram> {
 	 */
 	public void addDocument(final SiriusDiagramPrototype newInstance, final EObject context) {
 		if (context != null) { // we check the resource for control mode feature
+
 			Resource targetResource;
 			Resource contextResource = context.eResource();
+			final URI semanticUri = contextResource.getURI();
 			if (!contextResource.getURI().trimFileExtension().equals(getResource().getURI().trimFileExtension())) {
-				URI uri = contextResource.getURI();
-				uri = uri.trimFileExtension();
-				uri = uri.appendFileExtension(getModelFileExtension());
 				ResourceSet set = contextResource.getResourceSet();
-				targetResource = set.getResource(uri, true);
+				targetResource = set.getResource(contextResource.getURI(), true);
 			} else {
 				targetResource = getResource();
 			}
 			if (targetResource != null) {
-				targetResource.getContents().add(newInstance);
+				// // TODO add getSession from AirdResource
+				// targetResource.getContents().add(newInstance);
+				URI uri = contextResource.getURI();
+				uri = uri.trimFileExtension();
+				uri = uri.appendFileExtension(getModelFileExtension());
+
+				// URI airdUri = URI.createURI(uri);
+				final Session session = SessionManager.INSTANCE.getSession(uri, new NullProgressMonitor());
+				session.open(new NullProgressMonitor());
+				session.getTransactionalEditingDomain().getCommandStack()
+						.execute(new RecordingCommand(session.getTransactionalEditingDomain()) {
+							@Override
+							protected void doExecute() {
+								session.addSemanticResource(semanticUri, new NullProgressMonitor());
+								final ViewpointSelectionCallback selected = new ViewpointSelectionCallback();
+								for (final Viewpoint previouslySelected : session.getSelectedViewpoints(false)) {
+									selected.deselectViewpoint(previouslySelected, session, new NullProgressMonitor());
+								}
+								selected.selectViewpoint(
+										ViewpointRegistry.getInstance()
+												.getViewpoint(URI.createURI("viewpoint:/org.eclipse.papyrus.sirius.sequence.diagram/SequenceDiagram")),
+										session, new NullProgressMonitor());
+								selected.selectViewpoint(
+										ViewpointRegistry.getInstance()
+												.getViewpoint(URI.createURI("viewpoint:/org.eclipse.papyrus.sirius.clazz.diagram/ClassDiagram")),
+										session, new NullProgressMonitor());
+
+							}
+
+						});
+
+				session.save(new NullProgressMonitor());
+				session.close(new NullProgressMonitor());
+
 			}
 		}
 	}
+
 
 	/**
 	 *

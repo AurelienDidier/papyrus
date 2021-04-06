@@ -15,11 +15,20 @@
 
 package org.eclipse.papyrus.sirius.integration.emf.siriusdiagram.representation.architecture.commands;
 
+import java.util.Collection;
+
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.eclipse.papyrus.sirius.integration.emf.siriusdiagram.representation.SiriusDiagramPrototype;
+import org.eclipse.sirius.business.api.dialect.DialectManager;
+import org.eclipse.sirius.business.api.session.Session;
+import org.eclipse.sirius.business.api.session.SessionManager;
 import org.eclipse.sirius.diagram.DDiagram;
+import org.eclipse.sirius.ui.business.api.dialect.DialectUIManager;
+import org.eclipse.sirius.viewpoint.DRepresentation;
+import org.eclipse.sirius.viewpoint.description.RepresentationDescription;
 
 /**
  * Create a DDiagram Editor view
@@ -82,12 +91,29 @@ public class CreateSiriusDiagramEditorViewCommand extends AbstractCreatePapyrusE
 
 		final SiriusDiagramPrototype newInstance = EcoreUtil.copy(template);
 
-		if (newInstance instanceof DDiagram) {
-			// TODO newInstance.setMainTitle(this.mainTitle);
+		attachToResource(semanticContext, newInstance);
+		// if (SiriusDiagramPrototype instanceof DDiagram) {
+
+		// TODO get Session
+		Session session = SessionManager.INSTANCE.getSessions().iterator().next();
+		// Get Representation
+		EObject model = this.semanticContext;
+		Collection<RepresentationDescription> descs = DialectManager.INSTANCE.getAvailableRepresentationDescriptions(session.getSelectedViewpoints(false), model);
+		for (RepresentationDescription desc : descs) {
+			if (DialectManager.INSTANCE.canCreate(model, desc)) {
+				DRepresentation rep = DialectManager.INSTANCE.createRepresentation(session.toString()/* Mettre le path du aird ici */, model, desc, session, new NullProgressMonitor());
+				DialectUIManager.INSTANCE.openEditor(session, rep, new NullProgressMonitor());
+				session.save(new NullProgressMonitor());
+			}
 		}
 
+		// DialectUIManager.INSTANCE.openEditor(session, myDiagram,
+		// new NullProgressMonitor());
+		// newInstance.setMainTitle(this.mainTitle);
+		// End test
+		// }
 
-		attachToResource(semanticContext, newInstance);
+
 
 		// final IDocumentStructureGeneratorConfiguration generator = newInstance.getDocumentStructureGeneratorConfiguration();
 		// if (null != generator) {
