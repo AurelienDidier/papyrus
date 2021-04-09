@@ -21,7 +21,7 @@ import java.util.List;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.papyrus.infra.emf.utils.EMFHelper;
 import org.eclipse.papyrus.infra.ui.command.AbstractCommandHandler;
-import org.eclipse.papyrus.model2doc.emf.documentstructuretemplate.DocumentTemplate;
+import org.eclipse.sirius.diagram.DSemanticDiagram;
 
 /**
  * This abstract handler provides the method to select documents.
@@ -34,8 +34,8 @@ public abstract class AbstractSiriusDiagramCommandHandler extends AbstractComman
 	 *
 	 * @return the list of selected documents
 	 */
-	public List<DocumentTemplate> getSelectedDocumentTemplates() {
-		final List<DocumentTemplate> documents = new ArrayList<>();
+	public List<DSemanticDiagram> getSelectedDSemanticDiagrams() {
+		final List<DSemanticDiagram> documents = new ArrayList<>();
 
 		// Get first element if the selection is an IStructuredSelection
 		final Iterator<?> iterator = getSelectedElements().iterator();
@@ -44,8 +44,8 @@ public abstract class AbstractSiriusDiagramCommandHandler extends AbstractComman
 			Object current = iterator.next();
 			// Get the document template object (Facet Element) by IAdaptable mechanism
 			EObject document = EMFHelper.getEObject(current);
-			if (document instanceof DocumentTemplate) {
-				documents.add((DocumentTemplate) document);
+			if (document instanceof DSemanticDiagram) {
+				documents.add((DSemanticDiagram) document);
 			}
 		}
 

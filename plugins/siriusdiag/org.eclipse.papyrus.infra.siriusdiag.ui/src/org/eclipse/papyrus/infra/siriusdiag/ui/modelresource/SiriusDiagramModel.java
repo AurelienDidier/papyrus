@@ -19,8 +19,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.papyrus.infra.core.resource.AbstractDynamicModel;
-import org.eclipse.papyrus.model2doc.emf.documentstructuretemplate.DocumentTemplate;
-import org.eclipse.papyrus.model2doc.emf.documentstructuretemplate.utils.DocumentStructureTemplateConstants;
+import org.eclipse.sirius.diagram.DSemanticDiagram;
 
 
 
@@ -29,17 +28,17 @@ import org.eclipse.papyrus.model2doc.emf.documentstructuretemplate.utils.Documen
  *
  *
  */
-public class SiriusDiagramModel extends AbstractDynamicModel<DocumentTemplate> {
+public class SiriusDiagramModel extends AbstractDynamicModel<DSemanticDiagram> {
 
 	/**
 	 * Document Model ID.
 	 */
-	public static final String DOCUMENT_MODEL_ID = "org.eclipse.papyrus.infra.siriusdiag.ui.DocumentTemplate"; //$NON-NLS-1$
+	public static final String SIRIUS_DIAGRAM_MODEL_ID = "org.eclipse.papyrus.infra.siriusdiag.ui.DSemanticDiagram"; //$NON-NLS-1$
 
 	/**
 	 * the file extension where document are stored.
 	 */
-	public static final String DOCUMENT_MODEL_FILE_EXTENSION = DocumentStructureTemplateConstants.DOCUMENT_STRUCTURE_TEMPLATE_FILE_EXTENSION; // $NON-NLS-1$
+	public static final String SIRIUS_DIAGRAM_MODEL_FILE_EXTENSION = "aird"; // $NON-NLS-1$
 
 	/**
 	 *
@@ -57,7 +56,7 @@ public class SiriusDiagramModel extends AbstractDynamicModel<DocumentTemplate> {
 	 */
 	@Override
 	protected String getModelFileExtension() {
-		return DOCUMENT_MODEL_FILE_EXTENSION;
+		return SIRIUS_DIAGRAM_MODEL_FILE_EXTENSION;
 	}
 
 	/**
@@ -67,7 +66,7 @@ public class SiriusDiagramModel extends AbstractDynamicModel<DocumentTemplate> {
 	 */
 	@Override
 	public String getIdentifier() {
-		return DOCUMENT_MODEL_ID;
+		return SIRIUS_DIAGRAM_MODEL_ID;
 	}
 
 	/**
@@ -97,10 +96,10 @@ public class SiriusDiagramModel extends AbstractDynamicModel<DocumentTemplate> {
 	 *
 	 * @param document
 	 * @param context
-	 *            we need the context to be able to calculate the resource name were the DocumentTemplate will be saved.
-	 *            because this value is maybe not yet set to {@link DocumentTemplate#setSemanticContext(EObject)}
+	 *            we need the context to be able to calculate the resource name were the DSemanticDiagram will be saved.
+	 *            because this value is maybe not yet set to {@link DSemanticDiagram#setSemanticContext(EObject)}
 	 */
-	public void addDocument(final DocumentTemplate document, final EObject context) {
+	public void addDocument(final DSemanticDiagram document, final EObject context) {
 		if (context != null) { // we check the resource for control mode feature
 			Resource targetResource;
 			Resource contextResource = context.eResource();
@@ -137,7 +136,7 @@ public class SiriusDiagramModel extends AbstractDynamicModel<DocumentTemplate> {
 	 * @return
 	 */
 	protected boolean isSupportedRoot(EObject object) {
-		return object instanceof DocumentTemplate;
+		return object instanceof DSemanticDiagram;
 	}
 
 	/**

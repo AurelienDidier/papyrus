@@ -8,7 +8,7 @@
          <propertySection
                class="org.eclipse.papyrus.infra.siriusdiag.properties.internal.SiriusDiagramPropertySection"
                filter="org.eclipse.papyrus.infra.siriusdiag.properties.internal.SiriusDiagramPackageSectionFilter"
-               id="org.eclipse.papyrus.model2doc.emf.documentstructuretemplate.properties.propertySection1"
+               id="org.eclipse.papyrus.infra.siriusdiag.properties.propertySection1"
                tab="advanced">
             <input
                   type="java.lang.Object">

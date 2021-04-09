@@ -17,11 +17,10 @@ import java.util.Map;
 
 import org.eclipse.emf.common.util.DiagnosticChain;
 import org.eclipse.emf.common.util.ResourceLocator;
-
 import org.eclipse.emf.ecore.EPackage;
-
 import org.eclipse.emf.ecore.util.EObjectValidator;
-import org.eclipse.papyrus.infra.siriusdiag.representation.*;
+import org.eclipse.papyrus.infra.siriusdiag.representation.RepresentationPackage;
+import org.eclipse.papyrus.infra.siriusdiag.representation.SiriusDiagramPrototype;
 
 /**
  * <!-- begin-user-doc -->
@@ -59,7 +58,7 @@ public class RepresentationValidator extends EObjectValidator {
 	 *
 	 * @generated
 	 */
-	public static final int PAPYRUS_DOCUMENT_PROTOTYPE__IS_VALID_CLASS = 1;
+	public static final int SIRIUS_DIAGRAM_PROTOTYPE__IS_VALID_CLASS = 1;
 
 	/**
 	 * A constant with a fixed name that can be used as the base value for additional hand written constants.
@@ -112,8 +111,8 @@ public class RepresentationValidator extends EObjectValidator {
 	@Override
 	protected boolean validate(int classifierID, Object value, DiagnosticChain diagnostics, Map<Object, Object> context) {
 		switch (classifierID) {
-		case RepresentationPackage.PAPYRUS_DOCUMENT_PROTOTYPE:
-			return validatePapyrusDocumentPrototype((SiriusDiagramPrototype) value, diagnostics, context);
+		case RepresentationPackage.SIRIUS_DIAGRAM_PROTOTYPE:
+			return validateSiriusDiagramPrototype((SiriusDiagramPrototype) value, diagnostics, context);
 		default:
 			return true;
 		}
@@ -125,7 +124,7 @@ public class RepresentationValidator extends EObjectValidator {
 	 *
 	 * @generated
 	 */
-	public boolean validatePapyrusDocumentPrototype(SiriusDiagramPrototype siriusDiagramPrototype, DiagnosticChain diagnostics, Map<Object, Object> context) {
+	public boolean validateSiriusDiagramPrototype(SiriusDiagramPrototype siriusDiagramPrototype, DiagnosticChain diagnostics, Map<Object, Object> context) {
 		if (!validate_NoCircularContainment(siriusDiagramPrototype, diagnostics, context)) {
 			return false;
 		}
@@ -152,7 +151,7 @@ public class RepresentationValidator extends EObjectValidator {
 			result &= validate_EveryMapEntryUnique(siriusDiagramPrototype, diagnostics, context);
 		}
 		if (result || diagnostics != null) {
-			result &= validatePapyrusDocumentPrototype_isValidClass(siriusDiagramPrototype, diagnostics, context);
+			result &= validateSiriusDiagramPrototype_isValidClass(siriusDiagramPrototype, diagnostics, context);
 		}
 		return result;
 	}
@@ -164,7 +163,7 @@ public class RepresentationValidator extends EObjectValidator {
 	 *
 	 * @generated
 	 */
-	public boolean validatePapyrusDocumentPrototype_isValidClass(SiriusDiagramPrototype siriusDiagramPrototype, DiagnosticChain diagnostics, Map<Object, Object> context) {
+	public boolean validateSiriusDiagramPrototype_isValidClass(SiriusDiagramPrototype siriusDiagramPrototype, DiagnosticChain diagnostics, Map<Object, Object> context) {
 		return siriusDiagramPrototype.isValidClass(diagnostics, context);
 	}
 

@@ -17,7 +17,7 @@ package org.eclipse.papyrus.infra.siriusdiag.ui.internal.adapter;
 import org.eclipse.core.runtime.IAdapterFactory;
 import org.eclipse.papyrus.infra.core.sasheditor.di.contentprovider.IOpenable;
 import org.eclipse.papyrus.infra.core.sasheditor.di.contentprovider.IOpenableWithContainer;
-import org.eclipse.papyrus.model2doc.emf.documentstructuretemplate.DocumentTemplate;
+import org.eclipse.sirius.diagram.DSemanticDiagram;
 
 /**
  * Adapter factory converting Document to IOpenable.
@@ -36,9 +36,9 @@ public class SiriusDiagramViewAdapterFactory implements IAdapterFactory {
 	@Override
 	public Object getAdapter(Object adaptableObject, Class adapterType) {
 		if (adapterType == IOpenable.class) {
-			if (adaptableObject instanceof DocumentTemplate) {
-				DocumentTemplate document = (DocumentTemplate) adaptableObject;
-				return new IOpenableWithContainer.Openable(adaptableObject, document.getSemanticContext());
+			if (adaptableObject instanceof DSemanticDiagram) {
+				DSemanticDiagram document = (DSemanticDiagram) adaptableObject;
+				return new IOpenableWithContainer.Openable(adaptableObject, document.getTarget());
 			}
 		}
 

@@ -24,12 +24,12 @@ import org.eclipse.papyrus.infra.siriusdiag.representation.impl.RepresentationFa
 public class CustomRepresentationFactoryImpl extends RepresentationFactoryImpl {
 
 	/**
-	 * @see org.eclipse.papyrus.infra.siriusdiag.representation.impl.RepresentationFactoryImpl#createPapyrusDocumentPrototype()
+	 * @see org.eclipse.papyrus.infra.siriusdiag.representation.impl.RepresentationFactoryImpl#createSiriusDiagramPrototype()
 	 *
 	 * @return
 	 */
 	@Override
-	public SiriusDiagramPrototype createPapyrusDocumentPrototype() {
+	public SiriusDiagramPrototype createSiriusDiagramPrototype() {
 		return new CustomSiriusDiagramPrototypeImpl();
 	}
 

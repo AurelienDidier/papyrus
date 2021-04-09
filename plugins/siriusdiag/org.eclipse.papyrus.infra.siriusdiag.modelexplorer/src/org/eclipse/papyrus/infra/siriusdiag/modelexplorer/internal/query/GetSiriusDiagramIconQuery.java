@@ -21,13 +21,13 @@ import org.eclipse.papyrus.emf.facet.efacet.core.exception.DerivedTypedElementEx
 import org.eclipse.papyrus.emf.facet.query.java.core.IJavaQuery2;
 import org.eclipse.papyrus.emf.facet.query.java.core.IParameterValueList2;
 import org.eclipse.papyrus.infra.viewpoints.policy.ViewPrototype;
-import org.eclipse.papyrus.model2doc.emf.documentstructuretemplate.TextDocumentTemplate;
+import org.eclipse.sirius.diagram.DSemanticDiagram;
 
 /**
  * Query to retrieve the path to the icon of the corresponding document.
  *
  */
-public class GetSiriusDiagramIconQuery implements IJavaQuery2<TextDocumentTemplate, IImage> {
+public class GetSiriusDiagramIconQuery implements IJavaQuery2<DSemanticDiagram, IImage> {
 
 	/**
 	 * @see org.eclipse.papyrus.emf.facet.query.java.core.IJavaQuery2#evaluate(org.eclipse.emf.ecore.EObject, org.eclipse.papyrus.emf.facet.query.java.core.IParameterValueList2, org.eclipse.papyrus.emf.facet.efacet.core.IFacetManager)
@@ -36,11 +36,11 @@ public class GetSiriusDiagramIconQuery implements IJavaQuery2<TextDocumentTempla
 	 * @param parameterValues
 	 * @param facetManager
 	 * @return
-	 * 		the icon
+	 *         the icon
 	 * @throws DerivedTypedElementException
 	 */
 	@Override
-	public IImage evaluate(final TextDocumentTemplate context, final IParameterValueList2 parameterValues, final IFacetManager facetManager) throws DerivedTypedElementException {
+	public IImage evaluate(final DSemanticDiagram context, final IParameterValueList2 parameterValues, final IFacetManager facetManager) throws DerivedTypedElementException {
 		ViewPrototype prototype = ViewPrototype.get(context);
 		return (prototype != null) ? ImageUtils.wrap(prototype.getIconURI()) : null;
 	}

@@ -15,26 +15,33 @@
 
 package org.eclipse.papyrus.infra.siriusdiag.representation.architecture.commands;
 
+import java.util.Collection;
+
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
-import org.eclipse.papyrus.model2doc.core.generatorconfiguration.IDocumentStructureGeneratorConfiguration;
-import org.eclipse.papyrus.model2doc.emf.documentstructuretemplate.DocumentTemplate;
-import org.eclipse.papyrus.model2doc.emf.documentstructuretemplate.DocumentTemplatePrototype;
-import org.eclipse.papyrus.model2doc.emf.documentstructuretemplate.TextDocumentTemplate;
+import org.eclipse.papyrus.infra.siriusdiag.representation.SiriusDiagramPrototype;
+import org.eclipse.sirius.business.api.dialect.DialectManager;
+import org.eclipse.sirius.business.api.session.Session;
+import org.eclipse.sirius.business.api.session.SessionManager;
+import org.eclipse.sirius.diagram.DSemanticDiagram;
+import org.eclipse.sirius.ui.business.api.dialect.DialectUIManager;
+import org.eclipse.sirius.viewpoint.DRepresentation;
+import org.eclipse.sirius.viewpoint.description.RepresentationDescription;
 
 /**
- * Create a DocumentTemplate Editor view
+ * Create a DSemanticDiagram Editor view
  */
-public class CreateSiriusDiagramEditorViewCommand extends AbstractCreatePapyrusEditorViewCommand<DocumentTemplate> {
+public class CreateSiriusDiagramEditorViewCommand extends AbstractCreatePapyrusEditorViewCommand<DSemanticDiagram> {
 
 	/**
-	 * the {@link DocumentTemplatePrototype} used to create the {@link DocumentTemplate} model and its editor view
+	 * the {@link SiriusDiagramPrototype} used to create the {@link DSemanticDiagram} model and its editor view
 	 */
-	private final DocumentTemplatePrototype prototype;
+	private final SiriusDiagramPrototype prototype;
 
 	/**
-	 * the main title of the created {@link DocumentTemplate}
+	 * the main title of the created {@link DSemanticDiagram}
 	 */
 	private final String mainTitle;
 
@@ -50,9 +57,9 @@ public class CreateSiriusDiagramEditorViewCommand extends AbstractCreatePapyrusE
 	 * @param graphicalContext
 	 * @param openAfterCreation
 	 */
-	public CreateSiriusDiagramEditorViewCommand(final TransactionalEditingDomain domain, final DocumentTemplatePrototype documentTemplatePrototype, final String documentName, final String documentMainTitle, final EObject semanticContext,
+	public CreateSiriusDiagramEditorViewCommand(final TransactionalEditingDomain domain, final SiriusDiagramPrototype documentTemplatePrototype, final String documentName, final String documentMainTitle, final EObject semanticContext,
 			final EObject graphicalContext, final boolean openAfterCreation) {
-		super(domain, "Create new DocumentTemplate", documentName, semanticContext, graphicalContext, openAfterCreation); //$NON-NLS-1$
+		super(domain, "Create new Sirius Diagram", documentName, semanticContext, graphicalContext, openAfterCreation); //$NON-NLS-1$
 		this.prototype = documentTemplatePrototype;
 		this.mainTitle = documentMainTitle;
 	}
@@ -68,7 +75,7 @@ public class CreateSiriusDiagramEditorViewCommand extends AbstractCreatePapyrusE
 	 * @param semanticContext
 	 * @param openAfterCreation
 	 */
-	public CreateSiriusDiagramEditorViewCommand(final TransactionalEditingDomain domain, final DocumentTemplatePrototype documentTemplatePrototype, final String documentName, final String documentMainTitle, final EObject semanticContext,
+	public CreateSiriusDiagramEditorViewCommand(final TransactionalEditingDomain domain, final SiriusDiagramPrototype documentTemplatePrototype, final String documentName, final String documentMainTitle, final EObject semanticContext,
 			final boolean openAfterCreation) {
 		this(domain, documentTemplatePrototype, documentName, documentMainTitle, semanticContext, null, openAfterCreation);
 	}
@@ -80,26 +87,43 @@ public class CreateSiriusDiagramEditorViewCommand extends AbstractCreatePapyrusE
 	 */
 	@Override
 	protected void doExecute() {
-		final DocumentTemplate template = this.prototype.getDocumentTemplate();
+		final SiriusDiagramPrototype template = this.prototype.;
 
-		final DocumentTemplate newInstance = EcoreUtil.copy(template);
-
-		if (newInstance instanceof TextDocumentTemplate) {
-			((TextDocumentTemplate) newInstance).setMainTitle(this.mainTitle);
-		}
-
+		final SiriusDiagramPrototype newInstance = EcoreUtil.copy(template);
 
 		attachToResource(semanticContext, newInstance);
+		// if (SiriusDiagramPrototype instanceof DDiagram) {
 
-		final IDocumentStructureGeneratorConfiguration generator = newInstance.getDocumentStructureGeneratorConfiguration();
-		if (null != generator) {
-			generator.setDocumentName(this.editorViewName);
+		// TODO get Session
+		Session session = SessionManager.INSTANCE.getSessions().iterator().next();
+		// Get Representation
+		EObject model = this.semanticContext;
+		Collection<RepresentationDescription> descs = DialectManager.INSTANCE.getAvailableRepresentationDescriptions(session.getSelectedViewpoints(false), model);
+		for (RepresentationDescription desc : descs) {
+			if (DialectManager.INSTANCE.canCreate(model, desc)) {
+				DRepresentation rep = DialectManager.INSTANCE.createRepresentation(session.toString()/* Mettre le path du aird ici */, model, desc, session, new NullProgressMonitor());
+				DialectUIManager.INSTANCE.openEditor(session, rep, new NullProgressMonitor());
+				session.save(new NullProgressMonitor());
+			}
 		}
 
-		newInstance.setDocumentTemplatePrototype(this.prototype);
-		newInstance.setGraphicalContext(this.graphicalContext);
-		newInstance.setSemanticContext(this.semanticContext);
-		newInstance.setName(this.editorViewName);
+		// DialectUIManager.INSTANCE.openEditor(session, myDiagram,
+		// new NullProgressMonitor());
+		// newInstance.setMainTitle(this.mainTitle);
+		// End test
+		// }
+
+
+
+		// final IDocumentStructureGeneratorConfiguration generator = newInstance.getDocumentStructureGeneratorConfiguration();
+		// if (null != generator) {
+		// generator.setDocumentName(this.editorViewName);
+		// }
+
+		// newInstance.setDDiagram(this.prototype);
+		// newInstance.setGraphicalContext(this.graphicalContext);
+		// newInstance.setSemanticContext(this.semanticContext);
+		// newInstance.setName(this.editorViewName);
 		if (this.openAfterCreation) {
 			openEditor(newInstance);
 		}

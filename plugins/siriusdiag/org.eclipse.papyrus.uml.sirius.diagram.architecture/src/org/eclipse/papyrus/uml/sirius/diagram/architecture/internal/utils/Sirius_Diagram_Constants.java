@@ -23,7 +23,7 @@ public final class Sirius_Diagram_Constants {
 		// to prevent instanciation
 	}
 
-	public static final String DOCX_GENERIC_UML_DOCUMENT_TEMPLATE_TYPE = "DOCX-GenericUMLDocumentStructureTemplateType"; //$NON-NLS-1$
+	public static final String UML_SIRIUS_DIAGRAM_TYPE = "UMLSiriusDiagramType"; //$NON-NLS-1$
 
-	public static final String DOCX_EMPTY_UML_DOCUMENT_TEMPLATE_TYPE = "DOCX-EmptyUMLDocumentStructureTemplateType"; //$NON-NLS-1$
+	public static final String EMPTY_UML_SIRIUS_DIAGRAM_TYPE = "EmptyUMLSiriusDiagramType"; //$NON-NLS-1$
 }

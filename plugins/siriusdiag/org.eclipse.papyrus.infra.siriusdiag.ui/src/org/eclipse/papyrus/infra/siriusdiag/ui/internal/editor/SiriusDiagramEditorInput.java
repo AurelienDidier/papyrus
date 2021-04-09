@@ -17,7 +17,7 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.papyrus.infra.siriusdiag.ui.internal.messages.Messages;
-import org.eclipse.papyrus.model2doc.emf.documentstructuretemplate.DocumentTemplate;
+import org.eclipse.sirius.diagram.DSemanticDiagram;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IPersistableElement;
 
@@ -28,7 +28,7 @@ import org.eclipse.ui.IPersistableElement;
 public class SiriusDiagramEditorInput implements IEditorInput {
 
 	/** The input for the Document widget */
-	private final DocumentTemplate documentInstance;
+	private final DSemanticDiagram documentInstance;
 
 	/**
 	 *
@@ -37,7 +37,7 @@ public class SiriusDiagramEditorInput implements IEditorInput {
 	 * @param documentTemplate
 	 *            the document template to edit
 	 */
-	public SiriusDiagramEditorInput(final DocumentTemplate documentTemplate) {
+	public SiriusDiagramEditorInput(final DSemanticDiagram documentTemplate) {
 		this.documentInstance = documentTemplate;
 	}
 
@@ -46,7 +46,7 @@ public class SiriusDiagramEditorInput implements IEditorInput {
 	 * @return
 	 *         the document template for which we are opening an editor
 	 */
-	public DocumentTemplate getDocumentTemplate() {
+	public DSemanticDiagram getDSemanticDiagram() {
 		return this.documentInstance;
 	}
 
@@ -101,7 +101,7 @@ public class SiriusDiagramEditorInput implements IEditorInput {
 	 *         the description
 	 */
 	private String getDescription() {
-		final String description = this.documentInstance.getDescription();
+		final String description = this.documentInstance.getDocumentation();
 		return description == null || description.isEmpty() ? Messages.DocumentStructureTemplateEditorInput_NoDescription : description;
 	}
 
@@ -121,16 +121,16 @@ public class SiriusDiagramEditorInput implements IEditorInput {
 	 * @see org.eclipse.core.runtime.IAdaptable#getAdapter(java.lang.Class)
 	 *
 	 * @param adapter
-	 *            the only supported type are {@link URI} and {@link DocumentTemplate}
+	 *            the only supported type are {@link URI} and {@link DSemanticDiagram}
 	 * @return
-	 *         the uri of the file containing the {@link DocumentTemplate} to edit or the {@link DocumentTemplate} itself
+	 *         the uri of the file containing the {@link DSemanticDiagram} to edit or the {@link DSemanticDiagram} itself
 	 */
 	@Override
 	public <T> T getAdapter(Class<T> adapter) {
 		if (adapter == URI.class) {
 			return adapter.cast(this.documentInstance.eResource().getURI());
 		}
-		if (adapter == DocumentTemplate.class) {
+		if (adapter == DSemanticDiagram.class) {
 			return adapter.cast(this.documentInstance);
 		}
 		return null;

@@ -20,7 +20,7 @@
    <extension point="org.eclipse.emf.ecore.generated_package">
       <!-- @generated DocumentStructureTemplateRepresentation -->
       <package
-            uri="http://www.eclipse.org/papyrus/model2doc/integration/1.0.0/emf/documentstructuretemplate/representation"
+            uri="http://www.eclipse.org/papyrus/sirius/integration/1.0.0/emf/siriusdiagram/representation"
             class="org.eclipse.papyrus.infra.siriusdiag.representation.RepresentationPackage"
             genModel="model/DocumentStructureTemplateRepresentation.genmodel"/>
    </extension>
@@ -28,7 +28,7 @@
          point="org.eclipse.emf.ecore.factory_override">
       <factory
             class="org.eclipse.papyrus.infra.siriusdiag.representation.internal.custom.CustomRepresentationFactoryImpl"
-            uri="http://www.eclipse.org/papyrus/model2doc/integration/1.0.0/emf/documentstructuretemplate/representation">
+            uri="http://www.eclipse.org/papyrus/sirius/integration/1.0.0/emf/siriusdiagram/representation">
       </factory>
    </extension>
 

@@ -15,24 +15,22 @@ package org.eclipse.papyrus.infra.siriusdiag.representation.impl;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.Map;
-import org.eclipse.emf.common.notify.Notification;
 
+import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.BasicDiagnostic;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.DiagnosticChain;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
 import org.eclipse.emf.ecore.util.EObjectValidator;
 import org.eclipse.papyrus.infra.architecture.representation.impl.PapyrusRepresentationKindImpl;
-import org.eclipse.papyrus.infra.siriusdiag.representation.SiriusDiagramPrototype;
 import org.eclipse.papyrus.infra.siriusdiag.representation.RepresentationPackage;
+import org.eclipse.papyrus.infra.siriusdiag.representation.SiriusDiagramPrototype;
 import org.eclipse.papyrus.infra.siriusdiag.representation.util.RepresentationValidator;
-import org.eclipse.papyrus.model2doc.emf.documentstructuretemplate.DocumentTemplatePrototype;
+import org.eclipse.sirius.diagram.DSemanticDiagram;
 
 /**
  * <!-- begin-user-doc -->
@@ -42,7 +40,7 @@ import org.eclipse.papyrus.model2doc.emf.documentstructuretemplate.DocumentTempl
  * The following features are implemented:
  * </p>
  * <ul>
- * <li>{@link org.eclipse.papyrus.infra.siriusdiag.representation.impl.SiriusDiagramPrototypeImpl#getDocumentTemplatePrototype <em>Document Template Prototype</em>}</li>
+ * <li>{@link org.eclipse.papyrus.infra.siriusdiag.representation.impl.SiriusDiagramPrototypeImpl#getSiriusDiagramPrototype <em>Document Template Prototype</em>}</li>
  * <li>{@link org.eclipse.papyrus.infra.siriusdiag.representation.impl.SiriusDiagramPrototypeImpl#getCreationCommandClass <em>Creation Command Class</em>}</li>
  * </ul>
  *
@@ -50,15 +48,15 @@ import org.eclipse.papyrus.model2doc.emf.documentstructuretemplate.DocumentTempl
  */
 public class SiriusDiagramPrototypeImpl extends PapyrusRepresentationKindImpl implements SiriusDiagramPrototype {
 	/**
-	 * The cached value of the '{@link #getDocumentTemplatePrototype() <em>Document Template Prototype</em>}' reference.
+	 * The cached value of the '{@link #getSiriusDiagramPrototype() <em>Document Template Prototype</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
-	 * @see #getDocumentTemplatePrototype()
+	 * @see #getSiriusDiagramPrototype()
 	 * @generated
 	 * @ordered
 	 */
-	protected DocumentTemplatePrototype documentTemplatePrototype;
+	protected DSemanticDiagram siriusDiagramPrototype;
 
 	/**
 	 * The default value of the '{@link #getCreationCommandClass() <em>Creation Command Class</em>}' attribute.
@@ -100,7 +98,7 @@ public class SiriusDiagramPrototypeImpl extends PapyrusRepresentationKindImpl im
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return RepresentationPackage.Literals.PAPYRUS_DOCUMENT_PROTOTYPE;
+		return RepresentationPackage.Literals.SIRIUS_DIAGRAM_PROTOTYPE;
 	}
 
 	/**
@@ -110,17 +108,17 @@ public class SiriusDiagramPrototypeImpl extends PapyrusRepresentationKindImpl im
 	 * @generated
 	 */
 	@Override
-	public DocumentTemplatePrototype getDocumentTemplatePrototype() {
-		if (documentTemplatePrototype != null && documentTemplatePrototype.eIsProxy()) {
-			InternalEObject oldDocumentTemplatePrototype = (InternalEObject) documentTemplatePrototype;
-			documentTemplatePrototype = (DocumentTemplatePrototype) eResolveProxy(oldDocumentTemplatePrototype);
-			if (documentTemplatePrototype != oldDocumentTemplatePrototype) {
+	public DSemanticDiagram getSiriusDiagramPrototype() {
+		if (siriusDiagramPrototype != null && siriusDiagramPrototype.eIsProxy()) {
+			InternalEObject oldSiriusDiagramPrototype = (InternalEObject) siriusDiagramPrototype;
+			siriusDiagramPrototype = (DSemanticDiagram) eResolveProxy(oldSiriusDiagramPrototype);
+			if (siriusDiagramPrototype != oldSiriusDiagramPrototype) {
 				if (eNotificationRequired()) {
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, RepresentationPackage.PAPYRUS_DOCUMENT_PROTOTYPE__DOCUMENT_TEMPLATE_PROTOTYPE, oldDocumentTemplatePrototype, documentTemplatePrototype));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, RepresentationPackage.SIRIUS_DIAGRAM_PROTOTYPE__SIRIUS_DIAGRAM_PROTOTYPE, oldSiriusDiagramPrototype, siriusDiagramPrototype));
 				}
 			}
 		}
-		return documentTemplatePrototype;
+		return siriusDiagramPrototype;
 	}
 
 	/**
@@ -129,8 +127,8 @@ public class SiriusDiagramPrototypeImpl extends PapyrusRepresentationKindImpl im
 	 *
 	 * @generated
 	 */
-	public DocumentTemplatePrototype basicGetDocumentTemplatePrototype() {
-		return documentTemplatePrototype;
+	public DSemanticDiagram basicGetSiriusDiagramPrototype() {
+		return siriusDiagramPrototype;
 	}
 
 	/**
@@ -140,11 +138,11 @@ public class SiriusDiagramPrototypeImpl extends PapyrusRepresentationKindImpl im
 	 * @generated
 	 */
 	@Override
-	public void setDocumentTemplatePrototype(DocumentTemplatePrototype newDocumentTemplatePrototype) {
-		DocumentTemplatePrototype oldDocumentTemplatePrototype = documentTemplatePrototype;
-		documentTemplatePrototype = newDocumentTemplatePrototype;
+	public void setSiriusDiagramPrototype(DSemanticDiagram newSiriusDiagramPrototype) {
+		DSemanticDiagram oldSiriusDiagramPrototype = siriusDiagramPrototype;
+		siriusDiagramPrototype = newSiriusDiagramPrototype;
 		if (eNotificationRequired()) {
-			eNotify(new ENotificationImpl(this, Notification.SET, RepresentationPackage.PAPYRUS_DOCUMENT_PROTOTYPE__DOCUMENT_TEMPLATE_PROTOTYPE, oldDocumentTemplatePrototype, documentTemplatePrototype));
+			eNotify(new ENotificationImpl(this, Notification.SET, RepresentationPackage.SIRIUS_DIAGRAM_PROTOTYPE__SIRIUS_DIAGRAM_PROTOTYPE, oldSiriusDiagramPrototype, siriusDiagramPrototype));
 		}
 	}
 
@@ -170,7 +168,7 @@ public class SiriusDiagramPrototypeImpl extends PapyrusRepresentationKindImpl im
 		String oldCreationCommandClass = creationCommandClass;
 		creationCommandClass = newCreationCommandClass;
 		if (eNotificationRequired()) {
-			eNotify(new ENotificationImpl(this, Notification.SET, RepresentationPackage.PAPYRUS_DOCUMENT_PROTOTYPE__CREATION_COMMAND_CLASS, oldCreationCommandClass, creationCommandClass));
+			eNotify(new ENotificationImpl(this, Notification.SET, RepresentationPackage.SIRIUS_DIAGRAM_PROTOTYPE__CREATION_COMMAND_CLASS, oldCreationCommandClass, creationCommandClass));
 		}
 	}
 
@@ -190,7 +188,7 @@ public class SiriusDiagramPrototypeImpl extends PapyrusRepresentationKindImpl im
 			if (chain != null) {
 				chain.add(new BasicDiagnostic(Diagnostic.ERROR,
 						RepresentationValidator.DIAGNOSTIC_SOURCE,
-						RepresentationValidator.PAPYRUS_DOCUMENT_PROTOTYPE__IS_VALID_CLASS,
+						RepresentationValidator.SIRIUS_DIAGRAM_PROTOTYPE__IS_VALID_CLASS,
 						EcorePlugin.INSTANCE.getString("_UI_GenericInvariant_diagnostic", new Object[] { "isValidClass", EObjectValidator.getObjectLabel(this, context) }), //$NON-NLS-1$ //$NON-NLS-2$
 						new Object[] { this }));
 			}
@@ -208,12 +206,12 @@ public class SiriusDiagramPrototypeImpl extends PapyrusRepresentationKindImpl im
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-		case RepresentationPackage.PAPYRUS_DOCUMENT_PROTOTYPE__DOCUMENT_TEMPLATE_PROTOTYPE:
+		case RepresentationPackage.SIRIUS_DIAGRAM_PROTOTYPE__SIRIUS_DIAGRAM_PROTOTYPE:
 			if (resolve) {
-				return getDocumentTemplatePrototype();
+				return getSiriusDiagramPrototype();
 			}
-			return basicGetDocumentTemplatePrototype();
-		case RepresentationPackage.PAPYRUS_DOCUMENT_PROTOTYPE__CREATION_COMMAND_CLASS:
+			return basicGetSiriusDiagramPrototype();
+		case RepresentationPackage.SIRIUS_DIAGRAM_PROTOTYPE__CREATION_COMMAND_CLASS:
 			return getCreationCommandClass();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -229,10 +227,10 @@ public class SiriusDiagramPrototypeImpl extends PapyrusRepresentationKindImpl im
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-		case RepresentationPackage.PAPYRUS_DOCUMENT_PROTOTYPE__DOCUMENT_TEMPLATE_PROTOTYPE:
-			setDocumentTemplatePrototype((DocumentTemplatePrototype) newValue);
+		case RepresentationPackage.SIRIUS_DIAGRAM_PROTOTYPE__SIRIUS_DIAGRAM_PROTOTYPE:
+			setSiriusDiagramPrototype((DSemanticDiagram) newValue);
 			return;
-		case RepresentationPackage.PAPYRUS_DOCUMENT_PROTOTYPE__CREATION_COMMAND_CLASS:
+		case RepresentationPackage.SIRIUS_DIAGRAM_PROTOTYPE__CREATION_COMMAND_CLASS:
 			setCreationCommandClass((String) newValue);
 			return;
 		}
@@ -248,10 +246,10 @@ public class SiriusDiagramPrototypeImpl extends PapyrusRepresentationKindImpl im
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-		case RepresentationPackage.PAPYRUS_DOCUMENT_PROTOTYPE__DOCUMENT_TEMPLATE_PROTOTYPE:
-			setDocumentTemplatePrototype((DocumentTemplatePrototype) null);
+		case RepresentationPackage.SIRIUS_DIAGRAM_PROTOTYPE__SIRIUS_DIAGRAM_PROTOTYPE:
+			setSiriusDiagramPrototype((DSemanticDiagram) null);
 			return;
-		case RepresentationPackage.PAPYRUS_DOCUMENT_PROTOTYPE__CREATION_COMMAND_CLASS:
+		case RepresentationPackage.SIRIUS_DIAGRAM_PROTOTYPE__CREATION_COMMAND_CLASS:
 			setCreationCommandClass(CREATION_COMMAND_CLASS_EDEFAULT);
 			return;
 		}
@@ -267,9 +265,9 @@ public class SiriusDiagramPrototypeImpl extends PapyrusRepresentationKindImpl im
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-		case RepresentationPackage.PAPYRUS_DOCUMENT_PROTOTYPE__DOCUMENT_TEMPLATE_PROTOTYPE:
-			return documentTemplatePrototype != null;
-		case RepresentationPackage.PAPYRUS_DOCUMENT_PROTOTYPE__CREATION_COMMAND_CLASS:
+		case RepresentationPackage.SIRIUS_DIAGRAM_PROTOTYPE__SIRIUS_DIAGRAM_PROTOTYPE:
+			return siriusDiagramPrototype != null;
+		case RepresentationPackage.SIRIUS_DIAGRAM_PROTOTYPE__CREATION_COMMAND_CLASS:
 			return CREATION_COMMAND_CLASS_EDEFAULT == null ? creationCommandClass != null : !CREATION_COMMAND_CLASS_EDEFAULT.equals(creationCommandClass);
 		}
 		return super.eIsSet(featureID);
@@ -285,7 +283,7 @@ public class SiriusDiagramPrototypeImpl extends PapyrusRepresentationKindImpl im
 	@SuppressWarnings("unchecked")
 	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
 		switch (operationID) {
-		case RepresentationPackage.PAPYRUS_DOCUMENT_PROTOTYPE___IS_VALID_CLASS__DIAGNOSTICCHAIN_MAP:
+		case RepresentationPackage.SIRIUS_DIAGRAM_PROTOTYPE___IS_VALID_CLASS__DIAGNOSTICCHAIN_MAP:
 			return isValidClass((DiagnosticChain) arguments.get(0), (Map<Object, Object>) arguments.get(1));
 		}
 		return super.eInvoke(operationID, arguments);
@@ -310,4 +308,4 @@ public class SiriusDiagramPrototypeImpl extends PapyrusRepresentationKindImpl im
 		return result.toString();
 	}
 
-} // PapyrusDocumentPrototypeImpl
+} // SiriusDiagramPrototypeImpl

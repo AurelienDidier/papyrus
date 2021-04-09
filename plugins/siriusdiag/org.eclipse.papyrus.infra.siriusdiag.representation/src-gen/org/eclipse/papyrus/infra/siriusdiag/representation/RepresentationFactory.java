@@ -42,7 +42,7 @@ public interface RepresentationFactory extends EFactory {
 	 * @return a new object of class '<em>Sirius Diagram Prototype</em>'.
 	 * @generated
 	 */
-	SiriusDiagramPrototype createPapyrusDocumentPrototype();
+	SiriusDiagramPrototype createSiriusDiagramPrototype();
 
 	/**
 	 * Returns the package supported by this factory.

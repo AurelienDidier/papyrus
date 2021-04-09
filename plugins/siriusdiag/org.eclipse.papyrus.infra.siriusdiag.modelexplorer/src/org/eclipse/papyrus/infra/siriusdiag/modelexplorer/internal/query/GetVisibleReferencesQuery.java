@@ -21,13 +21,13 @@ import org.eclipse.papyrus.emf.facet.efacet.core.IFacetManager;
 import org.eclipse.papyrus.emf.facet.efacet.core.exception.DerivedTypedElementException;
 import org.eclipse.papyrus.emf.facet.query.java.core.IJavaQuery2;
 import org.eclipse.papyrus.emf.facet.query.java.core.IParameterValueList2;
-import org.eclipse.papyrus.model2doc.emf.documentstructuretemplate.TextDocumentTemplate;
+import org.eclipse.sirius.diagram.DSemanticDiagram;
 
 /**
  * Query to retrieve the visible references of corresponding document.
  *
  */
-public class GetVisibleReferencesQuery implements IJavaQuery2<TextDocumentTemplate, List<Object>> {
+public class GetVisibleReferencesQuery implements IJavaQuery2<DSemanticDiagram, List<Object>> {
 	/**
 	 * @see org.eclipse.papyrus.emf.facet.query.java.core.IJavaQuery2#evaluate(org.eclipse.emf.ecore.EObject, org.eclipse.papyrus.emf.facet.query.java.core.IParameterValueList2, org.eclipse.papyrus.emf.facet.efacet.core.IFacetManager)
 	 *
@@ -39,7 +39,7 @@ public class GetVisibleReferencesQuery implements IJavaQuery2<TextDocumentTempla
 	 * @throws DerivedTypedElementException
 	 */
 	@Override
-	public List<Object> evaluate(final TextDocumentTemplate context, final IParameterValueList2 parameterValues, final IFacetManager facetManager) throws DerivedTypedElementException {
+	public List<Object> evaluate(final DSemanticDiagram context, final IParameterValueList2 parameterValues, final IFacetManager facetManager) throws DerivedTypedElementException {
 		return Collections.emptyList();
 	}
 }

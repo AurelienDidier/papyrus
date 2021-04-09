@@ -23,7 +23,7 @@ import org.eclipse.papyrus.emf.facet.efacet.core.exception.DerivedTypedElementEx
 import org.eclipse.papyrus.emf.facet.query.java.core.IJavaQuery2;
 import org.eclipse.papyrus.emf.facet.query.java.core.IParameterValueList2;
 import org.eclipse.papyrus.infra.emf.utils.EMFHelper;
-import org.eclipse.papyrus.model2doc.emf.documentstructuretemplate.TextDocumentTemplate;
+import org.eclipse.sirius.diagram.DSemanticDiagram;
 
 /**
  * Query to test if the selected element is a document container.
@@ -37,7 +37,7 @@ public class IsSiriusDiagramContainerQuery implements IJavaQuery2<EObject, Boole
 	 * @param parameterValues
 	 * @param facetManager
 	 * @return
-	 * 		<code>true</code> if the selection is a document container
+	 *         <code>true</code> if the selection is a document container
 	 * @throws DerivedTypedElementException
 	 */
 	@Override
@@ -46,9 +46,9 @@ public class IsSiriusDiagramContainerQuery implements IJavaQuery2<EObject, Boole
 		if (settings != null) {
 			for (Setting setting : settings) {
 				EObject usingElement = setting.getEObject();
-				if (usingElement instanceof TextDocumentTemplate) {
-					final TextDocumentTemplate document = (TextDocumentTemplate) usingElement;
-					final EObject container = document.getGraphicalContext() == null ? document.getSemanticContext() : document.getGraphicalContext();
+				if (usingElement instanceof DSemanticDiagram) {
+					final DSemanticDiagram document = (DSemanticDiagram) usingElement;
+					final EObject container = document.getTarget();
 					if (container == context) {
 						return true;
 					}

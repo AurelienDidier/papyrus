@@ -29,11 +29,11 @@ import org.eclipse.papyrus.infra.core.services.ServicesRegistry;
 import org.eclipse.papyrus.infra.core.utils.ServiceUtils;
 import org.eclipse.papyrus.infra.emf.utils.ServiceUtilsForEObject;
 import org.eclipse.papyrus.infra.siriusdiag.representation.architecture.Activator;
-import org.eclipse.papyrus.model2doc.emf.documentstructuretemplate.DocumentTemplate;
-import org.eclipse.papyrus.infra.siriusdiag.ui.modelresource.DocumentTemplateModel;
+import org.eclipse.papyrus.infra.siriusdiag.ui.modelresource.SiriusDiagramModel;
+import org.eclipse.sirius.diagram.DSemanticDiagram;
 
 /**
- * Abstract Command allowing to create a {@link DocumentTemplate}
+ * Abstract Command allowing to create a {@link DSemanticDiagram}
  */
 public abstract class AbstractCreatePapyrusEditorViewCommand<T extends EObject> extends RecordingCommand {
 
@@ -123,7 +123,7 @@ public abstract class AbstractCreatePapyrusEditorViewCommand<T extends EObject> 
 	 * @param docTemplate
 	 *            the document template to save
 	 */
-	protected final void attachToResource(final EObject modelElement, final DocumentTemplate docTemplate) {
+	protected final void attachToResource(final EObject modelElement, final DSemanticDiagram docTemplate) {
 		final ServicesRegistry sReg = getServiceRegistry(modelElement);
 		if (sReg == null) {
 			return;
@@ -133,11 +133,11 @@ public abstract class AbstractCreatePapyrusEditorViewCommand<T extends EObject> 
 			return;
 		}
 
-		DocumentTemplateModel model = null;
+		SiriusDiagramModel model = null;
 		try {
-			model = (DocumentTemplateModel) modelSet.getModelChecked(DocumentTemplateModel.DOCUMENT_MODEL_ID);
+			model = (SiriusDiagramModel) modelSet.getModelChecked(SiriusDiagramModel.SIRIUS_DIAGRAM_MODEL_ID);
 		} catch (NotFoundException e) {
-			Activator.log.error("DocumentTemplateModel not found", e); //$NON-NLS-1$
+			Activator.log.error("SiriusDiagramModel not found", e); //$NON-NLS-1$
 			return;
 		}
 		model.addDocument(docTemplate, modelElement);
@@ -197,8 +197,8 @@ public abstract class AbstractCreatePapyrusEditorViewCommand<T extends EObject> 
 	 * @param template
 	 *            the document template
 	 */
-	protected final void openEditor(final DocumentTemplate template) {
-		final ServicesRegistry sReg = getServiceRegistry(template.getSemanticContext());
+	protected final void openEditor(final DSemanticDiagram template) {
+		final ServicesRegistry sReg = getServiceRegistry(template.getTarget());
 		if (null == sReg) {
 			return;
 		}

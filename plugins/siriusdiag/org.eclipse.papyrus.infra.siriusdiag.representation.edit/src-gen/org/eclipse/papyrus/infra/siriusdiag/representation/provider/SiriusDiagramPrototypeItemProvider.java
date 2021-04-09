@@ -21,13 +21,11 @@ import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
-
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 import org.eclipse.papyrus.infra.architecture.representation.provider.PapyrusRepresentationKindItemProvider;
-
-import org.eclipse.papyrus.infra.siriusdiag.representation.SiriusDiagramPrototype;
 import org.eclipse.papyrus.infra.siriusdiag.representation.RepresentationPackage;
+import org.eclipse.papyrus.infra.siriusdiag.representation.SiriusDiagramPrototype;
 
 /**
  * This is the item provider adapter for a {@link org.eclipse.papyrus.infra.siriusdiag.representation.SiriusDiagramPrototype} object.
@@ -60,7 +58,7 @@ public class SiriusDiagramPrototypeItemProvider extends PapyrusRepresentationKin
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
-			addDocumentTemplatePrototypePropertyDescriptor(object);
+			addSiriusDiagramPrototypePropertyDescriptor(object);
 			addCreationCommandClassPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
@@ -73,12 +71,12 @@ public class SiriusDiagramPrototypeItemProvider extends PapyrusRepresentationKin
 	 *
 	 * @generated
 	 */
-	protected void addDocumentTemplatePrototypePropertyDescriptor(Object object) {
+	protected void addSiriusDiagramPrototypePropertyDescriptor(Object object) {
 		itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
-				getString("_UI_PapyrusDocumentPrototype_documentTemplatePrototype_feature"), //$NON-NLS-1$
-				getString("_UI_PropertyDescriptor_description", "_UI_PapyrusDocumentPrototype_documentTemplatePrototype_feature", "_UI_PapyrusDocumentPrototype_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-				RepresentationPackage.Literals.PAPYRUS_DOCUMENT_PROTOTYPE__DOCUMENT_TEMPLATE_PROTOTYPE,
+				getString("_UI_SiriusDiagramPrototype_documentTemplatePrototype_feature"), //$NON-NLS-1$
+				getString("_UI_PropertyDescriptor_description", "_UI_SiriusDiagramPrototype_documentTemplatePrototype_feature", "_UI_SiriusDiagramPrototype_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				RepresentationPackage.Literals.SIRIUS_DIAGRAM_PROTOTYPE__SIRIUS_DIAGRAM_PROTOTYPE,
 				true,
 				false,
 				true,
@@ -97,9 +95,9 @@ public class SiriusDiagramPrototypeItemProvider extends PapyrusRepresentationKin
 	protected void addCreationCommandClassPropertyDescriptor(Object object) {
 		itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
-				getString("_UI_PapyrusDocumentPrototype_creationCommandClass_feature"), //$NON-NLS-1$
-				getString("_UI_PropertyDescriptor_description", "_UI_PapyrusDocumentPrototype_creationCommandClass_feature", "_UI_PapyrusDocumentPrototype_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-				RepresentationPackage.Literals.PAPYRUS_DOCUMENT_PROTOTYPE__CREATION_COMMAND_CLASS,
+				getString("_UI_SiriusDiagramPrototype_creationCommandClass_feature"), //$NON-NLS-1$
+				getString("_UI_PropertyDescriptor_description", "_UI_SiriusDiagramPrototype_creationCommandClass_feature", "_UI_SiriusDiagramPrototype_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				RepresentationPackage.Literals.SIRIUS_DIAGRAM_PROTOTYPE__CREATION_COMMAND_CLASS,
 				true,
 				false,
 				false,
@@ -109,7 +107,7 @@ public class SiriusDiagramPrototypeItemProvider extends PapyrusRepresentationKin
 	}
 
 	/**
-	 * This returns PapyrusDocumentPrototype.gif.
+	 * This returns SiriusDiagramPrototype.gif.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
@@ -117,7 +115,7 @@ public class SiriusDiagramPrototypeItemProvider extends PapyrusRepresentationKin
 	 */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/PapyrusDocumentPrototype")); //$NON-NLS-1$
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/SiriusDiagramPrototype")); //$NON-NLS-1$
 	}
 
 	/**
@@ -141,8 +139,8 @@ public class SiriusDiagramPrototypeItemProvider extends PapyrusRepresentationKin
 	@Override
 	public String getText(Object object) {
 		String label = ((SiriusDiagramPrototype) object).getName();
-		return label == null || label.length() == 0 ? getString("_UI_PapyrusDocumentPrototype_type") : //$NON-NLS-1$
-				getString("_UI_PapyrusDocumentPrototype_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
+		return label == null || label.length() == 0 ? getString("_UI_SiriusDiagramPrototype_type") : //$NON-NLS-1$
+				getString("_UI_SiriusDiagramPrototype_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 
@@ -159,7 +157,7 @@ public class SiriusDiagramPrototypeItemProvider extends PapyrusRepresentationKin
 		updateChildren(notification);
 
 		switch (notification.getFeatureID(SiriusDiagramPrototype.class)) {
-		case RepresentationPackage.PAPYRUS_DOCUMENT_PROTOTYPE__CREATION_COMMAND_CLASS:
+		case RepresentationPackage.SIRIUS_DIAGRAM_PROTOTYPE__CREATION_COMMAND_CLASS:
 			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 			return;
 		}

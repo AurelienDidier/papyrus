@@ -13,7 +13,7 @@
                tooltip="The Sirius Diagram Template Menu">
             <dynamic
                   class="org.eclipse.papyrus.infra.siriusdiag.ui.internal.menus.SiriusDiagramDynamicContribution"
-                  id="org.eclipse.papyrus.infra.siriusdiag.ui.internal.menus.DocumentTemplateDynamicContribution">
+                  id="org.eclipse.papyrus.infra.siriusdiag.ui.internal.menus.DSemanticDiagramDynamicContribution">
             </dynamic>
          </menu>
       </menuContribution>
@@ -41,7 +41,7 @@
    <extension
          point="org.eclipse.core.runtime.adapters">
       <factory
-            adaptableType="org.eclipse.papyrus.model2doc.emf.documentstructuretemplate.DocumentTemplate"
+            adaptableType="org.eclipse.sirius.diagram.DSemanticDiagram"
             class="org.eclipse.papyrus.infra.siriusdiag.ui.internal.adapter.SiriusDiagramViewAdapterFactory">
          <adapter
                type="org.eclipse.papyrus.infra.core.sasheditor.di.contentprovider.IOpenable">

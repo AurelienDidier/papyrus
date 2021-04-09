@@ -43,6 +43,6 @@ public class SiriusDiagramPropertySection extends AbstractEObjectAdvancedPropert
 	 */
 	@Override
 	public IPropertySource createPropertySource(Object object, IItemPropertySource itemPropertySource) {
-		return new DocumentTemplateStructurePropertySource(object, itemPropertySource);
+		return new SiriusDiagramStructurePropertySource(object, itemPropertySource);
 	}
 }

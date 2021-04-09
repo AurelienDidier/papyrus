@@ -56,7 +56,7 @@ public interface RepresentationPackage extends EPackage {
 	 *
 	 * @generated
 	 */
-	String eNS_URI = "http://www.eclipse.org/papyrus/model2doc/integration/1.0.0/emf/documentstructuretemplate/representation"; //$NON-NLS-1$
+	String eNS_URI = "http://www.eclipse.org/papyrus/sirius/integration/1.0.0/emf/siriusdiagram/representation"; //$NON-NLS-1$
 
 	/**
 	 * The package namespace name.
@@ -82,10 +82,10 @@ public interface RepresentationPackage extends EPackage {
 	 * <!-- end-user-doc -->
 	 *
 	 * @see org.eclipse.papyrus.infra.siriusdiag.representation.impl.SiriusDiagramPrototypeImpl
-	 * @see org.eclipse.papyrus.infra.siriusdiag.representation.impl.RepresentationPackageImpl#getPapyrusDocumentPrototype()
+	 * @see org.eclipse.papyrus.infra.siriusdiag.representation.impl.RepresentationPackageImpl#getSiriusDiagramPrototype()
 	 * @generated
 	 */
-	int PAPYRUS_DOCUMENT_PROTOTYPE = 0;
+	int SIRIUS_DIAGRAM_PROTOTYPE = 0;
 
 	/**
 	 * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -95,7 +95,7 @@ public interface RepresentationPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PAPYRUS_DOCUMENT_PROTOTYPE__ID = org.eclipse.papyrus.infra.architecture.representation.RepresentationPackage.PAPYRUS_REPRESENTATION_KIND__ID;
+	int SIRIUS_DIAGRAM_PROTOTYPE__ID = org.eclipse.papyrus.infra.architecture.representation.RepresentationPackage.PAPYRUS_REPRESENTATION_KIND__ID;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -105,7 +105,7 @@ public interface RepresentationPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PAPYRUS_DOCUMENT_PROTOTYPE__NAME = org.eclipse.papyrus.infra.architecture.representation.RepresentationPackage.PAPYRUS_REPRESENTATION_KIND__NAME;
+	int SIRIUS_DIAGRAM_PROTOTYPE__NAME = org.eclipse.papyrus.infra.architecture.representation.RepresentationPackage.PAPYRUS_REPRESENTATION_KIND__NAME;
 
 	/**
 	 * The feature id for the '<em><b>Description</b></em>' attribute.
@@ -115,7 +115,7 @@ public interface RepresentationPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PAPYRUS_DOCUMENT_PROTOTYPE__DESCRIPTION = org.eclipse.papyrus.infra.architecture.representation.RepresentationPackage.PAPYRUS_REPRESENTATION_KIND__DESCRIPTION;
+	int SIRIUS_DIAGRAM_PROTOTYPE__DESCRIPTION = org.eclipse.papyrus.infra.architecture.representation.RepresentationPackage.PAPYRUS_REPRESENTATION_KIND__DESCRIPTION;
 
 	/**
 	 * The feature id for the '<em><b>Qualified Name</b></em>' attribute.
@@ -125,7 +125,7 @@ public interface RepresentationPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PAPYRUS_DOCUMENT_PROTOTYPE__QUALIFIED_NAME = org.eclipse.papyrus.infra.architecture.representation.RepresentationPackage.PAPYRUS_REPRESENTATION_KIND__QUALIFIED_NAME;
+	int SIRIUS_DIAGRAM_PROTOTYPE__QUALIFIED_NAME = org.eclipse.papyrus.infra.architecture.representation.RepresentationPackage.PAPYRUS_REPRESENTATION_KIND__QUALIFIED_NAME;
 
 	/**
 	 * The feature id for the '<em><b>Icon</b></em>' attribute.
@@ -135,7 +135,7 @@ public interface RepresentationPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PAPYRUS_DOCUMENT_PROTOTYPE__ICON = org.eclipse.papyrus.infra.architecture.representation.RepresentationPackage.PAPYRUS_REPRESENTATION_KIND__ICON;
+	int SIRIUS_DIAGRAM_PROTOTYPE__ICON = org.eclipse.papyrus.infra.architecture.representation.RepresentationPackage.PAPYRUS_REPRESENTATION_KIND__ICON;
 
 	/**
 	 * The feature id for the '<em><b>Language</b></em>' container reference.
@@ -145,7 +145,7 @@ public interface RepresentationPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PAPYRUS_DOCUMENT_PROTOTYPE__LANGUAGE = org.eclipse.papyrus.infra.architecture.representation.RepresentationPackage.PAPYRUS_REPRESENTATION_KIND__LANGUAGE;
+	int SIRIUS_DIAGRAM_PROTOTYPE__LANGUAGE = org.eclipse.papyrus.infra.architecture.representation.RepresentationPackage.PAPYRUS_REPRESENTATION_KIND__LANGUAGE;
 
 	/**
 	 * The feature id for the '<em><b>Concerns</b></em>' reference list.
@@ -155,7 +155,7 @@ public interface RepresentationPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PAPYRUS_DOCUMENT_PROTOTYPE__CONCERNS = org.eclipse.papyrus.infra.architecture.representation.RepresentationPackage.PAPYRUS_REPRESENTATION_KIND__CONCERNS;
+	int SIRIUS_DIAGRAM_PROTOTYPE__CONCERNS = org.eclipse.papyrus.infra.architecture.representation.RepresentationPackage.PAPYRUS_REPRESENTATION_KIND__CONCERNS;
 
 	/**
 	 * The feature id for the '<em><b>Grayed Icon</b></em>' attribute.
@@ -165,7 +165,7 @@ public interface RepresentationPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PAPYRUS_DOCUMENT_PROTOTYPE__GRAYED_ICON = org.eclipse.papyrus.infra.architecture.representation.RepresentationPackage.PAPYRUS_REPRESENTATION_KIND__GRAYED_ICON;
+	int SIRIUS_DIAGRAM_PROTOTYPE__GRAYED_ICON = org.eclipse.papyrus.infra.architecture.representation.RepresentationPackage.PAPYRUS_REPRESENTATION_KIND__GRAYED_ICON;
 
 	/**
 	 * The feature id for the '<em><b>Parent</b></em>' reference.
@@ -175,7 +175,7 @@ public interface RepresentationPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PAPYRUS_DOCUMENT_PROTOTYPE__PARENT = org.eclipse.papyrus.infra.architecture.representation.RepresentationPackage.PAPYRUS_REPRESENTATION_KIND__PARENT;
+	int SIRIUS_DIAGRAM_PROTOTYPE__PARENT = org.eclipse.papyrus.infra.architecture.representation.RepresentationPackage.PAPYRUS_REPRESENTATION_KIND__PARENT;
 
 	/**
 	 * The feature id for the '<em><b>Model Rules</b></em>' containment reference list.
@@ -185,7 +185,7 @@ public interface RepresentationPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PAPYRUS_DOCUMENT_PROTOTYPE__MODEL_RULES = org.eclipse.papyrus.infra.architecture.representation.RepresentationPackage.PAPYRUS_REPRESENTATION_KIND__MODEL_RULES;
+	int SIRIUS_DIAGRAM_PROTOTYPE__MODEL_RULES = org.eclipse.papyrus.infra.architecture.representation.RepresentationPackage.PAPYRUS_REPRESENTATION_KIND__MODEL_RULES;
 
 	/**
 	 * The feature id for the '<em><b>Owning Rules</b></em>' containment reference list.
@@ -195,7 +195,7 @@ public interface RepresentationPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PAPYRUS_DOCUMENT_PROTOTYPE__OWNING_RULES = org.eclipse.papyrus.infra.architecture.representation.RepresentationPackage.PAPYRUS_REPRESENTATION_KIND__OWNING_RULES;
+	int SIRIUS_DIAGRAM_PROTOTYPE__OWNING_RULES = org.eclipse.papyrus.infra.architecture.representation.RepresentationPackage.PAPYRUS_REPRESENTATION_KIND__OWNING_RULES;
 
 	/**
 	 * The feature id for the '<em><b>Implementation ID</b></em>' attribute.
@@ -205,7 +205,7 @@ public interface RepresentationPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PAPYRUS_DOCUMENT_PROTOTYPE__IMPLEMENTATION_ID = org.eclipse.papyrus.infra.architecture.representation.RepresentationPackage.PAPYRUS_REPRESENTATION_KIND__IMPLEMENTATION_ID;
+	int SIRIUS_DIAGRAM_PROTOTYPE__IMPLEMENTATION_ID = org.eclipse.papyrus.infra.architecture.representation.RepresentationPackage.PAPYRUS_REPRESENTATION_KIND__IMPLEMENTATION_ID;
 
 	/**
 	 * The feature id for the '<em><b>Document Template Prototype</b></em>' reference.
@@ -215,7 +215,7 @@ public interface RepresentationPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PAPYRUS_DOCUMENT_PROTOTYPE__DOCUMENT_TEMPLATE_PROTOTYPE = org.eclipse.papyrus.infra.architecture.representation.RepresentationPackage.PAPYRUS_REPRESENTATION_KIND_FEATURE_COUNT + 0;
+	int SIRIUS_DIAGRAM_PROTOTYPE__SIRIUS_DIAGRAM_PROTOTYPE = org.eclipse.papyrus.infra.architecture.representation.RepresentationPackage.PAPYRUS_REPRESENTATION_KIND_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Creation Command Class</b></em>' attribute.
@@ -225,7 +225,7 @@ public interface RepresentationPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PAPYRUS_DOCUMENT_PROTOTYPE__CREATION_COMMAND_CLASS = org.eclipse.papyrus.infra.architecture.representation.RepresentationPackage.PAPYRUS_REPRESENTATION_KIND_FEATURE_COUNT + 1;
+	int SIRIUS_DIAGRAM_PROTOTYPE__CREATION_COMMAND_CLASS = org.eclipse.papyrus.infra.architecture.representation.RepresentationPackage.PAPYRUS_REPRESENTATION_KIND_FEATURE_COUNT + 1;
 
 	/**
 	 * The number of structural features of the '<em>Sirius Diagram Prototype</em>' class.
@@ -235,7 +235,7 @@ public interface RepresentationPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PAPYRUS_DOCUMENT_PROTOTYPE_FEATURE_COUNT = org.eclipse.papyrus.infra.architecture.representation.RepresentationPackage.PAPYRUS_REPRESENTATION_KIND_FEATURE_COUNT + 2;
+	int SIRIUS_DIAGRAM_PROTOTYPE_FEATURE_COUNT = org.eclipse.papyrus.infra.architecture.representation.RepresentationPackage.PAPYRUS_REPRESENTATION_KIND_FEATURE_COUNT + 2;
 
 	/**
 	 * The operation id for the '<em>Is Valid Class</em>' operation.
@@ -245,7 +245,7 @@ public interface RepresentationPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PAPYRUS_DOCUMENT_PROTOTYPE___IS_VALID_CLASS__DIAGNOSTICCHAIN_MAP = org.eclipse.papyrus.infra.architecture.representation.RepresentationPackage.PAPYRUS_REPRESENTATION_KIND_OPERATION_COUNT + 0;
+	int SIRIUS_DIAGRAM_PROTOTYPE___IS_VALID_CLASS__DIAGNOSTICCHAIN_MAP = org.eclipse.papyrus.infra.architecture.representation.RepresentationPackage.PAPYRUS_REPRESENTATION_KIND_OPERATION_COUNT + 0;
 
 	/**
 	 * The number of operations of the '<em>Sirius Diagram Prototype</em>' class.
@@ -255,7 +255,7 @@ public interface RepresentationPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PAPYRUS_DOCUMENT_PROTOTYPE_OPERATION_COUNT = org.eclipse.papyrus.infra.architecture.representation.RepresentationPackage.PAPYRUS_REPRESENTATION_KIND_OPERATION_COUNT + 1;
+	int SIRIUS_DIAGRAM_PROTOTYPE_OPERATION_COUNT = org.eclipse.papyrus.infra.architecture.representation.RepresentationPackage.PAPYRUS_REPRESENTATION_KIND_OPERATION_COUNT + 1;
 
 
 	/**
@@ -267,19 +267,19 @@ public interface RepresentationPackage extends EPackage {
 	 * @see org.eclipse.papyrus.infra.siriusdiag.representation.SiriusDiagramPrototype
 	 * @generated
 	 */
-	EClass getPapyrusDocumentPrototype();
+	EClass getSiriusDiagramPrototype();
 
 	/**
-	 * Returns the meta object for the reference '{@link org.eclipse.papyrus.infra.siriusdiag.representation.SiriusDiagramPrototype#getDocumentTemplatePrototype <em>Document Template Prototype</em>}'.
+	 * Returns the meta object for the reference '{@link org.eclipse.papyrus.infra.siriusdiag.representation.SiriusDiagramPrototype#getSiriusDiagramPrototype <em>Document Template Prototype</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
 	 * @return the meta object for the reference '<em>Document Template Prototype</em>'.
-	 * @see org.eclipse.papyrus.infra.siriusdiag.representation.SiriusDiagramPrototype#getDocumentTemplatePrototype()
-	 * @see #getPapyrusDocumentPrototype()
+	 * @see org.eclipse.papyrus.infra.siriusdiag.representation.SiriusDiagramPrototype#getSiriusDiagramPrototype()
+	 * @see #getSiriusDiagramPrototype()
 	 * @generated
 	 */
-	EReference getPapyrusDocumentPrototype_DocumentTemplatePrototype();
+	EReference getSiriusDiagramPrototype_SiriusDiagramPrototype();
 
 	/**
 	 * Returns the meta object for the attribute '{@link org.eclipse.papyrus.infra.siriusdiag.representation.SiriusDiagramPrototype#getCreationCommandClass <em>Creation Command Class</em>}'.
@@ -288,10 +288,10 @@ public interface RepresentationPackage extends EPackage {
 	 *
 	 * @return the meta object for the attribute '<em>Creation Command Class</em>'.
 	 * @see org.eclipse.papyrus.infra.siriusdiag.representation.SiriusDiagramPrototype#getCreationCommandClass()
-	 * @see #getPapyrusDocumentPrototype()
+	 * @see #getSiriusDiagramPrototype()
 	 * @generated
 	 */
-	EAttribute getPapyrusDocumentPrototype_CreationCommandClass();
+	EAttribute getSiriusDiagramPrototype_CreationCommandClass();
 
 	/**
 	 * Returns the meta object for the '{@link org.eclipse.papyrus.infra.siriusdiag.representation.SiriusDiagramPrototype#isValidClass(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map) <em>Is Valid Class</em>}'
@@ -303,7 +303,7 @@ public interface RepresentationPackage extends EPackage {
 	 * @see org.eclipse.papyrus.infra.siriusdiag.representation.SiriusDiagramPrototype#isValidClass(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map)
 	 * @generated
 	 */
-	EOperation getPapyrusDocumentPrototype__IsValidClass__DiagnosticChain_Map();
+	EOperation getSiriusDiagramPrototype__IsValidClass__DiagnosticChain_Map();
 
 	/**
 	 * Returns the factory that creates the instances of the model.
@@ -336,10 +336,10 @@ public interface RepresentationPackage extends EPackage {
 		 * <!-- end-user-doc -->
 		 *
 		 * @see org.eclipse.papyrus.infra.siriusdiag.representation.impl.SiriusDiagramPrototypeImpl
-		 * @see org.eclipse.papyrus.infra.siriusdiag.representation.impl.RepresentationPackageImpl#getPapyrusDocumentPrototype()
+		 * @see org.eclipse.papyrus.infra.siriusdiag.representation.impl.RepresentationPackageImpl#getSiriusDiagramPrototype()
 		 * @generated
 		 */
-		EClass PAPYRUS_DOCUMENT_PROTOTYPE = eINSTANCE.getPapyrusDocumentPrototype();
+		EClass SIRIUS_DIAGRAM_PROTOTYPE = eINSTANCE.getSiriusDiagramPrototype();
 
 		/**
 		 * The meta object literal for the '<em><b>Document Template Prototype</b></em>' reference feature.
@@ -348,7 +348,7 @@ public interface RepresentationPackage extends EPackage {
 		 *
 		 * @generated
 		 */
-		EReference PAPYRUS_DOCUMENT_PROTOTYPE__DOCUMENT_TEMPLATE_PROTOTYPE = eINSTANCE.getPapyrusDocumentPrototype_DocumentTemplatePrototype();
+		EReference SIRIUS_DIAGRAM_PROTOTYPE__SIRIUS_DIAGRAM_PROTOTYPE = eINSTANCE.getSiriusDiagramPrototype_SiriusDiagramPrototype();
 
 		/**
 		 * The meta object literal for the '<em><b>Creation Command Class</b></em>' attribute feature.
@@ -357,7 +357,7 @@ public interface RepresentationPackage extends EPackage {
 		 *
 		 * @generated
 		 */
-		EAttribute PAPYRUS_DOCUMENT_PROTOTYPE__CREATION_COMMAND_CLASS = eINSTANCE.getPapyrusDocumentPrototype_CreationCommandClass();
+		EAttribute SIRIUS_DIAGRAM_PROTOTYPE__CREATION_COMMAND_CLASS = eINSTANCE.getSiriusDiagramPrototype_CreationCommandClass();
 
 		/**
 		 * The meta object literal for the '<em><b>Is Valid Class</b></em>' operation.
@@ -366,7 +366,7 @@ public interface RepresentationPackage extends EPackage {
 		 *
 		 * @generated
 		 */
-		EOperation PAPYRUS_DOCUMENT_PROTOTYPE___IS_VALID_CLASS__DIAGNOSTICCHAIN_MAP = eINSTANCE.getPapyrusDocumentPrototype__IsValidClass__DiagnosticChain_Map();
+		EOperation SIRIUS_DIAGRAM_PROTOTYPE___IS_VALID_CLASS__DIAGNOSTICCHAIN_MAP = eINSTANCE.getSiriusDiagramPrototype__IsValidClass__DiagnosticChain_Map();
 
 	}
 

@@ -24,11 +24,11 @@ public class Messages extends NLS {
 
 	private static final String BUNDLE_NAME = "org.eclipse.papyrus.infra.siriusdiag.modelexplorer.internal.messages.messages"; //$NON-NLS-1$
 
-	public static String RenameDocumentTemplateHandler_NewName;
+	public static String RenameSiriusDiagramHandler_NewName;
 
-	public static String RenameDocumentTemplateHandler_RenameAnExistingDocumentTemplate;
+	public static String RenameSiriusDiagramHandler_RenameAnExistingDSemanticDiagram;
 
-	public static String RenameDocumentTemplateHandler_Label_DialogTitle;
+	public static String RenameSiriusDiagramHandler_Label_DialogTitle;
 
 	static {
 		// initialize resource bundle

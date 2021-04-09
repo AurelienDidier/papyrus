@@ -15,14 +15,12 @@ package org.eclipse.papyrus.infra.siriusdiag.representation.util;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
-
 import org.eclipse.emf.ecore.util.Switch;
-
 import org.eclipse.papyrus.infra.architecture.representation.PapyrusRepresentationKind;
-
 import org.eclipse.papyrus.infra.core.architecture.ADElement;
 import org.eclipse.papyrus.infra.core.architecture.RepresentationKind;
-import org.eclipse.papyrus.infra.siriusdiag.representation.*;
+import org.eclipse.papyrus.infra.siriusdiag.representation.RepresentationPackage;
+import org.eclipse.papyrus.infra.siriusdiag.representation.SiriusDiagramPrototype;
 
 /**
  * <!-- begin-user-doc -->
@@ -87,9 +85,9 @@ public class RepresentationSwitch<T> extends Switch<T> {
 	@Override
 	protected T doSwitch(int classifierID, EObject theEObject) {
 		switch (classifierID) {
-		case RepresentationPackage.PAPYRUS_DOCUMENT_PROTOTYPE: {
+		case RepresentationPackage.SIRIUS_DIAGRAM_PROTOTYPE: {
 			SiriusDiagramPrototype siriusDiagramPrototype = (SiriusDiagramPrototype) theEObject;
-			T result = casePapyrusDocumentPrototype(siriusDiagramPrototype);
+			T result = caseSiriusDiagramPrototype(siriusDiagramPrototype);
 			if (result == null) {
 				result = casePapyrusRepresentationKind(siriusDiagramPrototype);
 			}
@@ -122,7 +120,7 @@ public class RepresentationSwitch<T> extends Switch<T> {
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T casePapyrusDocumentPrototype(SiriusDiagramPrototype object) {
+	public T caseSiriusDiagramPrototype(SiriusDiagramPrototype object) {
 		return null;
 	}
 

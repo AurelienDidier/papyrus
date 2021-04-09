@@ -14,10 +14,10 @@
 package org.eclipse.papyrus.infra.siriusdiag.representation;
 
 import java.util.Map;
+
 import org.eclipse.emf.common.util.DiagnosticChain;
 import org.eclipse.papyrus.infra.architecture.representation.PapyrusRepresentationKind;
-
-import org.eclipse.papyrus.model2doc.emf.documentstructuretemplate.DocumentTemplatePrototype;
+import org.eclipse.sirius.diagram.DSemanticDiagram;
 
 /**
  * <!-- begin-user-doc -->
@@ -25,18 +25,18 @@ import org.eclipse.papyrus.model2doc.emf.documentstructuretemplate.DocumentTempl
  * <!-- end-user-doc -->
  *
  * <!-- begin-model-doc -->
- * This class allows to reference the DocumentTemplatePrototype to use to create a new DocumentTemplate
+ * This class allows to reference the SiriusDiagramPrototype to use to create a new Sirius Diagram
  * <!-- end-model-doc -->
  *
  * <p>
  * The following features are supported:
  * </p>
  * <ul>
- * <li>{@link org.eclipse.papyrus.infra.siriusdiag.representation.SiriusDiagramPrototype#getDocumentTemplatePrototype <em>Document Template Prototype</em>}</li>
+ * <li>{@link org.eclipse.papyrus.infra.siriusdiag.representation.SiriusDiagramPrototype#getSiriusDiagramPrototype <em>Document Template Prototype</em>}</li>
  * <li>{@link org.eclipse.papyrus.infra.siriusdiag.representation.SiriusDiagramPrototype#getCreationCommandClass <em>Creation Command Class</em>}</li>
  * </ul>
  *
- * @see org.eclipse.papyrus.infra.siriusdiag.representation.RepresentationPackage#getPapyrusDocumentPrototype()
+ * @see org.eclipse.papyrus.infra.siriusdiag.representation.RepresentationPackage#getSiriusDiagramPrototype()
  * @model
  * @generated
  */
@@ -50,40 +50,40 @@ public interface SiriusDiagramPrototype extends PapyrusRepresentationKind {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * <!-- begin-model-doc -->
-	 * This feature references the DocumentTemplatePrototype to use to create a new DocumentTemplate
+	 * This feature references the SiriusDiagramPrototype to use to create a new Sirius Diagram
 	 * <!-- end-model-doc -->
 	 *
 	 * @return the value of the '<em>Document Template Prototype</em>' reference.
-	 * @see #setDocumentTemplatePrototype(DocumentTemplatePrototype)
-	 * @see org.eclipse.papyrus.infra.siriusdiag.representation.RepresentationPackage#getPapyrusDocumentPrototype_DocumentTemplatePrototype()
+	 * @see #setSiriusDiagramPrototype(SiriusDiagramPrototype)
+	 * @see org.eclipse.papyrus.infra.siriusdiag.representation.RepresentationPackage#getSiriusDiagramPrototype_SiriusDiagramPrototype()
 	 * @model required="true"
 	 * @generated
 	 */
-	DocumentTemplatePrototype getDocumentTemplatePrototype();
+	DSemanticDiagram getSiriusDiagramPrototype();
 
 	/**
-	 * Sets the value of the '{@link org.eclipse.papyrus.infra.siriusdiag.representation.SiriusDiagramPrototype#getDocumentTemplatePrototype <em>Document Template Prototype</em>}' reference.
+	 * Sets the value of the '{@link org.eclipse.papyrus.infra.siriusdiag.representation.SiriusDiagramPrototype#getSiriusDiagramPrototype <em>Document Template Prototype</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
 	 * @param value
 	 *            the new value of the '<em>Document Template Prototype</em>' reference.
-	 * @see #getDocumentTemplatePrototype()
+	 * @see #getSiriusDiagramPrototype()
 	 * @generated
 	 */
-	void setDocumentTemplatePrototype(DocumentTemplatePrototype value);
+	void setSiriusDiagramPrototype(DSemanticDiagram value);
 
 	/**
 	 * Returns the value of the '<em><b>Creation Command Class</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * <!-- begin-model-doc -->
-	 * This feature allows to define the class to use to create the new document. The class must implements ICreateDocumentTemplateEditorCommand.
+	 * This feature allows to define the class to use to create the new document. The class must implements ICreateDSemanticDiagramEditorCommand.
 	 * <!-- end-model-doc -->
 	 *
 	 * @return the value of the '<em>Creation Command Class</em>' attribute.
 	 * @see #setCreationCommandClass(String)
-	 * @see org.eclipse.papyrus.infra.siriusdiag.representation.RepresentationPackage#getPapyrusDocumentPrototype_CreationCommandClass()
+	 * @see org.eclipse.papyrus.infra.siriusdiag.representation.RepresentationPackage#getSiriusDiagramPrototype_CreationCommandClass()
 	 * @model required="true"
 	 * @generated
 	 */
@@ -113,4 +113,4 @@ public interface SiriusDiagramPrototype extends PapyrusRepresentationKind {
 	 */
 	boolean isValidClass(DiagnosticChain chain, Map<Object, Object> context);
 
-} // PapyrusDocumentPrototype
+} // SiriusDiagramPrototype

@@ -18,7 +18,7 @@ import org.eclipse.gmf.runtime.common.ui.services.parser.IParser;
 import org.eclipse.papyrus.infra.gmfdiag.extensionpoints.editors.configuration.AbstractBasicDirectEditorConfiguration;
 import org.eclipse.papyrus.infra.internationalization.utils.utils.LabelInternationalizationPreferencesUtils;
 import org.eclipse.papyrus.infra.internationalization.utils.utils.LabelInternationalizationUtils;
-import org.eclipse.papyrus.model2doc.emf.documentstructuretemplate.DocumentTemplate;
+import org.eclipse.sirius.diagram.DSemanticDiagram;
 
 /**
  * This class provides a Specific direct editor configuration to rename Document.
@@ -36,9 +36,9 @@ public class SiriusDiagramDirectEditorConfiguration extends AbstractBasicDirectE
 	 */
 	public boolean isLabelSet(final Object objectToEdit) {
 		boolean result = false;
-		if (objectToEdit instanceof DocumentTemplate) {
-			final String documentLabel = LabelInternationalizationUtils.getLabelWithoutSubstract(((DocumentTemplate) objectToEdit), true);
-			result = null != documentLabel && LabelInternationalizationPreferencesUtils.getInternationalizationPreference(((DocumentTemplate) objectToEdit));
+		if (objectToEdit instanceof DSemanticDiagram) {
+			final String documentLabel = LabelInternationalizationUtils.getLabelWithoutSubstract(((DSemanticDiagram) objectToEdit), true);
+			result = null != documentLabel && LabelInternationalizationPreferencesUtils.getInternationalizationPreference(((DSemanticDiagram) objectToEdit));
 		}
 		return result;
 	}
@@ -49,12 +49,12 @@ public class SiriusDiagramDirectEditorConfiguration extends AbstractBasicDirectE
 	@Override
 	public String getTextToEdit(final Object objectToEdit) {
 		String result = null;
-		if (objectToEdit instanceof DocumentTemplate) {
-			final String documentLabel = LabelInternationalizationUtils.getLabelWithoutSubstract(((DocumentTemplate) objectToEdit), true);
-			if (null != documentLabel && LabelInternationalizationPreferencesUtils.getInternationalizationPreference(((DocumentTemplate) objectToEdit))) {
+		if (objectToEdit instanceof DSemanticDiagram) {
+			final String documentLabel = LabelInternationalizationUtils.getLabelWithoutSubstract(((DSemanticDiagram) objectToEdit), true);
+			if (null != documentLabel && LabelInternationalizationPreferencesUtils.getInternationalizationPreference(((DSemanticDiagram) objectToEdit))) {
 				result = documentLabel;
 			} else {
-				result = ((DocumentTemplate) objectToEdit).getName();
+				result = ((DSemanticDiagram) objectToEdit).getName();
 			}
 		}
 

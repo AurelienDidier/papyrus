@@ -16,9 +16,8 @@ package org.eclipse.papyrus.infra.siriusdiag.modelexplorer.internal.commands;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
-import org.eclipse.papyrus.infra.internationalization.utils.utils.LabelInternationalizationUtils;
-import org.eclipse.papyrus.model2doc.emf.documentstructuretemplate.DocumentTemplate;
 import org.eclipse.papyrus.views.modelexplorer.commands.RenameLabelCommand;
+import org.eclipse.sirius.diagram.DSemanticDiagram;
 
 public class RenameSiriusDiagramLabelCommand extends RenameLabelCommand {
 
@@ -48,8 +47,8 @@ public class RenameSiriusDiagramLabelCommand extends RenameLabelCommand {
 	 */
 	@Override
 	protected void renameLabel(EObject element, String newLabel) {
-		if (element instanceof DocumentTemplate) {
-			LabelInternationalizationUtils.setLabel(element, newLabel, null);
+		if (element instanceof DSemanticDiagram) {
+			// TODO:LabelInternationalizationUtils.setLabel(element, newLabel, null);
 		}
 	}
 

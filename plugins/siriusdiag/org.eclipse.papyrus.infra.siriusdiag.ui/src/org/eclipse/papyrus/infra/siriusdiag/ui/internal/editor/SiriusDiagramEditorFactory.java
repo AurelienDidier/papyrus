@@ -28,7 +28,7 @@ import org.eclipse.papyrus.infra.siriusdiag.ui.Activator;
 import org.eclipse.papyrus.infra.siriusdiag.ui.internal.provider.SiriusDiagramLabelProvider;
 import org.eclipse.papyrus.infra.ui.extension.diagrameditor.AbstractEditorFactory;
 import org.eclipse.papyrus.infra.ui.multidiagram.actionbarcontributor.ActionBarContributorRegistry;
-import org.eclipse.papyrus.model2doc.emf.documentstructuretemplate.DocumentTemplate;
+import org.eclipse.sirius.diagram.DSemanticDiagram;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.part.EditorActionBarContributor;
@@ -81,7 +81,7 @@ public class SiriusDiagramEditorFactory extends AbstractEditorFactory {
 	 */
 	@Override
 	public boolean isPageModelFactoryFor(Object pageIdentifier) {
-		return pageIdentifier instanceof DocumentTemplate;
+		return pageIdentifier instanceof DSemanticDiagram;
 	}
 
 	/**
@@ -104,7 +104,7 @@ public class SiriusDiagramEditorFactory extends AbstractEditorFactory {
 		/**
 		 * The raw model stored in the SashProvider.
 		 */
-		private DocumentTemplate rawModel;
+		private DSemanticDiagram rawModel;
 
 		/**
 		 *
@@ -113,7 +113,7 @@ public class SiriusDiagramEditorFactory extends AbstractEditorFactory {
 		public DocumentViewEditorModel(Object pageIdentifier, ServicesRegistry servicesRegistry, ILabelProvider labels) {
 			super(labels);
 
-			this.rawModel = (DocumentTemplate) pageIdentifier;
+			this.rawModel = (DSemanticDiagram) pageIdentifier;
 			this.servicesRegistry = servicesRegistry;
 		}
 
@@ -129,7 +129,7 @@ public class SiriusDiagramEditorFactory extends AbstractEditorFactory {
 		public IEditorPart createIEditorPart() throws PartInitException {
 			try {
 
-				Constructor<?> c = getDiagramClass().getConstructor(ServicesRegistry.class, DocumentTemplate.class);
+				Constructor<?> c = getDiagramClass().getConstructor(ServicesRegistry.class, DSemanticDiagram.class);
 				IEditorPart newEditor = (IEditorPart) c.newInstance(this.servicesRegistry, this.rawModel);
 				this.editor = newEditor;
 				return this.editor;

@@ -46,7 +46,7 @@ public class SiriusDiagramQuickFormatHandler extends AbstractSiriusDiagramComman
 	protected Command getCommand(ExecutionEvent event) {
 		String parameter = event.getParameter(NamePropertyTester.PARAMETER_ID);
 
-		SiriusDiagramQuickFormatAction action = new SiriusDiagramQuickFormatAction(parameter, new ArrayList<EObject>(getSelectedDocumentTemplates()));
+		SiriusDiagramQuickFormatAction action = new SiriusDiagramQuickFormatAction(parameter, new ArrayList<EObject>(getSelectedDSemanticDiagrams()));
 		setBaseEnabled(action.isEnabled());
 		if (action.isEnabled()) {
 			return action.getCommand();
@@ -80,7 +80,7 @@ public class SiriusDiagramQuickFormatHandler extends AbstractSiriusDiagramComman
 	 */
 	@Override
 	protected boolean computeEnabled(IEvaluationContext context) {
-		return !getSelectedDocumentTemplates().isEmpty();
+		return !getSelectedDSemanticDiagrams().isEmpty();
 	}
 
 }

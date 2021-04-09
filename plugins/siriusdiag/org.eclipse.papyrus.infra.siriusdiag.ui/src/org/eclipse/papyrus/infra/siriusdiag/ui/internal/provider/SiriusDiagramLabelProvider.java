@@ -20,7 +20,7 @@ import org.eclipse.papyrus.infra.emf.utils.EMFHelper;
 import org.eclipse.papyrus.infra.services.labelprovider.service.IFilteredLabelProvider;
 import org.eclipse.papyrus.infra.siriusdiag.ui.Activator;
 import org.eclipse.papyrus.infra.viewpoints.policy.ViewPrototypeLabelProvider;
-import org.eclipse.papyrus.model2doc.emf.documentstructuretemplate.DocumentTemplate;
+import org.eclipse.sirius.diagram.DSemanticDiagram;
 import org.eclipse.swt.graphics.Image;
 
 /**
@@ -33,7 +33,7 @@ public class SiriusDiagramLabelProvider extends ViewPrototypeLabelProvider imple
 		if (object instanceof IStructuredSelection) {
 			return accept((IStructuredSelection) object);
 		}
-		return EMFHelper.getEObject(object) instanceof DocumentTemplate;
+		return EMFHelper.getEObject(object) instanceof DSemanticDiagram;
 	}
 
 	/**
@@ -60,8 +60,8 @@ public class SiriusDiagramLabelProvider extends ViewPrototypeLabelProvider imple
 	@Override
 	protected String getName(final EObject object) {
 		String value = null;
-		if (object instanceof DocumentTemplate) {
-			value = ((DocumentTemplate) object).getName(); // TODO internationalization to manage here
+		if (object instanceof DSemanticDiagram) {
+			value = ((DSemanticDiagram) object).getName(); // TODO internationalization to manage here
 		}
 		return null != value ? value : super.getName(object);
 	}

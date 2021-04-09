@@ -14,20 +14,24 @@
 
 package org.eclipse.papyrus.infra.siriusdiag.ui.internal.viewpoint;
 
+import org.eclipse.emf.common.command.AbstractCommand;
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.papyrus.infra.viewpoints.policy.ViewPrototype;
-import org.eclipse.papyrus.model2doc.emf.documentstructuretemplate.DocumentTemplate;
+import org.eclipse.papyrus.infra.core.resource.ModelSet;
+import org.eclipse.papyrus.infra.core.services.ServiceException;
+import org.eclipse.papyrus.infra.core.services.ServicesRegistry;
+import org.eclipse.papyrus.infra.emf.utils.ServiceUtilsForEObject;
+import org.eclipse.papyrus.infra.siriusdiag.representation.ICreateSiriusDiagramEditorCommand;
 import org.eclipse.papyrus.infra.siriusdiag.representation.SiriusDiagramPrototype;
-import org.eclipse.papyrus.infra.siriusdiag.representation.command.ICreateDocumentTemplateEditorCommand;
+import org.eclipse.papyrus.infra.siriusdiag.ui.Activator;
+import org.eclipse.papyrus.infra.viewpoints.policy.ViewPrototype;
+import org.eclipse.sirius.diagram.DSemanticDiagram;
 
 /**
  * Represents a prototype of Document Template View for the viewpoints infrastructure.
  *
  */
-// TODO : this class is internal, but exported and used in the JUnit tests.
-// We must move it.
-public class SiriusDiagramViewPrototype extends ViewPrototype implements ExtendedViewPrototype<DocumentTemplate> {
+public class SiriusDiagramViewPrototype extends ViewPrototype implements ExtendedViewPrototype<DSemanticDiagram> {
 
 	private final ICreateSiriusDiagramEditorCommand command;
 
@@ -86,80 +90,28 @@ public class SiriusDiagramViewPrototype extends ViewPrototype implements Extende
 	 */
 	@Override
 	public boolean instantiateOn(EObject owner, String name) {
-		return instantiateOn(owner, name, true);
+		if (this.command != null) {
+			ServicesRegistry registry;
+			try {
+				registry = ServiceUtilsForEObject.getInstance().getServiceRegistry(owner);
+			} catch (ServiceException ex) {
+				Activator.log.error(ex);
+				return false;
+			}
+			ModelSet modelSet;
+			try {
+				modelSet = registry.getService(ModelSet.class);
+			} catch (ServiceException ex) {
+				Activator.log.error(ex);
+				return false;
+			}
+			Object result = this.command.execute(UNAVAILABLE_VIEW, name, owner, isOwnerReassignable());
+			return result != null;
+		}
+		return false;
+
 	}
 
-	/**
-	 * @see org.eclipse.papyrus.infra.viewpoints.policy.ViewPrototype#getCommandChangeOwner(org.eclipse.emf.ecore.EObject, org.eclipse.emf.ecore.EObject)
-	 *
-	 * @param view
-	 * @param target
-	 * @return
-	 */
-	@Override
-	public Command getCommandChangeOwner(EObject view, EObject target) {
-		// TODO
-		throw new UnsupportedOperationException();
-		// final Document document = (Document) view;
-		// final EObject previous = document.getContext();
-		// return new AbstractCommand("Change document onwer element") {
-		// @Override
-		// public void execute() {
-		// document.setOwner(target);
-		// }
-		//
-		// @Override
-		// public void undo() {
-		// document.setOwner(previous);
-		// }
-		//
-		// @Override
-		// public void redo() {
-		// document.setOwner(target);
-		// }
-		//
-		// @Override
-		// protected boolean prepare() {
-		// return true;
-		// }
-		// };
-	}
-
-	/**
-	 * @see org.eclipse.papyrus.infra.viewpoints.policy.ViewPrototype#getCommandChangeRoot(org.eclipse.emf.ecore.EObject, org.eclipse.emf.ecore.EObject)
-	 *
-	 * @param view
-	 * @param target
-	 * @return
-	 */
-	@Override
-	public Command getCommandChangeRoot(EObject view, EObject target) {
-		throw new UnsupportedOperationException();
-
-		// final Document document = (Document) view;
-		// final EObject previous = document.getContext();
-		// return new AbstractCommand("Change document root element") {
-		// @Override
-		// public void execute() {
-		// document.setContext(target);
-		// }
-		//
-		// @Override
-		// public void undo() {
-		// document.setContext(previous);
-		// }
-		//
-		// @Override
-		// public void redo() {
-		// document.setContext(target);
-		// }
-		//
-		// @Override
-		// protected boolean prepare() {
-		// return true;
-		// }
-		// };
-	}
 
 	/**
 	 * @see org.eclipse.papyrus.infra.viewpoints.policy.ViewPrototype#getOwnerOf(org.eclipse.emf.ecore.EObject)
@@ -170,7 +122,7 @@ public class SiriusDiagramViewPrototype extends ViewPrototype implements Extende
 	@Override
 	public EObject getOwnerOf(EObject view) {
 		// it is graphical context
-		return ((DocumentTemplate) view).getGraphicalContext();
+		return ((DSemanticDiagram) view).eContainer();// TODO: test if eContainer() or root.
 	}
 
 	/**
@@ -182,11 +134,11 @@ public class SiriusDiagramViewPrototype extends ViewPrototype implements Extende
 	@Override
 	public EObject getRootOf(EObject view) {
 		// it is semantic context
-		return ((DocumentTemplate) view).getSemanticContext();
+		return ((DSemanticDiagram) view).getTarget();
 	}
 
 	/**
-	 * @see org.eclipse.papyrus.infra.siriusdiag.ui.internal.viewpoint.ExtendedViewPrototype#instantiateOn(org.eclipse.emf.ecore.EObject, org.eclipse.emf.ecore.EObject, java.lang.String, boolean)
+	 * @see org.eclipse.papyrus.sirius.integration.emf.siriusdiagram.ui.internal.viewpoint.ExtendedViewPrototype#instantiateOn(org.eclipse.emf.ecore.EObject, org.eclipse.emf.ecore.EObject, java.lang.String, boolean)
 	 *
 	 * @param semanticOwner
 	 * @param graphicalOwner
@@ -195,8 +147,79 @@ public class SiriusDiagramViewPrototype extends ViewPrototype implements Extende
 	 * @return
 	 */
 	@Override
-	public DocumentTemplate instantiateOn(final EObject semanticOwner, final EObject graphicalOwner, final String name, final boolean openCreatedView) {
+	public DSemanticDiagram instantiateOn(final EObject semanticOwner, final EObject graphicalOwner, final String name, final boolean openCreatedView) {
 		return command.execute(this, name, semanticOwner, graphicalOwner, openCreatedView);
+	}
+
+
+
+	@Override
+	public Command getCommandChangeRoot(EObject view, final EObject target) {
+		final DSemanticDiagram diagram = (DSemanticDiagram) view;
+		final EObject previous = diagram.getTarget();
+		return new AbstractCommand("Change diagram root element") {
+			@Override
+			public void execute() {
+				diagram.setTarget(target);
+			}
+
+			@Override
+			public void undo() {
+				diagram.setTarget(previous);
+			}
+
+			@Override
+			public void redo() {
+				diagram.setTarget(target);
+			}
+
+			@Override
+			protected boolean prepare() {
+				return true;
+			}
+		};
+	}
+
+	/**
+	 * @since 3.0
+	 */
+	@Override
+	public SiriusDiagramPrototype getRepresentationKind() {
+		return (SiriusDiagramPrototype) representationKind;
+	}
+
+	/**
+	 * @see org.eclipse.papyrus.infra.viewpoints.policy.ViewPrototype#getCommandChangeOwner(org.eclipse.emf.ecore.EObject, org.eclipse.emf.ecore.EObject)
+	 *
+	 * @param view
+	 * @param target
+	 * @return
+	 */
+	@Override
+	public Command getCommandChangeOwner(EObject view, final EObject target) {
+		final DSemanticDiagram diagram = (DSemanticDiagram) view;
+		final EObject previous = diagram.getTarget();
+		return new AbstractCommand("Change diagram owner") {
+			@Override
+			public void execute() {
+				// DiagramUtils.setOwner(diagram, target);
+			}
+
+			@Override
+			public void undo() {
+				// DiagramUtils.setOwner(diagram, previous);
+			}
+
+			@Override
+			public void redo() {
+				// DiagramUtils.setOwner(diagram, target);
+			}
+
+			@Override
+			protected boolean prepare() {
+				return true;
+			}
+		};
 	}
 
 }

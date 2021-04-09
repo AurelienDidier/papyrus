@@ -17,12 +17,12 @@ package org.eclipse.papyrus.infra.siriusdiag.representation;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.papyrus.infra.viewpoints.policy.ViewPrototype;
-import org.eclipse.papyrus.model2doc.emf.documentstructuretemplate.DocumentTemplate;
+import org.eclipse.sirius.diagram.DSemanticDiagram;
 
 
 /**
  *
- * This interface must be implemented by the creation command registered in the architecture framework, to be able to create new DocumentTemplate
+ * This interface must be implemented by the creation command registered in the architecture framework, to be able to create new Sirius Diagram
  *
  */
 public interface ICreateSiriusDiagramEditorCommand {
@@ -30,9 +30,9 @@ public interface ICreateSiriusDiagramEditorCommand {
 	/**
 	 *
 	 * @param prototype
-	 *            a view prototype (should be a PapyrusDocumentTemplateViewPrototype)
+	 *            a view prototype (should be a PapyrusDSemanticDiagramViewPrototype)
 	 * @param name
-	 *            the name of the new DocumentTemplate to create
+	 *            the name of the new Sirius Diagram to create
 	 * @param semanticContext
 	 *            the semantic context
 	 * @param open
@@ -40,14 +40,14 @@ public interface ICreateSiriusDiagramEditorCommand {
 	 * @return
 	 *         the created document template
 	 */
-	public DocumentTemplate execute(final ViewPrototype prototype, final String name, final EObject semanticContext, boolean open);
+	public DSemanticDiagram execute(final ViewPrototype prototype, final String name, final EObject semanticContext, boolean open);
 
 	/**
 	 *
 	 * @param prototype
-	 *            a view prototype (should be a PapyrusDocumentTemplateViewPrototype)
+	 *            a view prototype (should be a PapyrusDSemanticDiagramViewPrototype)
 	 * @param name
-	 *            the name of the new DocumentTemplate to create
+	 *            the name of the new Sirius Diagram to create
 	 * @param semanticContext
 	 *            the semantic context
 	 * @param graphicalContext
@@ -57,6 +57,6 @@ public interface ICreateSiriusDiagramEditorCommand {
 	 * @return
 	 *         the created document template
 	 */
-	public DocumentTemplate execute(final ViewPrototype prototype, final String name, final EObject semanticContext, final EObject graphicalContext, final boolean open);
+	public DSemanticDiagram execute(final ViewPrototype prototype, final String name, final EObject semanticContext, final EObject graphicalContext, final boolean open);
 
 }

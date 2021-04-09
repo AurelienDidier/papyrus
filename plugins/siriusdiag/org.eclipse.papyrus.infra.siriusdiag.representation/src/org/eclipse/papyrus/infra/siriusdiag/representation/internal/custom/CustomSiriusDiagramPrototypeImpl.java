@@ -43,7 +43,7 @@ public class CustomSiriusDiagramPrototypeImpl extends SiriusDiagramPrototypeImpl
 	/**
 	 * the name of the required element type
 	 */
-	private static final String REQUIRED_ELEMENT_TYPE_NAME = "DocumentTemplateContext"; //$NON-NLS-1$
+	private static final String REQUIRED_ELEMENT_TYPE_NAME = "DSemanticDiagramContext"; //$NON-NLS-1$
 
 	/**
 	 * the ID of the required element type
@@ -115,8 +115,8 @@ public class CustomSiriusDiagramPrototypeImpl extends SiriusDiagramPrototypeImpl
 	private Diagnostic createDiagnostic(final String message) {
 		return new BasicDiagnostic(Diagnostic.ERROR,
 				RepresentationValidator.DIAGNOSTIC_SOURCE,
-				RepresentationValidator.PAPYRUS_DOCUMENT_PROTOTYPE__IS_VALID_CLASS,
+				RepresentationValidator.SIRIUS_DIAGRAM_PROTOTYPE__IS_VALID_CLASS,
 				message,
-				new Object[] { this, RepresentationPackage.eINSTANCE.getPapyrusDocumentPrototype_CreationCommandClass() });
+				new Object[] { this, RepresentationPackage.eINSTANCE.getSiriusDiagramPrototype_CreationCommandClass() });
 	}
 }

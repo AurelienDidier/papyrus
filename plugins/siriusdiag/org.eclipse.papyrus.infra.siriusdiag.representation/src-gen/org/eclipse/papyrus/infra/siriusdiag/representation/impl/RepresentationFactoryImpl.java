@@ -18,9 +18,9 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
-import org.eclipse.papyrus.infra.siriusdiag.representation.SiriusDiagramPrototype;
 import org.eclipse.papyrus.infra.siriusdiag.representation.RepresentationFactory;
 import org.eclipse.papyrus.infra.siriusdiag.representation.RepresentationPackage;
+import org.eclipse.papyrus.infra.siriusdiag.representation.SiriusDiagramPrototype;
 
 /**
  * <!-- begin-user-doc -->
@@ -69,8 +69,8 @@ public class RepresentationFactoryImpl extends EFactoryImpl implements Represent
 	@Override
 	public EObject create(EClass eClass) {
 		switch (eClass.getClassifierID()) {
-		case RepresentationPackage.PAPYRUS_DOCUMENT_PROTOTYPE:
-			return createPapyrusDocumentPrototype();
+		case RepresentationPackage.SIRIUS_DIAGRAM_PROTOTYPE:
+			return createSiriusDiagramPrototype();
 		default:
 			throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
 		}
@@ -83,7 +83,7 @@ public class RepresentationFactoryImpl extends EFactoryImpl implements Represent
 	 * @generated
 	 */
 	@Override
-	public SiriusDiagramPrototype createPapyrusDocumentPrototype() {
+	public SiriusDiagramPrototype createSiriusDiagramPrototype() {
 		SiriusDiagramPrototypeImpl papyrusDocumentPrototype = new SiriusDiagramPrototypeImpl();
 		return papyrusDocumentPrototype;
 	}

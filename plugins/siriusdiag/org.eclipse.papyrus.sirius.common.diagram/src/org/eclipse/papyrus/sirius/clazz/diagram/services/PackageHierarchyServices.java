@@ -13,10 +13,10 @@ package org.eclipse.papyrus.sirius.clazz.diagram.services;
 import java.util.Iterator;
 
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.papyrus.sirius.clazz.diagram.core.services.AbstractDiagramServices;
 import org.eclipse.uml2.uml.Element;
 import org.eclipse.uml2.uml.PackageImport;
 import org.eclipse.uml2.uml.VisibilityKind;
-import org.eclipse.papyrus.sirius.clazz.diagram.core.services.AbstractDiagramServices;
 
 /**
  * A set of services to handle the Package Hierarchy diagram.

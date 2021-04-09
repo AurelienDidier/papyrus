@@ -25,13 +25,13 @@ import org.eclipse.papyrus.emf.facet.efacet.core.exception.DerivedTypedElementEx
 import org.eclipse.papyrus.emf.facet.query.java.core.IJavaQuery2;
 import org.eclipse.papyrus.emf.facet.query.java.core.IParameterValueList2;
 import org.eclipse.papyrus.infra.emf.utils.EMFHelper;
-import org.eclipse.papyrus.model2doc.emf.documentstructuretemplate.TextDocumentTemplate;
+import org.eclipse.sirius.diagram.DSemanticDiagram;
 
 /**
  * Query to retrieve the collection of all contained documents.
  *
  */
-public class GetContainedSiriusDiagram implements IJavaQuery2<EObject, Collection<TextDocumentTemplate>> {
+public class GetContainedSiriusDiagram implements IJavaQuery2<EObject, Collection<DSemanticDiagram>> {
 
 	/**
 	 * @see org.eclipse.papyrus.emf.facet.query.java.core.IJavaQuery2#evaluate(org.eclipse.emf.ecore.EObject, org.eclipse.papyrus.emf.facet.query.java.core.IParameterValueList2, org.eclipse.papyrus.emf.facet.efacet.core.IFacetManager)
@@ -40,20 +40,20 @@ public class GetContainedSiriusDiagram implements IJavaQuery2<EObject, Collectio
 	 * @param parameterValues
 	 * @param facetManager
 	 * @return
-	 * 		the collection of all contained documents.
+	 *         the collection of all contained documents.
 	 * @throws DerivedTypedElementException
 	 */
 	@Override
-	public Collection<TextDocumentTemplate> evaluate(EObject source, IParameterValueList2 parameterValues, IFacetManager facetManager) throws DerivedTypedElementException {
-		List<TextDocumentTemplate> documents = new ArrayList<>();
+	public Collection<DSemanticDiagram> evaluate(EObject source, IParameterValueList2 parameterValues, IFacetManager facetManager) throws DerivedTypedElementException {
+		List<DSemanticDiagram> documents = new ArrayList<>();
 
 		Collection<Setting> settings = EMFHelper.getUsages(source);
 		if (settings != null) {
 			for (Setting setting : settings) {
 				EObject usingElement = setting.getEObject();
-				if (usingElement instanceof TextDocumentTemplate) {
-					TextDocumentTemplate document = (TextDocumentTemplate) usingElement;
-					if (null != document.getGraphicalContext() && document.getGraphicalContext() == source && !documents.contains(document)) {
+				if (usingElement instanceof DSemanticDiagram) {
+					DSemanticDiagram document = (DSemanticDiagram) usingElement;
+					if (null != document.getTarget() && document.getTarget() == source && !documents.contains(document)) {
 						documents.add(document);
 					}
 				}

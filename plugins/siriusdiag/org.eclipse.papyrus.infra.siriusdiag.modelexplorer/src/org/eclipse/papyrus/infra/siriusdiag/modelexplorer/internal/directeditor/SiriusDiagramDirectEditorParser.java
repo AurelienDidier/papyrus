@@ -28,7 +28,10 @@ import org.eclipse.gmf.runtime.common.ui.services.parser.IParserEditStatus;
 import org.eclipse.gmf.runtime.emf.commands.core.command.AbstractTransactionalCommand;
 import org.eclipse.jface.text.contentassist.IContentAssistProcessor;
 import org.eclipse.papyrus.infra.internationalization.utils.utils.LabelInternationalizationUtils;
-import org.eclipse.papyrus.model2doc.emf.documentstructuretemplate.DocumentTemplate;
+import org.eclipse.sirius.business.api.query.DRepresentationQuery;
+import org.eclipse.sirius.diagram.DSemanticDiagram;
+import org.eclipse.sirius.viewpoint.DRepresentation;
+import org.eclipse.sirius.viewpoint.DRepresentationDescriptor;
 
 /**
  * Specific Parser for the Document Direct Editor.
@@ -82,11 +85,14 @@ public class SiriusDiagramDirectEditorParser implements IParser {
 			 */
 			@Override
 			protected CommandResult doExecuteWithResult(IProgressMonitor monitor, IAdaptable info) throws ExecutionException {
-				if ((eObjectElement instanceof DocumentTemplate) && (null != newString && !newString.isEmpty())) {
+				if ((eObjectElement instanceof DSemanticDiagram) && (null != newString && !newString.isEmpty())) {
 					if (isLabelModification) {
 						LabelInternationalizationUtils.setLabel((eObjectElement), newString, null);
 					} else {
-						((DocumentTemplate) eObjectElement).setName(newString);
+						DRepresentationDescriptor representationDescriptor = new DRepresentationQuery((DRepresentation) eObjectElement).getRepresentationDescriptor();
+						if (representationDescriptor != null) {
+							representationDescriptor.setName(newString);
+						}
 					}
 					return CommandResult.newOKCommandResult();
 				}

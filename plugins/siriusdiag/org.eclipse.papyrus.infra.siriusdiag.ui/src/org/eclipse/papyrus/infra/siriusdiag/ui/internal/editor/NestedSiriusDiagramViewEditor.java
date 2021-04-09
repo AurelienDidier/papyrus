@@ -34,9 +34,7 @@ import org.eclipse.papyrus.infra.core.services.ServiceException;
 import org.eclipse.papyrus.infra.core.services.ServicesRegistry;
 import org.eclipse.papyrus.infra.core.utils.ServiceUtils;
 import org.eclipse.papyrus.infra.siriusdiag.ui.Activator;
-import org.eclipse.papyrus.model2doc.emf.documentstructuretemplate.DocumentTemplate;
-import org.eclipse.papyrus.model2doc.emf.documentstructuretemplate.presentation.TransactionalDocumentStructureTemplateEditor;
-import org.eclipse.papyrus.model2doc.emf.documentstructuretemplate.provider.DocumentStructureTemplateItemProviderAdapterFactory;
+import org.eclipse.sirius.diagram.DSemanticDiagram;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IEditorSite;
@@ -48,7 +46,7 @@ import org.eclipse.ui.IEditorSite;
  *
  * In order to get the new child menu, we register the action bar contribution using this same extension point and we use if for this editor.
  */
-public class NestedSiriusDiagramViewEditor extends TransactionalDocumentStructureTemplateEditor {
+public class NestedSiriusDiagramViewEditor extends DDiagramEditorImpl {
 
 	/** the service registry */
 	protected ServicesRegistry servicesRegistry;
@@ -56,7 +54,7 @@ public class NestedSiriusDiagramViewEditor extends TransactionalDocumentStructur
 	/**
 	 * The edited document template
 	 */
-	private DocumentTemplate document;
+	private DSemanticDiagram diagram;
 
 	/**
 	 *
@@ -67,11 +65,11 @@ public class NestedSiriusDiagramViewEditor extends TransactionalDocumentStructur
 	 * @param rawModel
 	 *            the edited element, it can't be <code>null</code>
 	 */
-	public NestedSiriusDiagramViewEditor(ServicesRegistry servicesRegistry, DocumentTemplate rawModel) {
+	public NestedSiriusDiagramViewEditor(ServicesRegistry servicesRegistry, DSemanticDiagram rawModel) {
 		super();
-		this.document = rawModel;
+		this.diagram = rawModel;
 		this.servicesRegistry = servicesRegistry;
-		Assert.isNotNull(this.document, "The edited DocumentTemplate is null. The DocumentStructureTemplate Editor creation failed"); //$NON-NLS-1$
+		Assert.isNotNull(this.diagram, "The edited DSemanticDiagram is null. The DocumentStructureTemplate Editor creation failed"); //$NON-NLS-1$
 		Assert.isNotNull(this.servicesRegistry, "The papyrus ServicesRegistry is null. The DocumentStructureTemplate Editor creation failed."); //$NON-NLS-1$
 		initializeEditingDomain();
 	}
@@ -135,7 +133,7 @@ public class NestedSiriusDiagramViewEditor extends TransactionalDocumentStructur
 	 */
 	@Override
 	public void init(IEditorSite site, IEditorInput input) {// throws PartInitException {
-		final SiriusDiagramEditorInput documentViewEditorInput = new SiriusDiagramEditorInput(this.document);
+		final SiriusDiagramEditorInput documentViewEditorInput = new SiriusDiagramEditorInput(this.diagram);
 		super.init(site, documentViewEditorInput);
 	}
 
@@ -185,7 +183,6 @@ public class NestedSiriusDiagramViewEditor extends TransactionalDocumentStructur
 	protected void initAdapterFactory() {
 		adapterFactory = createComposedAdapterFactory();
 		adapterFactory.addAdapterFactory(new CustomResourceItemProviderAdapterFactory());
-		adapterFactory.addAdapterFactory(new DocumentStructureTemplateItemProviderAdapterFactory());
 		adapterFactory.addAdapterFactory(new EcoreItemProviderAdapterFactory());
 		adapterFactory.addAdapterFactory(new ReflectiveItemProviderAdapterFactory());
 	}
@@ -204,7 +201,7 @@ public class NestedSiriusDiagramViewEditor extends TransactionalDocumentStructur
 
 	/**
 	 *
-	 * Custom ResourceItemProviderAdapterFactory to be able to show only the structure of the DocumentTemplate
+	 * Custom ResourceItemProviderAdapterFactory to be able to show only the structure of the DSemanticDiagram
 	 * and not other elements contained in the file
 	 *
 	 */
@@ -257,13 +254,13 @@ public class NestedSiriusDiagramViewEditor extends TransactionalDocumentStructur
 		 */
 		@Override
 		public Collection<?> getElements(Object object) {
-			return Collections.singleton(document.eResource());
+			return Collections.singleton(diagram.eResource());
 		}
 	}
 
 	/**
 	 *
-	 * Custom ResourceItemProvider to get only the {@link DocumentTemplate} displayed in the EcoreEditor
+	 * Custom ResourceItemProvider to get only the {@link DSemanticDiagram} displayed in the EcoreEditor
 	 *
 	 */
 	private class CustomResourceItemProvider extends ResourceItemProvider {
@@ -326,7 +323,7 @@ public class NestedSiriusDiagramViewEditor extends TransactionalDocumentStructur
 		@Override
 		public Collection<?> getChildren(Object object) {
 			if (object instanceof Resource) {
-				return Collections.singletonList(document);
+				return Collections.singletonList(diagram);
 			}
 			return super.getChildren(object);
 		}

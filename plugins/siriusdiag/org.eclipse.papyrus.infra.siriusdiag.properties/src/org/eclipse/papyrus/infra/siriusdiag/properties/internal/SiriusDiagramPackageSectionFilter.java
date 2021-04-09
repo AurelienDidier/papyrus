@@ -18,7 +18,7 @@ package org.eclipse.papyrus.infra.siriusdiag.properties.internal;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.jface.viewers.IFilter;
-import org.eclipse.papyrus.model2doc.emf.documentstructuretemplate.DocumentStructureTemplatePackage;
+import org.eclipse.sirius.diagram.DiagramPackage;
 
 /**
  * Property section dedicated to element coming from DocumentStructureTemplate
@@ -48,7 +48,7 @@ public class SiriusDiagramPackageSectionFilter implements IFilter {
 		}
 		final EObject eobject = (EObject) toTest;
 		final EPackage epackage = eobject.eClass().getEPackage();
-		return epackage == DocumentStructureTemplatePackage.eINSTANCE;
+		return epackage == DiagramPackage.eINSTANCE;
 	}
 
 }

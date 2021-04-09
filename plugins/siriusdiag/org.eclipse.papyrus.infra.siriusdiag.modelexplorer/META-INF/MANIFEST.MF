@@ -22,7 +22,6 @@ Require-Bundle: org.eclipse.ui;bundle-version="[3.118.0,4.0.0)",
  org.eclipse.papyrus.infra.emf.gmf;bundle-version="[2.0.0,3.0.0)",
  org.eclipse.papyrus.infra.internationalization.utils;bundle-version="[2.0.0,3.0.0)",
  org.eclipse.jface;bundle-version="[3.22.0,4.0.0)",
- org.eclipse.papyrus.model2doc.emf.documentstructuretemplate;bundle-version="[0.8.0,1.0.0)",
  org.eclipse.papyrus.infra.architecture;bundle-version="[3.0.0,4.0.0)",
  org.eclipse.papyrus.infra.architecture.representation;bundle-version="[3.0.0,4.0.0)",
  org.eclipse.core.expressions;bundle-version="[3.7.0,4.0.0)",
@@ -31,7 +30,8 @@ Require-Bundle: org.eclipse.ui;bundle-version="[3.118.0,4.0.0)",
  org.eclipse.gef;bundle-version="[3.11.0,4.0.0)",
  org.eclipse.gmf.runtime.diagram.ui;bundle-version="[1.9.0,2.0.0)",
  org.eclipse.papyrus.emf.facet.efacet.metamodel;bundle-version="[2.0.0,3.0.0)",
- org.eclipse.papyrus.emf.facet.query.java.metamodel;bundle-version="[2.0.0,3.0.0)"
+ org.eclipse.papyrus.emf.facet.query.java.metamodel;bundle-version="[2.0.0,3.0.0)",
+ org.eclipse.sirius.diagram
 Bundle-ManifestVersion: 2
 Bundle-Activator: org.eclipse.papyrus.infra.siriusdiag.modelexplorer.Activator
 Bundle-RequiredExecutionEnvironment: JavaSE-11

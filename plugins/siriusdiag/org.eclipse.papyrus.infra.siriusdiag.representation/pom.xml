@@ -5,8 +5,8 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
-		<groupId>org.eclipse.papyrus.model2doc.plugins-integration</groupId>
-		<artifactId>org.eclipse.papyrus.model2doc.plugins.integration</artifactId>
+		<groupId>org.eclipse.papyrus.infra.siriusdiag.plugins-integration</groupId>
+		<artifactId>org.eclipse.papyrus.infra.siriusdiag.plugins.integration</artifactId>
 		<version>0.7.0-SNAPSHOT</version>
 	</parent>
 

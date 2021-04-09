@@ -23,14 +23,14 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.papyrus.infra.architecture.ArchitectureDomainManager;
 import org.eclipse.papyrus.infra.architecture.representation.PapyrusRepresentationKind;
+import org.eclipse.papyrus.infra.siriusdiag.representation.ICreateSiriusDiagramEditorCommand;
+import org.eclipse.papyrus.infra.siriusdiag.representation.SiriusDiagramPrototype;
 import org.eclipse.papyrus.infra.siriusdiag.ui.Activator;
 import org.eclipse.papyrus.infra.tools.util.ClassLoaderHelper;
 import org.eclipse.papyrus.infra.viewpoints.policy.IViewTypeHelper;
 import org.eclipse.papyrus.infra.viewpoints.policy.PolicyChecker;
 import org.eclipse.papyrus.infra.viewpoints.policy.ViewPrototype;
-import org.eclipse.papyrus.model2doc.emf.documentstructuretemplate.DocumentTemplate;
-import org.eclipse.papyrus.infra.siriusdiag.representation.SiriusDiagramPrototype;
-import org.eclipse.papyrus.infra.siriusdiag.representation.command.ICreateDocumentTemplateEditorCommand;
+import org.eclipse.sirius.diagram.DSemanticDiagram;
 
 /**
  * Represents a helper for the handling of Sirius Diagram Template View Type creation commands.
@@ -51,7 +51,7 @@ public class CreateSiriusDiagramViewTypeCommandHelper implements IViewTypeHelper
 	 */
 	@Override
 	public boolean isSupported(EClass type) {
-		return EcoreUtil.equals(type, org.eclipse.papyrus.infra.siriusdiag.representation.RepresentationPackage.eINSTANCE.getPapyrusDocumentPrototype());
+		return EcoreUtil.equals(type, org.eclipse.papyrus.infra.siriusdiag.representation.RepresentationPackage.eINSTANCE.getSiriusDiagramPrototype());
 	}
 
 	/**
@@ -62,7 +62,7 @@ public class CreateSiriusDiagramViewTypeCommandHelper implements IViewTypeHelper
 	 */
 	@Override
 	public boolean isSupported(EObject view) {
-		return (view instanceof DocumentTemplate);
+		return (view instanceof DSemanticDiagram);
 	}
 
 	/**
@@ -124,7 +124,7 @@ public class CreateSiriusDiagramViewTypeCommandHelper implements IViewTypeHelper
 		}
 		PolicyChecker checker = PolicyChecker.getFor(view);
 		ArchitectureDomainManager manager = ArchitectureDomainManager.getInstance();
-		SiriusDiagramPrototype repKind = (SiriusDiagramPrototype) manager.getRepresentationKindById(((DocumentTemplate) view).getKindId());// getRepresentationKindById(((Document) view)
+		SiriusDiagramPrototype repKind = (SiriusDiagramPrototype) manager.getRepresentationKindById(((DSemanticDiagram) view).getUid());// getRepresentationKindById(((Document) view)
 		if (null != repKind && checker.isInViewpoint(repKind)) {
 			return getPrototypeFor(repKind);
 		}

@@ -17,6 +17,11 @@ import java.util.List;
 import java.util.Set;
 
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.papyrus.sirius.clazz.diagram.core.services.AbstractDiagramServices;
+import org.eclipse.papyrus.sirius.clazz.diagram.core.services.ConnectorServices;
+import org.eclipse.papyrus.sirius.clazz.diagram.core.services.DependencyServices;
+import org.eclipse.papyrus.sirius.clazz.diagram.core.services.ElementServices;
+import org.eclipse.papyrus.sirius.clazz.diagram.core.services.NodeInverseRefsServices;
 import org.eclipse.sirius.diagram.AbstractDNode;
 import org.eclipse.sirius.diagram.DDiagram;
 import org.eclipse.sirius.diagram.DSemanticDiagram;
@@ -39,11 +44,6 @@ import org.eclipse.uml2.uml.Property;
 import org.eclipse.uml2.uml.StructuredClassifier;
 import org.eclipse.uml2.uml.Type;
 import org.eclipse.uml2.uml.Usage;
-import org.eclipse.papyrus.sirius.clazz.diagram.core.services.AbstractDiagramServices;
-import org.eclipse.papyrus.sirius.clazz.diagram.core.services.ElementServices;
-import org.eclipse.papyrus.sirius.clazz.diagram.core.services.NodeInverseRefsServices;
-import org.eclipse.papyrus.sirius.clazz.diagram.core.services.ConnectorServices;
-import org.eclipse.papyrus.sirius.clazz.diagram.core.services.DependencyServices;
 
 /**
  * A set of services to handle the Component diagram.

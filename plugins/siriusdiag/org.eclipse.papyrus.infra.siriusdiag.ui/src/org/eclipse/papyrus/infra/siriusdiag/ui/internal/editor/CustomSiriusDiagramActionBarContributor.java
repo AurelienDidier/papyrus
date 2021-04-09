@@ -27,7 +27,6 @@ import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.papyrus.infra.siriusdiag.ui.Activator;
-import org.eclipse.papyrus.model2doc.emf.documentstructuretemplate.presentation.DocumentStructureTemplateActionBarContributor;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 
 /**

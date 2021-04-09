@@ -17,7 +17,9 @@ package org.eclipse.papyrus.infra.siriusdiag.modelexplorer.internal.commands;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.eclipse.papyrus.infra.ui.menu.NameNormalizationCommand;
-import org.eclipse.papyrus.model2doc.emf.documentstructuretemplate.DocumentTemplate;
+import org.eclipse.sirius.business.api.query.DRepresentationQuery;
+import org.eclipse.sirius.diagram.DSemanticDiagram;
+import org.eclipse.sirius.viewpoint.DRepresentationDescriptor;
 
 /**
  * This class provides document template name normalization command.
@@ -44,10 +46,13 @@ public class SiriusDiagramNameNormalizationCommand extends NameNormalizationComm
 	 */
 	@Override
 	protected void doExecute() {
-		if (this.source instanceof DocumentTemplate) {
-			final DocumentTemplate doc = (DocumentTemplate) this.source;
+		if (this.source instanceof DSemanticDiagram) {
+			final DSemanticDiagram doc = (DSemanticDiagram) this.source;
 			final String newName = normalizeName(doc.getName(), parameter);
-			doc.setName(newName);
+			DRepresentationDescriptor representationDescriptor = new DRepresentationQuery(doc).getRepresentationDescriptor();
+			if (representationDescriptor != null) {
+				representationDescriptor.setName(newName);
+			}
 		}
 	}
 

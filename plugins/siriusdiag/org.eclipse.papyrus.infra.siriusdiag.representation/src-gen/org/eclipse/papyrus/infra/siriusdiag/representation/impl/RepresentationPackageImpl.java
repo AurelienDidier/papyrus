@@ -21,25 +21,17 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EValidator;
 import org.eclipse.emf.ecore.EcorePackage;
-
 import org.eclipse.emf.ecore.impl.EPackageImpl;
-
 import org.eclipse.papyrus.infra.constraints.ConstraintsPackage;
-
 import org.eclipse.papyrus.infra.core.architecture.ArchitecturePackage;
-
 import org.eclipse.papyrus.infra.emf.expressions.ExpressionsPackage;
-import org.eclipse.papyrus.infra.types.ElementTypesConfigurationsPackage;
-
-import org.eclipse.papyrus.model2doc.core.author.AuthorPackage;
-import org.eclipse.papyrus.model2doc.core.builtintypes.BuiltInTypesPackage;
-import org.eclipse.papyrus.model2doc.core.generatorconfiguration.GeneratorConfigurationPackage;
-import org.eclipse.papyrus.model2doc.emf.documentstructuretemplate.DocumentStructureTemplatePackage;
-
-import org.eclipse.papyrus.infra.siriusdiag.representation.PapyrusDocumentPrototype;
 import org.eclipse.papyrus.infra.siriusdiag.representation.RepresentationFactory;
 import org.eclipse.papyrus.infra.siriusdiag.representation.RepresentationPackage;
+import org.eclipse.papyrus.infra.siriusdiag.representation.SiriusDiagramPrototype;
 import org.eclipse.papyrus.infra.siriusdiag.representation.util.RepresentationValidator;
+import org.eclipse.papyrus.infra.types.ElementTypesConfigurationsPackage;
+import org.eclipse.sirius.diagram.DiagramPackage;
+import org.eclipse.sirius.viewpoint.ViewpointPackage;
 
 /**
  * <!-- begin-user-doc -->
@@ -55,7 +47,7 @@ public class RepresentationPackageImpl extends EPackageImpl implements Represent
 	 *
 	 * @generated
 	 */
-	private EClass papyrusDocumentPrototypeEClass = null;
+	private EClass siriusDiagramPrototypeEClass = null;
 
 	/**
 	 * Creates an instance of the model <b>Package</b>, registered with
@@ -114,14 +106,12 @@ public class RepresentationPackageImpl extends EPackageImpl implements Represent
 		// Initialize simple dependencies
 		ArchitecturePackage.eINSTANCE.eClass();
 		ConstraintsPackage.eINSTANCE.eClass();
-		DocumentStructureTemplatePackage.eINSTANCE.eClass();
+		DiagramPackage.eINSTANCE.eClass();
+		ViewpointPackage.eINSTANCE.eClass();
 		EcorePackage.eINSTANCE.eClass();
 		ElementTypesConfigurationsPackage.eINSTANCE.eClass();
 		org.eclipse.papyrus.infra.architecture.representation.RepresentationPackage.eINSTANCE.eClass();
-		GeneratorConfigurationPackage.eINSTANCE.eClass();
-		AuthorPackage.eINSTANCE.eClass();
 		ExpressionsPackage.eINSTANCE.eClass();
-		BuiltInTypesPackage.eINSTANCE.eClass();
 
 		// Create package meta-data objects
 		theRepresentationPackage.createPackageContents();
@@ -153,8 +143,8 @@ public class RepresentationPackageImpl extends EPackageImpl implements Represent
 	 * @generated
 	 */
 	@Override
-	public EClass getPapyrusDocumentPrototype() {
-		return papyrusDocumentPrototypeEClass;
+	public EClass getSiriusDiagramPrototype() {
+		return siriusDiagramPrototypeEClass;
 	}
 
 	/**
@@ -164,8 +154,8 @@ public class RepresentationPackageImpl extends EPackageImpl implements Represent
 	 * @generated
 	 */
 	@Override
-	public EReference getPapyrusDocumentPrototype_DocumentTemplatePrototype() {
-		return (EReference) papyrusDocumentPrototypeEClass.getEStructuralFeatures().get(0);
+	public EReference getSiriusDiagramPrototype_SiriusDiagramPrototype() {
+		return (EReference) siriusDiagramPrototypeEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -175,8 +165,8 @@ public class RepresentationPackageImpl extends EPackageImpl implements Represent
 	 * @generated
 	 */
 	@Override
-	public EAttribute getPapyrusDocumentPrototype_CreationCommandClass() {
-		return (EAttribute) papyrusDocumentPrototypeEClass.getEStructuralFeatures().get(1);
+	public EAttribute getSiriusDiagramPrototype_CreationCommandClass() {
+		return (EAttribute) siriusDiagramPrototypeEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -186,8 +176,8 @@ public class RepresentationPackageImpl extends EPackageImpl implements Represent
 	 * @generated
 	 */
 	@Override
-	public EOperation getPapyrusDocumentPrototype__IsValidClass__DiagnosticChain_Map() {
-		return papyrusDocumentPrototypeEClass.getEOperations().get(0);
+	public EOperation getSiriusDiagramPrototype__IsValidClass__DiagnosticChain_Map() {
+		return siriusDiagramPrototypeEClass.getEOperations().get(0);
 	}
 
 	/**
@@ -224,10 +214,10 @@ public class RepresentationPackageImpl extends EPackageImpl implements Represent
 		isCreated = true;
 
 		// Create classes and their features
-		papyrusDocumentPrototypeEClass = createEClass(PAPYRUS_DOCUMENT_PROTOTYPE);
-		createEReference(papyrusDocumentPrototypeEClass, PAPYRUS_DOCUMENT_PROTOTYPE__DOCUMENT_TEMPLATE_PROTOTYPE);
-		createEAttribute(papyrusDocumentPrototypeEClass, PAPYRUS_DOCUMENT_PROTOTYPE__CREATION_COMMAND_CLASS);
-		createEOperation(papyrusDocumentPrototypeEClass, PAPYRUS_DOCUMENT_PROTOTYPE___IS_VALID_CLASS__DIAGNOSTICCHAIN_MAP);
+		siriusDiagramPrototypeEClass = createEClass(SIRIUS_DIAGRAM_PROTOTYPE);
+		createEReference(siriusDiagramPrototypeEClass, SIRIUS_DIAGRAM_PROTOTYPE__SIRIUS_DIAGRAM_PROTOTYPE);
+		createEAttribute(siriusDiagramPrototypeEClass, SIRIUS_DIAGRAM_PROTOTYPE__CREATION_COMMAND_CLASS);
+		createEOperation(siriusDiagramPrototypeEClass, SIRIUS_DIAGRAM_PROTOTYPE___IS_VALID_CLASS__DIAGNOSTICCHAIN_MAP);
 	}
 
 	/**
@@ -260,7 +250,7 @@ public class RepresentationPackageImpl extends EPackageImpl implements Represent
 		// Obtain other dependent packages
 		org.eclipse.papyrus.infra.architecture.representation.RepresentationPackage theRepresentationPackage_1 = (org.eclipse.papyrus.infra.architecture.representation.RepresentationPackage) EPackage.Registry.INSTANCE
 				.getEPackage(org.eclipse.papyrus.infra.architecture.representation.RepresentationPackage.eNS_URI);
-		-+ theDocumentStructureTemplatePackage = (DocumentStructureTemplatePackage) EPackage.Registry.INSTANCE.getEPackage(DocumentStructureTemplatePackage.eNS_URI);
+		RepresentationPackage theDiagramPackage = (RepresentationPackage) EPackage.Registry.INSTANCE.getEPackage(RepresentationPackage.eNS_URI);
 		EcorePackage theEcorePackage = (EcorePackage) EPackage.Registry.INSTANCE.getEPackage(EcorePackage.eNS_URI);
 
 		// Create type parameters
@@ -268,16 +258,16 @@ public class RepresentationPackageImpl extends EPackageImpl implements Represent
 		// Set bounds for type parameters
 
 		// Add supertypes to classes
-		papyrusDocumentPrototypeEClass.getESuperTypes().add(theRepresentationPackage_1.getPapyrusRepresentationKind());
+		siriusDiagramPrototypeEClass.getESuperTypes().add(theRepresentationPackage_1.getPapyrusRepresentationKind());
 
 		// Initialize classes, features, and operations; add parameters
-		initEClass(papyrusDocumentPrototypeEClass, PapyrusDocumentPrototype.class, "PapyrusDocumentPrototype", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEReference(getPapyrusDocumentPrototype_DocumentTemplatePrototype(), theDocumentStructureTemplatePackage.getDocumentTemplatePrototype(), null, "documentTemplatePrototype", null, 1, 1, PapyrusDocumentPrototype.class, !IS_TRANSIENT, !IS_VOLATILE, //$NON-NLS-1$
+		initEClass(siriusDiagramPrototypeEClass, SiriusDiagramPrototype.class, "SiriusDiagramPrototype", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEReference(getSiriusDiagramPrototype_SiriusDiagramPrototype(), theDiagramPackage.getSiriusDiagramPrototype(), null, "siriusDiagramPrototype", null, 1, 1, SiriusDiagramPrototype.class, !IS_TRANSIENT, !IS_VOLATILE, //$NON-NLS-1$
 				IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getPapyrusDocumentPrototype_CreationCommandClass(), theEcorePackage.getEString(), "creationCommandClass", null, 1, 1, PapyrusDocumentPrototype.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, //$NON-NLS-1$
+		initEAttribute(getSiriusDiagramPrototype_CreationCommandClass(), theEcorePackage.getEString(), "creationCommandClass", null, 1, 1, SiriusDiagramPrototype.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, //$NON-NLS-1$
 				!IS_DERIVED, IS_ORDERED);
 
-		EOperation op = initEOperation(getPapyrusDocumentPrototype__IsValidClass__DiagnosticChain_Map(), theEcorePackage.getEBoolean(), "isValidClass", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		EOperation op = initEOperation(getSiriusDiagramPrototype__IsValidClass__DiagnosticChain_Map(), theEcorePackage.getEBoolean(), "isValidClass", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		addEParameter(op, ecorePackage.getEDiagnosticChain(), "chain", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		EGenericType g1 = createEGenericType(theEcorePackage.getEMap());
 		EGenericType g2 = createEGenericType(theEcorePackage.getEJavaObject());

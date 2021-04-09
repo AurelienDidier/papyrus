@@ -15,16 +15,13 @@ package org.eclipse.papyrus.infra.siriusdiag.representation.util;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
-
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
-
 import org.eclipse.emf.ecore.EObject;
-
 import org.eclipse.papyrus.infra.architecture.representation.PapyrusRepresentationKind;
-
 import org.eclipse.papyrus.infra.core.architecture.ADElement;
 import org.eclipse.papyrus.infra.core.architecture.RepresentationKind;
-import org.eclipse.papyrus.infra.siriusdiag.representation.*;
+import org.eclipse.papyrus.infra.siriusdiag.representation.RepresentationPackage;
+import org.eclipse.papyrus.infra.siriusdiag.representation.SiriusDiagramPrototype;
 
 /**
  * <!-- begin-user-doc -->
@@ -87,8 +84,8 @@ public class RepresentationAdapterFactory extends AdapterFactoryImpl {
 	 */
 	protected RepresentationSwitch<Adapter> modelSwitch = new RepresentationSwitch<>() {
 		@Override
-		public Adapter casePapyrusDocumentPrototype(SiriusDiagramPrototype object) {
-			return createPapyrusDocumentPrototypeAdapter();
+		public Adapter caseSiriusDiagramPrototype(SiriusDiagramPrototype object) {
+			return createSiriusDiagramPrototypeAdapter();
 		}
 
 		@Override
@@ -139,7 +136,7 @@ public class RepresentationAdapterFactory extends AdapterFactoryImpl {
 	 * @see org.eclipse.papyrus.infra.siriusdiag.representation.SiriusDiagramPrototype
 	 * @generated
 	 */
-	public Adapter createPapyrusDocumentPrototypeAdapter() {
+	public Adapter createSiriusDiagramPrototypeAdapter() {
 		return null;
 	}
 

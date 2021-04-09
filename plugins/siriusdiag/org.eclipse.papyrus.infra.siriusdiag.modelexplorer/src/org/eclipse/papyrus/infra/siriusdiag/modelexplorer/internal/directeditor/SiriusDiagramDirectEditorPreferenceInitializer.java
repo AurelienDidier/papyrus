@@ -16,7 +16,7 @@ package org.eclipse.papyrus.infra.siriusdiag.modelexplorer.internal.directeditor
 import org.eclipse.core.runtime.preferences.AbstractPreferenceInitializer;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.papyrus.infra.gmfdiag.extensionpoints.editors.utils.IDirectEditorsIds;
-import org.eclipse.papyrus.model2doc.emf.documentstructuretemplate.DocumentTemplate;
+import org.eclipse.sirius.diagram.DSemanticDiagram;
 
 /**
  * This preference initializer initializes the preferences for the direct editor of Document.
@@ -32,7 +32,7 @@ public class SiriusDiagramDirectEditorPreferenceInitializer extends AbstractPref
 	/**
 	 * The Value for the objects 'Document'.
 	 */
-	private static final String EDITOR_NAME = "DocumentTemplate Direct Editor"; //$NON-NLS-1$
+	private static final String EDITOR_NAME = "DSemanticDiagram Direct Editor"; //$NON-NLS-1$
 
 	/**
 	 * Constructor.
@@ -48,8 +48,8 @@ public class SiriusDiagramDirectEditorPreferenceInitializer extends AbstractPref
 	public void initializeDefaultPreferences() {
 		// required to get the good preference store
 		IPreferenceStore store = org.eclipse.papyrus.infra.gmfdiag.extensionpoints.editors.Activator.getDefault().getPreferenceStore();
-		store.setDefault(PREFIX_PAPYRUS_EDITOR + DocumentTemplate.class.getName(), EDITOR_NAME);
-		// papyrus.directeditor.org.eclipse.papyrus.model2doc.emf.documentstructuretemplate.DocumentTemplate
+		store.setDefault(PREFIX_PAPYRUS_EDITOR + DSemanticDiagram.class.getName(), EDITOR_NAME);
+		// papyrus.directeditor.org.eclipse.sirius.diagram.DSemanticDiagram
 	}
 
 }

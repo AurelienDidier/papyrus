@@ -20,16 +20,16 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.papyrus.infra.architecture.representation.PapyrusRepresentationKind;
 import org.eclipse.papyrus.infra.core.utils.EditorNameInitializer;
 import org.eclipse.papyrus.infra.siriusdiag.architecture.internal.messages.Messages;
-import org.eclipse.papyrus.infra.viewpoints.policy.ViewPrototype;
-import org.eclipse.papyrus.model2doc.emf.documentstructuretemplate.DocumentStructureTemplatePackage;
-import org.eclipse.papyrus.model2doc.emf.documentstructuretemplate.DocumentTemplate;
-import org.eclipse.papyrus.model2doc.emf.documentstructuretemplate.DocumentTemplatePrototype;
+import org.eclipse.papyrus.infra.siriusdiag.representation.ICreateSiriusDiagramEditorCommand;
 import org.eclipse.papyrus.infra.siriusdiag.representation.SiriusDiagramPrototype;
-import org.eclipse.papyrus.infra.siriusdiag.representation.command.ICreateDocumentTemplateEditorCommand;
-import org.eclipse.papyrus.infra.siriusdiag.ui.internal.viewpoint.PapyrusDocumentTemplateViewPrototype;
+import org.eclipse.papyrus.infra.siriusdiag.ui.internal.viewpoint.SiriusDiagramViewPrototype;
+import org.eclipse.papyrus.infra.viewpoints.policy.ViewPrototype;
+import org.eclipse.sirius.diagram.DSemanticDiagram;
+import org.eclipse.sirius.diagram.DiagramPackage;
+import org.eclipse.sirius.viewpoint.ViewpointPackage;
 
 /**
- * This class allows to create new DocumentTemplate instance and open the papyrus editor for it
+ * This class allows to create new Sirius Diagram instance and open the papyrus editor for it
  */
 public class CreatePapyrusSiriusDiagramEditorCommand extends AbstractCreateSiriusDiagramEditorCommand implements ICreateSiriusDiagramEditorCommand {
 
@@ -48,21 +48,21 @@ public class CreatePapyrusSiriusDiagramEditorCommand extends AbstractCreateSiriu
 	 * @param prototype
 	 *            the ViewPrototype
 	 * @param semanticContext
-	 *            the semantic context for the created DocumentTemplate
+	 *            the semantic context for the created DSemanticDiagram
 	 * @return
 	 *         the default name to use
 	 */
 	private String getDefaultName(final ViewPrototype prototype, final EObject semanticContext) {
 		final StringBuilder nameBuilder = new StringBuilder("New"); //$NON-NLS-1$
 		nameBuilder.append(prototype.getLabel().replaceAll(" ", "")); //$NON-NLS-1$ //$NON-NLS-2$
-		final String nameWithIncrement = EditorNameInitializer.getNameWithIncrement(DocumentStructureTemplatePackage.eINSTANCE.getTextDocumentTemplate(), DocumentStructureTemplatePackage.eINSTANCE.getDocumentTemplate_Name(), nameBuilder.toString(),
+		final String nameWithIncrement = EditorNameInitializer.getNameWithIncrement(DiagramPackage.eINSTANCE.getDDiagram(), ViewpointPackage.eINSTANCE.getDRepresentationDescriptor_Name(), nameBuilder.toString(),
 				semanticContext);
 		return nameWithIncrement;
 	}
 
 	/**
 	 *
-	 * @see org.eclipse.papyrus.infra.siriusdiag.ui.internal.ICreateSiriusDiagramEditorCommand.ICreateDocumentTemplateEditorCommand#execute(org.eclipse.papyrus.infra.siriusdiag.ui.internal.viewpoint.PapyrusDocumentTemplateViewPrototype,
+	 * @see org.eclipse.papyrus.infra.siriusdiag.ui.internal.ICreateSiriusDiagramEditorCommand.ICreateDSemanticDiagramEditorCommand#execute(org.eclipse.papyrus.infra.siriusdiag.ui.internal.viewpoint.PapyrusDSemanticDiagramViewPrototype,
 	 *      org.eclipse.emf.ecore.EObject, java.lang.String)
 	 *
 	 * @param prototype
@@ -72,12 +72,12 @@ public class CreatePapyrusSiriusDiagramEditorCommand extends AbstractCreateSiriu
 	 * @return
 	 */
 	@Override
-	public DocumentTemplate execute(final ViewPrototype prototype, final String name, final EObject semanticContext, final boolean openAfterCreation) {
+	public DSemanticDiagram execute(final ViewPrototype prototype, final String name, final EObject semanticContext, final boolean openAfterCreation) {
 		return execute(prototype, name, semanticContext, semanticContext, openAfterCreation);
 	}
 
 	/**
-	 * @see org.eclipse.papyrus.infra.siriusdiag.representation.ICreateSiriusDiagramEditorCommand.ICreateDocumentTemplateEditorCommand#execute(org.eclipse.papyrus.infra.viewpoints.policy.ViewPrototype, java.lang.String,
+	 * @see org.eclipse.papyrus.infra.siriusdiag.representation.ICreateSiriusDiagramEditorCommand.ICreateDSemanticDiagramEditorCommand#execute(org.eclipse.papyrus.infra.viewpoints.policy.ViewPrototype, java.lang.String,
 	 *      org.eclipse.emf.ecore.EObject, org.eclipse.emf.ecore.EObject, boolean)
 	 *
 	 * @param prototype
@@ -88,12 +88,12 @@ public class CreatePapyrusSiriusDiagramEditorCommand extends AbstractCreateSiriu
 	 * @return
 	 */
 	@Override
-	public DocumentTemplate execute(final ViewPrototype prototype, final String name, final EObject semanticContext, final EObject graphicalContext, boolean openAfterCreation) {
-		if (prototype instanceof PapyrusDocumentTemplateViewPrototype) {
+	public DSemanticDiagram execute(final ViewPrototype prototype, final String name, final EObject semanticContext, final EObject graphicalContext, boolean openAfterCreation) {
+		if (prototype instanceof SiriusDiagramViewPrototype) {
 			final PapyrusRepresentationKind representation = prototype.getRepresentationKind();
-			Assert.isTrue(representation instanceof SiriusDiagramPrototype, "The representation associated to the PapyrusDocumentTemplateViewPrototype must be an instanceof PapyrusDocumentPrototype."); //$NON-NLS-1$
+			Assert.isTrue(representation instanceof SiriusDiagramPrototype, "The representation associated to the PapyrusDSemanticDiagramViewPrototype must be an instanceof SiriusDiagramPrototype."); //$NON-NLS-1$
 			SiriusDiagramPrototype docProto = (SiriusDiagramPrototype) representation;
-			final DocumentTemplatePrototype docTemplateProto = docProto.getDocumentTemplatePrototype();
+			final SiriusDiagramPrototype docTemplateProto = docProto.getSiriusDiagramPrototype();
 			final String documentName = (name == null || name.isEmpty()) ? askName(prototype, semanticContext) : name;
 			if (null == documentName) {
 				return null; // the creation is cancelled
