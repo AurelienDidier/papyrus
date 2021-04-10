@@ -87,7 +87,7 @@ public abstract class AbstractCreateSiriusDiagramEditorCommand implements ICreat
 	 * @return
 	 *         the created {@link DSemanticDiagram}
 	 */
-	protected DSemanticDiagram execute(final DSemanticDiagram docTemplateProto, final String documentName, final EObject semanticContext, final EObject graphicalContext, final boolean openAfterCreation) {
+	protected DSemanticDiagram execute(final SiriusDiagramPrototype docTemplateProto, final String documentName, final EObject semanticContext, final EObject graphicalContext, final boolean openAfterCreation) {
 		final Resource res = semanticContext.eResource();
 		final URI semanticURI = res.getURI();
 		if (semanticURI.isPlatformPlugin()) {
@@ -99,8 +99,8 @@ public abstract class AbstractCreateSiriusDiagramEditorCommand implements ICreat
 		if (null == domain) {
 			return null;
 		}
-		final String documentMainTitle = getDocumentMainTitle(semanticContext);
-		final CreateSiriusDiagramEditorViewCommand command = createDSemanticDiagramEditorCreationCommand(domain, docTemplateProto, documentName, documentMainTitle, semanticContext, openAfterCreation);
+		final String siriusDiagramMainTitle = getSiriusDiagramMainTitle(semanticContext);
+		final CreateSiriusDiagramEditorViewCommand command = createDSemanticDiagramEditorCreationCommand(domain, docTemplateProto, documentName, siriusDiagramMainTitle, semanticContext, openAfterCreation);
 		domain.getCommandStack().execute(command);
 		return command.getCreatedEditorView();
 	}
@@ -204,7 +204,7 @@ public abstract class AbstractCreateSiriusDiagramEditorCommand implements ICreat
 	 * @return
 	 *         the label to use as main title for the generated document
 	 */
-	protected String getDocumentMainTitle(final EObject semanticContext) {
+	protected String getSiriusDiagramMainTitle(final EObject semanticContext) {
 		return DelegatingToEMFLabelProvider.INSTANCE.getText(semanticContext);
 	}
 

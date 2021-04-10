@@ -93,13 +93,12 @@ public class CreatePapyrusSiriusDiagramEditorCommand extends AbstractCreateSiriu
 			final PapyrusRepresentationKind representation = prototype.getRepresentationKind();
 			Assert.isTrue(representation instanceof SiriusDiagramPrototype, "The representation associated to the PapyrusDSemanticDiagramViewPrototype must be an instanceof SiriusDiagramPrototype."); //$NON-NLS-1$
 			SiriusDiagramPrototype docProto = (SiriusDiagramPrototype) representation;
-			final SiriusDiagramPrototype docTemplateProto = docProto.getSiriusDiagramPrototype();
 			final String documentName = (name == null || name.isEmpty()) ? askName(prototype, semanticContext) : name;
 			if (null == documentName) {
 				return null; // the creation is cancelled
 			}
 
-			return super.execute(docTemplateProto, documentName, graphicalContext, semanticContext, openAfterCreation);
+			return super.execute(docProto, documentName, graphicalContext, semanticContext, openAfterCreation);
 		}
 		return null;
 	};

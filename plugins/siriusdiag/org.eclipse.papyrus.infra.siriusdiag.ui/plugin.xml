@@ -8,7 +8,7 @@
             locationURI="popup:org.eclipse.papyrus.views.modelexplorer.modelexplorer.popup?after=org.eclipse.papyrus.views.modelexplorer.popupmenu.creatediagram">
          <menu
                icon="icons/new_document.png"
-               id="org.eclipse.papyrus.model2doc.integration.documentstructuretemplate.ui.popupmenu.createdocumenttemplate"
+               id="org.eclipse.papyrus.infra.siriusdiag.ui.popupmenu.createsiriusdiagram"
                label="New Document Template"
                tooltip="The Sirius Diagram Template Menu">
             <dynamic
@@ -63,5 +63,4 @@
             provider="org.eclipse.papyrus.infra.siriusdiag.ui.internal.provider.SiriusDiagramLabelProvider">
       </labelProvider>
    </extension>
-
 </plugin>

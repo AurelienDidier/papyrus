@@ -10,7 +10,7 @@
 		<version>0.7.0-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>org.eclipse.papyrus.model2doc.integration.docx.uml.architecture</artifactId>
+	<artifactId>org.eclipse.papyrus.uml.sirius.diagram.architecture</artifactId>
 	<version>0.8.0-SNAPSHOT</version>
 	<packaging>eclipse-plugin</packaging>
 

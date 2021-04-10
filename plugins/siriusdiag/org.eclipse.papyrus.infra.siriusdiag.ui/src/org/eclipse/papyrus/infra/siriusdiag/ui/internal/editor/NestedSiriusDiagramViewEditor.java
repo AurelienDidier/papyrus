@@ -35,6 +35,7 @@ import org.eclipse.papyrus.infra.core.services.ServicesRegistry;
 import org.eclipse.papyrus.infra.core.utils.ServiceUtils;
 import org.eclipse.papyrus.infra.siriusdiag.ui.Activator;
 import org.eclipse.sirius.diagram.DSemanticDiagram;
+import org.eclipse.sirius.diagram.ui.tools.internal.editor.DDiagramEditorImpl;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IEditorSite;
@@ -90,7 +91,7 @@ public class NestedSiriusDiagramViewEditor extends DDiagramEditorImpl {
 
 	/**
 	 *
-	 * @see org.eclipse.papyrus.model2doc.emf.documentstructuretemplate.presentation.DocumentStructureTemplateEditor#getEditingDomain()
+	 * @see org.eclipse.papyrus.infra.siriusdiag.presentation.DocumentStructureTemplateEditor#getEditingDomain()
 	 *
 	 * @return
 	 */
@@ -106,7 +107,7 @@ public class NestedSiriusDiagramViewEditor extends DDiagramEditorImpl {
 
 	/**
 	 *
-	 * @see org.eclipse.papyrus.model2doc.emf.documentstructuretemplate.presentation.DocumentStructureTemplateEditor#doSave(org.eclipse.core.runtime.IProgressMonitor)
+	 * @see org.eclipse.papyrus.infra.siriusdiag.presentation.DocumentStructureTemplateEditor#doSave(org.eclipse.core.runtime.IProgressMonitor)
 	 *
 	 * @param monitor
 	 */
@@ -117,7 +118,7 @@ public class NestedSiriusDiagramViewEditor extends DDiagramEditorImpl {
 
 	/**
 	 *
-	 * @see org.eclipse.papyrus.model2doc.emf.documentstructuretemplate.presentation.DocumentStructureTemplateEditor#doSaveAs()
+	 * @see org.eclipse.papyrus.infra.siriusdiag.presentation.DocumentStructureTemplateEditor#doSaveAs()
 	 *
 	 */
 	@Override
@@ -126,7 +127,7 @@ public class NestedSiriusDiagramViewEditor extends DDiagramEditorImpl {
 
 	/**
 	 *
-	 * @see org.eclipse.papyrus.model2doc.emf.documentstructuretemplate.presentation.DocumentStructureTemplateEditor#init(org.eclipse.ui.IEditorSite, org.eclipse.ui.IEditorInput)
+	 * @see org.eclipse.papyrus.infra.siriusdiag.presentation.DocumentStructureTemplateEditor#init(org.eclipse.ui.IEditorSite, org.eclipse.ui.IEditorInput)
 	 *
 	 * @param site
 	 * @param input
@@ -139,7 +140,7 @@ public class NestedSiriusDiagramViewEditor extends DDiagramEditorImpl {
 
 	/**
 	 *
-	 * @see org.eclipse.papyrus.model2doc.emf.documentstructuretemplate.presentation.DocumentStructureTemplateEditor#isDirty()
+	 * @see org.eclipse.papyrus.infra.siriusdiag.presentation.DocumentStructureTemplateEditor#isDirty()
 	 *
 	 * @return
 	 */
@@ -151,7 +152,7 @@ public class NestedSiriusDiagramViewEditor extends DDiagramEditorImpl {
 
 	/**
 	 *
-	 * @see org.eclipse.papyrus.model2doc.emf.documentstructuretemplate.presentation.DocumentStructureTemplateEditor#isSaveAsAllowed()
+	 * @see org.eclipse.papyrus.infra.siriusdiag.presentation.DocumentStructureTemplateEditor#isSaveAsAllowed()
 	 *
 	 * @return
 	 */
